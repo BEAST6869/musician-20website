@@ -290,8 +290,12 @@ export default function Index() {
                 className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow text-center cursor-pointer backdrop-blur-sm"
                 style={{ borderColor: index % 2 === 0 ? '#ff00de' : '#00ffff' }}
               >
-                <div className="text-2xl mb-2" style={{ color: index % 2 === 0 ? '#ff00de' : '#00ffff' }}>
-                  {social.icon}
+                <div className="flex justify-center mb-2">
+                  <social.icon
+                    size={28}
+                    style={{ color: index % 2 === 0 ? '#ff00de' : '#00ffff' }}
+                    className="neon-text"
+                  />
                 </div>
                 <p className="text-xs font-mono text-cyber-glow">
                   {social.name}
