@@ -28,8 +28,8 @@ export default function Index() {
   ];
 
   const socialLinks = [
-    { name: "SPOTIFY", icon: Music, url: "#" },
-    { name: "APPLE MUSIC", icon: Play, url: "#" },
+    { name: "SPOTIFY", icon: SpotifyLogo, url: "#" },
+    { name: "APPLE MUSIC", icon: AppleLogo, url: "#" },
     { name: "INSTAGRAM", icon: Instagram, url: "#" },
     { name: "YOUTUBE", icon: Youtube, url: "#" }
   ];
