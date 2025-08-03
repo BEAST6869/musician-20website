@@ -15,10 +15,10 @@ export default function Index() {
   ];
 
   const socialLinks = [
-    { name: "SPOTIFY", icon: "♫", url: "#" },
-    { name: "APPLE MUSIC", icon: "◈", url: "#" },
-    { name: "INSTAGRAM", icon: "◯", url: "#" },
-    { name: "YOUTUBE", icon: "▷", url: "#" }
+    { name: "SPOTIFY", icon: Music, url: "#" },
+    { name: "APPLE MUSIC", icon: Play, url: "#" },
+    { name: "INSTAGRAM", icon: Instagram, url: "#" },
+    { name: "YOUTUBE", icon: Youtube, url: "#" }
   ];
 
   useEffect(() => {
