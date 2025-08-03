@@ -48,23 +48,56 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-32 h-32 border border-neon-pink animate-float" 
-             style={{ 
-               background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 0, 222, 0.1), transparent)`,
-               transform: `translateX(${mousePosition.x * 0.1}px) translateY(${mousePosition.y * 0.1}px)`
+      {/* Ethereal dreamscape background elements */}
+      <div className="absolute inset-0 opacity-30">
+        {/* Mythic floating orbs */}
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full border-2 border-neon-pink animate-float opacity-60"
+             style={{
+               background: `conic-gradient(from ${mousePosition.x}deg, rgba(255, 0, 222, 0.2), rgba(138, 43, 226, 0.2), rgba(0, 255, 255, 0.2))`,
+               transform: `translateX(${mousePosition.x * 0.1}px) translateY(${mousePosition.y * 0.1}px) rotate(${mousePosition.x}deg)`,
+               filter: 'blur(1px)'
              }} />
-        <div className="absolute top-60 right-20 w-24 h-24 border border-neon-green animate-float delay-1000"
-             style={{ 
-               background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(0, 255, 0, 0.1), transparent)`,
-               transform: `translateX(${-mousePosition.x * 0.05}px) translateY(${-mousePosition.y * 0.05}px)`
-             }} />
-        <div className="absolute bottom-32 left-1/3 w-40 h-40 border border-neon-violet animate-float delay-2000"
-             style={{ 
-               background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(138, 43, 226, 0.1), transparent)`,
+
+        {/* Celestial constellation */}
+        <div className="absolute top-60 right-20 w-64 h-64 animate-float delay-1000"
+             style={{
+               transform: `translateX(${-mousePosition.x * 0.05}px) translateY(${-mousePosition.y * 0.05}px) rotate(${mousePosition.y}deg)`
+             }}>
+          <div className="absolute top-0 left-0 w-2 h-2 bg-neon-green rounded-full animate-glow-pulse"></div>
+          <div className="absolute top-8 left-12 w-1 h-1 bg-neon-cyan rounded-full animate-neon-flicker"></div>
+          <div className="absolute top-16 left-4 w-3 h-3 bg-neon-violet rounded-full animate-float"></div>
+          <div className="absolute top-24 left-20 w-1 h-1 bg-neon-pink rounded-full animate-glow-pulse"></div>
+          <div className="absolute top-32 left-8 w-2 h-2 bg-neon-orange rounded-full animate-neon-flicker"></div>
+          {/* Connecting lines for constellation */}
+          <svg className="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 64 64">
+            <path d="M0,0 L12,8 L16,4 L24,20 L32,8" stroke="url(#constellation-gradient)" strokeWidth="0.5" fill="none" className="animate-pulse"/>
+            <defs>
+              <linearGradient id="constellation-gradient">
+                <stop offset="0%" stopColor="#ff00de"/>
+                <stop offset="50%" stopColor="#00ffff"/>
+                <stop offset="100%" stopColor="#39ff14"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        {/* Surreal geometric morphing shape */}
+        <div className="absolute bottom-32 left-1/3 w-48 h-48 animate-float delay-2000"
+             style={{
                transform: `translateX(${mousePosition.x * 0.08}px) translateY(${mousePosition.y * 0.08}px)`
-             }} />
+             }}>
+          <div className="relative w-full h-full">
+            <div className="absolute inset-0 border-2 border-neon-violet rounded-full animate-spin opacity-60" style={{ animationDuration: '15s' }}></div>
+            <div className="absolute inset-4 border border-neon-cyan animate-spin opacity-40" style={{ animationDuration: '10s', animationDirection: 'reverse', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+            <div className="absolute inset-8 border border-neon-pink animate-spin opacity-60" style={{ animationDuration: '20s', clipPath: 'polygon(30% 0%, 0% 70%, 70% 100%, 100% 30%)' }}></div>
+          </div>
+        </div>
+
+        {/* Mythic runes scattered around */}
+        <div className="absolute top-1/3 left-20 text-4xl text-neon-violet animate-float opacity-50" style={{ transform: `rotate(${mousePosition.x * 0.5}deg)` }}>⟐</div>
+        <div className="absolute bottom-1/4 right-32 text-3xl text-neon-cyan animate-neon-flicker opacity-60" style={{ transform: `rotate(${-mousePosition.y * 0.3}deg)` }}>◈</div>
+        <div className="absolute top-3/4 left-1/4 text-5xl text-neon-green animate-glow-pulse opacity-40" style={{ transform: `rotate(${mousePosition.x * 0.2}deg)` }}>⟡</div>
+        <div className="absolute top-1/4 right-1/3 text-2xl text-neon-pink animate-float opacity-70" style={{ transform: `rotate(${mousePosition.y * 0.4}deg)` }}>◉</div>
       </div>
 
       {/* Main content */}
