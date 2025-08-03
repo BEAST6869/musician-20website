@@ -111,14 +111,19 @@ export default function Index() {
             </h2>
             <div className="space-y-4 text-cyber-glow font-mono">
               <p className="text-lg leading-relaxed">
-                Shelby Mackay is a visionary electronic music producer who blends ethereal melodies with cutting-edge
-                digital production techniques. Drawing inspiration from cyberpunk aesthetics and futuristic soundscapes,
-                her music creates immersive audio experiences that transport listeners to alternate realities.
+                In the ever-evolving landscape of electronic music, Toronto-based Shelby Mackay is an emerging figure whose
+                sound challenges traditional boundaries. Her music blends electronic disco, experimental textures, and a
+                curiosity that refuses to be confined to a single genre.
               </p>
               <p className="text-lg leading-relaxed">
-                With roots in both classical composition and underground electronic scenes, Shelby has developed a unique
-                signature sound that combines organic textures with synthetic precision. Her work explores themes of
-                digital consciousness, human-machine symbiosis, and the emotional landscape of our technological age.
+                Mackay's style combines retro influences with forward-thinking sensibilities, seamlessly merging pop elements
+                with experimental sounds. Drawing from dubstep, '90s R&B, and vintage disco, tracks like "Moongirlnonsense"
+                and "Don'tforgetmypeace" showcase her ability to merge deep basslines with ethereal vocals and glitchy synths.
+              </p>
+              <p className="text-lg leading-relaxed">
+                What sets Shelby apart is her willingness to push against conventions—unbound by industry standards, her
+                transparency and authenticity resonate in every release. Her music captures both past and future, creating
+                sonic experiences that transport listeners into worlds of imagination.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-neon-green/30">
                 <div className="text-center">
