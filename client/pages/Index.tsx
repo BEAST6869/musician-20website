@@ -15,7 +15,7 @@ export default function Index() {
 
   const socialLinks = [
     { name: "SPOTIFY", icon: "♫", url: "#" },
-    { name: "SOUNDCLOUD", icon: "◈", url: "#" },
+    { name: "APPLE MUSIC", icon: "◈", url: "#" },
     { name: "INSTAGRAM", icon: "◯", url: "#" },
     { name: "YOUTUBE", icon: "▷", url: "#" }
   ];
