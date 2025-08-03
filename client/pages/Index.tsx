@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Music, Play, Instagram, Youtube } from "lucide-react";
 
 export default function Index() {
   const [currentTrack, setCurrentTrack] = useState(0);
