@@ -2,8 +2,23 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Index() {
-  const [glitchText, setGlitchText] = useState("NEURAL//INTERFACE");
+  const [currentTrack, setCurrentTrack] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const tracks = [
+    { title: "NEON NIGHTS", duration: "3:42", status: "streaming" },
+    { title: "CYBER DREAMS", duration: "4:15", status: "new" },
+    { title: "DIGITAL SOUL", duration: "3:28", status: "streaming" },
+    { title: "ELECTRIC HEART", duration: "4:03", status: "coming_soon" }
+  ];
+
+  const socialLinks = [
+    { name: "SPOTIFY", icon: "♫", url: "#" },
+    { name: "SOUNDCLOUD", icon: "◈", url: "#" },
+    { name: "INSTAGRAM", icon: "◯", url: "#" },
+    { name: "YOUTUBE", icon: "▷", url: "#" }
+  ];
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -15,21 +30,6 @@ export default function Index() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const texts = [
-        "NEURAL//INTERFACE",
-        "CYBER//NEXUS",
-        "DIGITAL//VOID",
-        "TECH//NOIR",
-        "NEON//DREAMS"
-      ];
-      setGlitchText(texts[Math.floor(Math.random() * texts.length)]);
-    }, 3000);
-
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -54,101 +54,188 @@ export default function Index() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-        {/* Header section */}
+      <div className="relative z-10 min-h-screen px-4 py-8">
+        {/* Artist Header */}
         <motion.div 
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="text-center mb-8"
+          className="text-center mb-12 pt-8"
         >
-          <h1 
-            className="text-6xl md:text-8xl font-bold text-neon-pink neon-text animate-neon-flicker mb-4 text-glitch"
-            data-text={glitchText}
-          >
-            {glitchText}
+          <h1 className="text-6xl md:text-8xl font-bold text-neon-pink neon-text animate-neon-flicker mb-4 text-glitch font-mono"
+              data-text="CYBER//VOID">
+            CYBER//VOID
           </h1>
-          <p className="text-xl md:text-2xl text-neon-cyan neon-text font-mono">
-            &gt; WELCOME TO THE DIGITAL FRONTIER _
+          <p className="text-xl md:text-2xl text-neon-cyan neon-text font-mono mb-4">
+            &gt; ELECTRONIC MUSIC PRODUCER
+          </p>
+          <p className="text-lg text-muted-foreground font-mono max-w-2xl mx-auto">
+            Crafting immersive soundscapes from the digital frontier. 
+            Where cyberpunk meets electronic soul.
           </p>
         </motion.div>
 
-        {/* Central interactive element */}
+        {/* Music Player Section */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.5 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="relative mb-12"
+          className="max-w-4xl mx-auto mb-16"
         >
-          <div className="w-64 h-64 md:w-80 md:h-80 relative">
-            {/* Orbital rings */}
-            <div className="absolute inset-0 border-2 border-neon-violet rounded-full animate-spin opacity-60" 
-                 style={{ animationDuration: "20s" }} />
-            <div className="absolute inset-4 border border-neon-green rounded-full animate-spin opacity-40" 
-                 style={{ animationDuration: "15s", animationDirection: "reverse" }} />
-            <div className="absolute inset-8 border border-neon-cyan rounded-full animate-spin opacity-60" 
-                 style={{ animationDuration: "10s" }} />
+          <div className="cyber-border bg-cyber-deep/50 p-6 rounded-lg backdrop-blur-sm">
+            <h2 className="text-2xl font-bold text-neon-violet mb-6 font-mono neon-text">
+              ◈ LATEST TRACKS
+            </h2>
             
-            {/* Central core */}
-            <div className="absolute inset-16 bg-gradient-to-br from-neon-pink to-neon-violet rounded-full animate-glow-pulse flex items-center justify-center">
-              <span className="text-cyber-dark font-bold text-2xl">◉</span>
+            <div className="space-y-4">
+              {tracks.map((track, index) => (
+                <motion.div
+                  key={track.title}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  className={`flex items-center justify-between p-4 rounded-lg transition-all cursor-pointer ${
+                    currentTrack === index 
+                      ? 'bg-gradient-to-r from-neon-pink/20 to-neon-violet/20 border border-neon-pink' 
+                      : 'bg-cyber-deep/30 hover:bg-cyber-deep/50 border border-transparent'
+                  }`}
+                  onClick={() => {
+                    setCurrentTrack(index);
+                    setIsPlaying(!isPlaying || currentTrack !== index);
+                  }}
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                      currentTrack === index && isPlaying 
+                        ? 'bg-neon-pink animate-glow-pulse' 
+                        : 'bg-cyber-deep border border-neon-cyan'
+                    }`}>
+                      <span className="text-xl font-mono">
+                        {currentTrack === index && isPlaying ? '⏸' : '▶'}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-cyber-glow font-mono">
+                        {track.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground font-mono">
+                        {track.duration}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-mono ${
+                      track.status === 'new' ? 'bg-neon-green/20 text-neon-green border border-neon-green' :
+                      track.status === 'coming_soon' ? 'bg-neon-orange/20 text-neon-orange border border-neon-orange' :
+                      'bg-neon-cyan/20 text-neon-cyan border border-neon-cyan'
+                    }`}>
+                      {track.status === 'new' ? 'NEW' : 
+                       track.status === 'coming_soon' ? 'SOON' : 'LIVE'}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-
-            {/* Floating data points */}
-            <div className="absolute top-8 right-8 w-4 h-4 bg-neon-green rounded-full animate-float" />
-            <div className="absolute bottom-12 left-6 w-3 h-3 bg-neon-pink rounded-full animate-float delay-500" />
-            <div className="absolute top-1/2 left-2 w-2 h-2 bg-neon-cyan rounded-full animate-float delay-1000" />
           </div>
         </motion.div>
 
-        {/* Navigation grid */}
+        {/* Features Grid */}
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.5 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16"
         >
-          {[
-            { title: "NEURAL MAPS", desc: "Navigate the data streams", icon: "▲" },
-            { title: "CYBER PROTOCOLS", desc: "Access secure channels", icon: "■" },
-            { title: "VOID TERMINAL", desc: "Enter the deep web", icon: "●" }
-          ].map((item, index) => (
-            <motion.div
-              key={item.title}
-              whileHover={{ scale: 1.05, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-              style={{ 
-                background: `linear-gradient(135deg, rgba(255, 0, 222, 0.1), rgba(0, 255, 255, 0.1))`,
-                borderColor: index === 0 ? '#ff00de' : index === 1 ? '#00ffff' : '#39ff14'
-              }}
-            >
-              <div className="text-4xl mb-4 group-hover:animate-glitch transition-all duration-300" 
-                   style={{ color: index === 0 ? '#ff00de' : index === 1 ? '#00ffff' : '#39ff14' }}>
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground font-mono text-sm">
-                {item.desc}
-              </p>
-            </motion.div>
-          ))}
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
+            style={{ borderColor: '#ff00de' }}
+          >
+            <div className="text-4xl mb-4 text-neon-pink group-hover:animate-glitch transition-all duration-300">
+              ♫
+            </div>
+            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
+              DISCOGRAPHY
+            </h3>
+            <p className="text-muted-foreground font-mono text-sm">
+              Explore the complete collection of releases
+            </p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
+            style={{ borderColor: '#00ffff' }}
+          >
+            <div className="text-4xl mb-4 text-neon-cyan group-hover:animate-glitch transition-all duration-300">
+              ◈
+            </div>
+            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
+              LIVE SHOWS
+            </h3>
+            <p className="text-muted-foreground font-mono text-sm">
+              Immersive performances & tour dates
+            </p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
+            style={{ borderColor: '#39ff14' }}
+          >
+            <div className="text-4xl mb-4 text-neon-green group-hover:animate-glitch transition-all duration-300">
+              ◯
+            </div>
+            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
+              REMIXES
+            </h3>
+            <p className="text-muted-foreground font-mono text-sm">
+              Custom tracks & collaboration work
+            </p>
+          </motion.div>
+        </motion.div>
+
+        {/* Social Links */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 2 }}
+          className="max-w-2xl mx-auto mb-8"
+        >
+          <h2 className="text-2xl font-bold text-neon-violet mb-6 font-mono neon-text text-center">
+            ◈ CONNECT
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {socialLinks.map((social, index) => (
+              <motion.a
+                key={social.name}
+                href={social.url}
+                whileHover={{ scale: 1.1, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow text-center cursor-pointer backdrop-blur-sm"
+                style={{ borderColor: index % 2 === 0 ? '#ff00de' : '#00ffff' }}
+              >
+                <div className="text-2xl mb-2" style={{ color: index % 2 === 0 ? '#ff00de' : '#00ffff' }}>
+                  {social.icon}
+                </div>
+                <p className="text-xs font-mono text-cyber-glow">
+                  {social.name}
+                </p>
+              </motion.a>
+            ))}
+          </div>
         </motion.div>
 
         {/* Bottom status bar */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2 }}
+          transition={{ duration: 1, delay: 2.5 }}
           className="fixed bottom-0 left-0 right-0 bg-cyber-deep/80 backdrop-blur-md border-t border-neon-cyan p-4"
         >
           <div className="flex justify-between items-center max-w-6xl mx-auto font-mono text-sm">
             <div className="flex space-x-6">
-              <span className="text-neon-green">STATUS: ONLINE</span>
-              <span className="text-neon-cyan">CONN: SECURE</span>
-              <span className="text-neon-violet">LAT: 0.001ms</span>
+              <span className="text-neon-green">NOW PLAYING: {isPlaying ? tracks[currentTrack].title : "OFFLINE"}</span>
+              <span className="text-neon-cyan">LISTENERS: 2.4K</span>
+              <span className="text-neon-violet">QUALITY: 320kbps</span>
             </div>
             <div className="text-neon-pink">
               {new Date().toLocaleTimeString()} UTC
@@ -159,7 +246,7 @@ export default function Index() {
 
       {/* Particle effects */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: 15 }).map((_, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-neon-cyan rounded-full animate-float opacity-60"
