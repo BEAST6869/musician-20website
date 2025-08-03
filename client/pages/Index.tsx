@@ -63,8 +63,8 @@ export default function Index() {
           className="text-center mb-12 pt-8"
         >
           <h1 className="text-6xl md:text-8xl font-bold text-neon-pink neon-text animate-neon-flicker mb-4 text-glitch font-mono"
-              data-text="CYBER//VOID">
-            CYBER//VOID
+              data-text="SHELBY MACKAY">
+            SHELBY MACKAY
           </h1>
           <p className="text-xl md:text-2xl text-neon-cyan neon-text font-mono mb-4">
             &gt; ELECTRONIC MUSIC PRODUCER
