@@ -57,6 +57,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Cyberpunk color palette
+        neon: {
+          pink: "hsl(var(--neon-pink))",
+          green: "hsl(var(--neon-green))",
+          violet: "hsl(var(--neon-violet))",
+          cyan: "hsl(var(--neon-cyan))",
+          orange: "hsl(var(--neon-orange))",
+        },
+        cyber: {
+          dark: "hsl(var(--cyber-dark))",
+          deep: "hsl(var(--cyber-deep))",
+          glow: "hsl(var(--cyber-glow))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +93,43 @@ export default {
             height: "0",
           },
         },
+        "glow-pulse": {
+          "0%": {
+            "box-shadow": "0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor",
+          },
+          "100%": {
+            "box-shadow": "0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor",
+          },
+        },
+        "glitch": {
+          "0%": { transform: "translate(0)" },
+          "20%": { transform: "translate(-2px, 2px)" },
+          "40%": { transform: "translate(-2px, -2px)" },
+          "60%": { transform: "translate(2px, 2px)" },
+          "80%": { transform: "translate(2px, -2px)" },
+          "100%": { transform: "translate(0)" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        "cyber-grid": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "neon-flicker": {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0.8" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite alternate",
+        "glitch": "glitch 0.3s linear infinite",
+        "float": "float 6s ease-in-out infinite",
+        "cyber-grid": "cyber-grid 20s linear infinite",
+        "neon-flicker": "neon-flicker 1.5s ease-in-out infinite alternate",
       },
     },
   },
