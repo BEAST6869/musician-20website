@@ -56,23 +56,94 @@ export default function Index() {
       {/* Main content */}
       <div className="relative z-10 min-h-screen px-4 py-8">
         {/* Artist Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="text-center mb-12 pt-8"
         >
-          <h1 className="text-6xl md:text-8xl font-bold text-neon-pink neon-text animate-neon-flicker mb-4 text-glitch font-mono"
-              data-text="SHELBY MACKAY">
-            SHELBY MACKAY
-          </h1>
-          <p className="text-xl md:text-2xl text-neon-cyan neon-text font-mono mb-4">
-            &gt; ELECTRONIC MUSIC PRODUCER
-          </p>
-          <p className="text-lg text-muted-foreground font-mono max-w-2xl mx-auto">
-            Crafting immersive soundscapes from the digital frontier. 
-            Where cyberpunk meets electronic soul.
-          </p>
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              className="relative"
+            >
+              <div className="w-64 h-64 lg:w-80 lg:h-80 relative">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fc1cbc1e8f515451c87c1c7955fc84aad%2Ffc27df9e89074cca8c2b2b426c863ade?format=webp&width=800"
+                  alt="Shelby Mackay"
+                  className="w-full h-full object-cover rounded-lg cyber-border hover-glow"
+                  style={{ borderColor: '#ff00de' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neon-pink/20 to-transparent rounded-lg" />
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-neon-green rounded-full animate-glow-pulse" />
+                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-neon-cyan rounded-full animate-float" />
+              </div>
+            </motion.div>
+
+            <div className="text-center lg:text-left">
+              <h1 className="text-6xl md:text-8xl font-bold text-neon-pink neon-text animate-neon-flicker mb-4 text-glitch font-mono"
+                  data-text="SHELBY MACKAY">
+                SHELBY MACKAY
+              </h1>
+              <p className="text-xl md:text-2xl text-neon-cyan neon-text font-mono mb-4">
+                &gt; ELECTRONIC MUSIC PRODUCER
+              </p>
+              <p className="text-lg text-muted-foreground font-mono max-w-2xl">
+                Crafting immersive soundscapes from the digital frontier.
+                Where cyberpunk meets electronic soul.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Bio Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="max-w-4xl mx-auto mb-16"
+        >
+          <div className="cyber-border bg-cyber-deep/50 p-8 rounded-lg backdrop-blur-sm" style={{ borderColor: '#39ff14' }}>
+            <h2 className="text-2xl font-bold text-neon-green mb-6 font-mono neon-text">
+              ◯ ARTIST.BIO
+            </h2>
+            <div className="space-y-4 text-cyber-glow font-mono">
+              <p className="text-lg leading-relaxed">
+                Shelby Mackay is a visionary electronic music producer who blends ethereal melodies with cutting-edge
+                digital production techniques. Drawing inspiration from cyberpunk aesthetics and futuristic soundscapes,
+                her music creates immersive audio experiences that transport listeners to alternate realities.
+              </p>
+              <p className="text-lg leading-relaxed">
+                With roots in both classical composition and underground electronic scenes, Shelby has developed a unique
+                signature sound that combines organic textures with synthetic precision. Her work explores themes of
+                digital consciousness, human-machine symbiosis, and the emotional landscape of our technological age.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-neon-green/30">
+                <div className="text-center">
+                  <div className="text-2xl text-neon-green mb-1">◈</div>
+                  <div className="text-xs text-muted-foreground">RELEASES</div>
+                  <div className="text-lg font-bold">12</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl text-neon-cyan mb-1">◯</div>
+                  <div className="text-xs text-muted-foreground">COLLABS</div>
+                  <div className="text-lg font-bold">8</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl text-neon-pink mb-1">♫</div>
+                  <div className="text-xs text-muted-foreground">STREAMS</div>
+                  <div className="text-lg font-bold">1.2M</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl text-neon-violet mb-1">▲</div>
+                  <div className="text-xs text-muted-foreground">SHOWS</div>
+                  <div className="text-lg font-bold">24</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Music Player Section */}
