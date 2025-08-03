@@ -371,17 +371,67 @@ export default function Index() {
         </motion.div>
       </div>
 
-      {/* Particle effects */}
+      {/* Ethereal particle effects */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 15 }).map((_, i) => (
+        {/* Stardust particles */}
+        {Array.from({ length: 25 }).map((_, i) => {
+          const colors = ['#ff00de', '#00ffff', '#39ff14', '#8a2be2', '#ff6b35'];
+          const shapes = ['rounded-full', 'rounded-sm'];
+          const sizes = ['w-1 h-1', 'w-0.5 h-0.5', 'w-2 h-2'];
+          return (
+            <div
+              key={i}
+              className={`absolute ${sizes[i % 3]} ${shapes[i % 2]} animate-float opacity-60`}
+              style={{
+                backgroundColor: colors[i % 5],
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 8}s`,
+                animationDuration: `${2 + Math.random() * 6}s`,
+                boxShadow: `0 0 ${Math.random() * 10 + 5}px currentColor`,
+                filter: Math.random() > 0.7 ? 'blur(0.5px)' : 'none'
+              }}
+            />
+          );
+        })}
+
+        {/* Floating ethereal symbols */}
+        {Array.from({ length: 8 }).map((_, i) => {
+          const symbols = ['◈', '⟐', '◉', '⟡', '◯', '◭', '◪', '◫'];
+          const colors = ['text-neon-pink', 'text-neon-cyan', 'text-neon-green', 'text-neon-violet'];
+          return (
+            <div
+              key={`symbol-${i}`}
+              className={`absolute text-lg ${colors[i % 4]} animate-float opacity-30 font-mono`}
+              style={{
+                left: `${Math.random() * 90 + 5}%`,
+                top: `${Math.random() * 90 + 5}%`,
+                animationDelay: `${Math.random() * 10}s`,
+                animationDuration: `${6 + Math.random() * 8}s`,
+                transform: `rotate(${Math.random() * 360}deg)`,
+                textShadow: '0 0 10px currentColor'
+              }}
+            >
+              {symbols[i]}
+            </div>
+          );
+        })}
+
+        {/* Mystic energy trails */}
+        {Array.from({ length: 5 }).map((_, i) => (
           <div
-            key={i}
-            className="absolute w-1 h-1 bg-neon-cyan rounded-full animate-float opacity-60"
+            key={`trail-${i}`}
+            className="absolute opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
+              left: `${Math.random() * 80 + 10}%`,
+              top: `${Math.random() * 80 + 10}%`,
+              width: `${Math.random() * 200 + 100}px`,
+              height: '2px',
+              background: `linear-gradient(90deg, transparent, #ff00de, #00ffff, transparent)`,
+              animation: `float ${8 + Math.random() * 4}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 3}s`,
+              transform: `rotate(${Math.random() * 360}deg)`,
+              filter: 'blur(1px)'
             }}
           />
         ))}
