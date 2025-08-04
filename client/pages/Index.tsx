@@ -58,7 +58,7 @@ export default function Index() {
       url: "https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94?si=YhRDbKpwRe6584Sh11FMUg",
     },
     { name: "APPLE MUSIC", icon: AppleLogo, url: "#" },
-    { name: "INSTAGRAM", icon: Instagram, url: "#" },
+    { name: "INSTAGRAM", icon: Instagram, url: "https://www.instagram.com/sheldoradoshellshock?igsh=YnoyMmo1Y3hqeTZo" },
     { name: "YOUTUBE", icon: Youtube, url: "#" },
   ];
 
