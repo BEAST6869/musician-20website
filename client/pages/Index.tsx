@@ -431,6 +431,8 @@ export default function Index() {
               <motion.a
                 key={social.name}
                 href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -3 }}
                 whileTap={{ scale: 0.95 }}
                 className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow text-center cursor-pointer backdrop-blur-sm"
