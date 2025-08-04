@@ -57,9 +57,21 @@ export default function Index() {
       icon: SpotifyLogo,
       url: "https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94?si=YhRDbKpwRe6584Sh11FMUg",
     },
-    { name: "APPLE MUSIC", icon: AppleLogo, url: "https://music.apple.com/us/album/sacred-queer-heart-single/1826390398" },
-    { name: "INSTAGRAM", icon: Instagram, url: "https://www.instagram.com/sheldoradoshellshock?igsh=YnoyMmo1Y3hqeTZo" },
-    { name: "YOUTUBE", icon: Youtube, url: "https://www.youtube.com/channel/UCo8uLZ6bb1zDfKK1_Q8f9BQ" },
+    {
+      name: "APPLE MUSIC",
+      icon: AppleLogo,
+      url: "https://music.apple.com/us/album/sacred-queer-heart-single/1826390398",
+    },
+    {
+      name: "INSTAGRAM",
+      icon: Instagram,
+      url: "https://www.instagram.com/sheldoradoshellshock?igsh=YnoyMmo1Y3hqeTZo",
+    },
+    {
+      name: "YOUTUBE",
+      icon: Youtube,
+      url: "https://www.youtube.com/channel/UCo8uLZ6bb1zDfKK1_Q8f9BQ",
+    },
   ];
 
   useEffect(() => {
