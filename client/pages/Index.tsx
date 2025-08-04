@@ -438,8 +438,7 @@ export default function Index() {
           <div className="flex justify-between items-center max-w-6xl mx-auto font-mono text-sm">
             <div className="flex space-x-6">
               <span className="text-neon-green">
-                NOW PLAYING:{" "}
-                {isPlaying ? tracks[currentTrack].title : "OFFLINE"}
+                LATEST RELEASE: {discography[0]?.title || "SACRED QUEER HEART"}
               </span>
               <span className="text-neon-cyan">LISTENERS: 2.4K</span>
               <span className="text-neon-violet">QUALITY: 320kbps</span>
