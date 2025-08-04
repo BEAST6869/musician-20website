@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 220 13% 4%;
+    --foreground: 180 100% 90%;
+
+    --card: 220 13% 6%;
+    --card-foreground: 180 100% 90%;
+
+    --popover: 220 13% 6%;
+    --popover-foreground: 180 100% 90%;
+
+    --primary: 300 100% 50%;
+    --primary-foreground: 220 13% 4%;
+
+    --secondary: 120 100% 50%;
+    --secondary-foreground: 220 13% 4%;
+
+    --muted: 220 13% 10%;
+    --muted-foreground: 180 20% 60%;
+
+    --accent: 270 100% 70%;
+    --accent-foreground: 220 13% 4%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 220 13% 4%;
+
+    --border: 220 13% 15%;
+    --input: 220 13% 12%;
+    --ring: 300 100% 50%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 220 13% 6%;
+    --sidebar-foreground: 180 100% 90%;
+    --sidebar-primary: 300 100% 50%;
+    --sidebar-primary-foreground: 220 13% 4%;
+    --sidebar-accent: 220 13% 10%;
+    --sidebar-accent-foreground: 180 100% 90%;
+    --sidebar-border: 220 13% 15%;
+    --sidebar-ring: 300 100% 50%;
+
+    /* Cyberpunk neon colors */
+    --neon-pink: 320 100% 50%;
+    --neon-green: 120 100% 50%;
+    --neon-violet: 270 100% 70%;
+    --neon-cyan: 180 100% 50%;
+    --neon-orange: 30 100% 50%;
+
+    /* Cyber dark tones */
+    --cyber-dark: 220 13% 2%;
+    --cyber-deep: 220 13% 8%;
+    --cyber-glow: 180 100% 80%;
+  }
+
+  .dark {
+    --background: 220 13% 2%;
+    --foreground: 180 100% 95%;
+
+    --card: 220 13% 4%;
+    --card-foreground: 180 100% 95%;
+
+    --popover: 220 13% 4%;
+    --popover-foreground: 180 100% 95%;
+
+    --primary: 320 100% 60%;
+    --primary-foreground: 220 13% 2%;
+
+    --secondary: 120 100% 60%;
+    --secondary-foreground: 220 13% 2%;
+
+    --muted: 220 13% 8%;
+    --muted-foreground: 180 20% 70%;
+
+    --accent: 270 100% 80%;
+    --accent-foreground: 220 13% 2%;
+
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 220 13% 2%;
+
+    --border: 220 13% 12%;
+    --input: 220 13% 10%;
+    --ring: 320 100% 60%;
+    --sidebar-background: 220 13% 4%;
+    --sidebar-foreground: 180 100% 95%;
+    --sidebar-primary: 320 100% 60%;
+    --sidebar-primary-foreground: 220 13% 2%;
+    --sidebar-accent: 220 13% 8%;
+    --sidebar-accent-foreground: 180 100% 95%;
+    --sidebar-border: 220 13% 12%;
+    --sidebar-ring: 320 100% 60%;
+
+    /* Enhanced neon colors for dark mode */
+    --neon-pink: 320 100% 60%;
+    --neon-green: 120 100% 60%;
+    --neon-violet: 270 100% 80%;
+    --neon-cyan: 180 100% 60%;
+    --neon-orange: 30 100% 60%;
+
+    /* Enhanced cyber tones for dark mode */
+    --cyber-dark: 220 13% 1%;
+    --cyber-deep: 220 13% 6%;
+    --cyber-glow: 180 100% 90%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* Custom cyberpunk styles */
+  .text-glitch {
+    position: relative;
+    animation: glitch 0.3s linear infinite;
+  }
+
+  .text-glitch::before,
+  .text-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .text-glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00de;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch 0.5s linear infinite alternate-reverse;
+  }
+
+  .text-glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00ffff, 2px 2px #ff00de;
+    animation: glitch 1s linear infinite alternate-reverse;
+  }
+
+  .neon-text {
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 15px currentColor,
+      0 0 20px currentColor;
+  }
+
+  .cyber-border {
+    border: 1px solid;
+    border-image: linear-gradient(45deg, #ff00de, #00ffff, #39ff14) 1;
+    box-shadow:
+      0 0 10px rgba(255, 0, 222, 0.3),
+      inset 0 0 10px rgba(0, 255, 255, 0.1);
+  }
+
+  .hover-glow:hover {
+    box-shadow:
+      0 0 20px currentColor,
+      0 0 40px currentColor,
+      0 0 60px currentColor;
+    transition: all 0.3s ease;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: cyber-grid 20s linear infinite;
+  }
+
+  /* Custom Cyberpunk Scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--cyber-dark));
+    border: 1px solid hsl(var(--border));
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--neon-pink)) 0%,
+      hsl(var(--neon-violet)) 50%,
+      hsl(var(--neon-cyan)) 100%
+    );
+    border-radius: 6px;
+    border: 1px solid hsl(var(--neon-pink));
+    box-shadow:
+      0 0 10px hsl(var(--neon-pink)),
+      inset 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--neon-cyan)) 0%,
+      hsl(var(--neon-green)) 50%,
+      hsl(var(--neon-pink)) 100%
+    );
+    border-color: hsl(var(--neon-cyan));
+    box-shadow:
+      0 0 20px hsl(var(--neon-cyan)),
+      inset 0 0 15px rgba(255, 255, 255, 0.2);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--neon-green)) 0%,
+      hsl(var(--neon-pink)) 50%,
+      hsl(var(--neon-violet)) 100%
+    );
+    box-shadow:
+      0 0 25px hsl(var(--neon-green)),
+      inset 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: hsl(var(--cyber-dark));
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Firefox scrollbar */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--neon-pink)) hsl(var(--cyber-dark));
+  }
+}
