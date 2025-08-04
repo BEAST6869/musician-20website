@@ -332,63 +332,58 @@ export default function Index() {
         >
           <div className="cyber-border bg-cyber-deep/50 p-6 rounded-lg backdrop-blur-sm">
             <h2 className="text-2xl font-bold text-neon-violet mb-6 font-mono neon-text">
-              ◈ LATEST TRACKS
+              ◈ DISCOGRAPHY
             </h2>
 
-            <div className="space-y-4">
-              {tracks.map((track, index) => (
-                <motion.div
-                  key={track.title}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  className={`flex items-center justify-between p-4 rounded-lg transition-all cursor-pointer ${
-                    currentTrack === index
-                      ? "bg-gradient-to-r from-neon-pink/20 to-neon-violet/20 border border-neon-pink"
-                      : "bg-cyber-deep/30 hover:bg-cyber-deep/50 border border-transparent"
-                  }`}
-                  onClick={() => {
-                    setCurrentTrack(index);
-                    setIsPlaying(!isPlaying || currentTrack !== index);
-                  }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {discography.map((release, index) => (
+                <motion.a
+                  key={release.title}
+                  href={release.spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow cursor-pointer backdrop-blur-sm group"
+                  style={{ borderColor: index % 3 === 0 ? '#ff00de' : index % 3 === 1 ? '#00ffff' : '#39ff14' }}
                 >
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                        currentTrack === index && isPlaying
-                          ? "bg-neon-pink animate-glow-pulse"
-                          : "bg-cyber-deep border border-neon-cyan"
-                      }`}
-                    >
-                      <span className="text-xl font-mono">
-                        {currentTrack === index && isPlaying ? "⏸" : "▶"}
+                  {/* Album Artwork */}
+                  <div className="relative mb-4 overflow-hidden rounded-lg">
+                    <img
+                      src={release.artwork}
+                      alt={`${release.title} artwork`}
+                      className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-cyber-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="text-4xl text-neon-green animate-glow-pulse">
+                        ▶
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Track Info */}
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-bold text-cyber-glow font-mono group-hover:text-neon-cyan transition-colors">
+                      {release.title}
+                    </h3>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground font-mono">
+                        {release.type} • {release.year}
+                      </span>
+                      <span className="text-sm text-muted-foreground font-mono">
+                        {release.duration}
                       </span>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-cyber-glow font-mono">
-                        {track.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-mono">
-                        {track.duration}
-                      </p>
+                    <div className="flex items-center space-x-2 mt-3">
+                      <div className="w-4 h-4">
+                        <SpotifyLogo size={16} style={{ color: '#39ff14' }} />
+                      </div>
+                      <span className="text-xs font-mono text-neon-green">
+                        STREAM ON SPOTIFY
+                      </span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-mono ${
-                        track.status === "new"
-                          ? "bg-neon-green/20 text-neon-green border border-neon-green"
-                          : track.status === "coming_soon"
-                            ? "bg-neon-orange/20 text-neon-orange border border-neon-orange"
-                            : "bg-neon-cyan/20 text-neon-cyan border border-neon-cyan"
-                      }`}
-                    >
-                      {track.status === "new"
-                        ? "NEW"
-                        : track.status === "coming_soon"
-                          ? "SOON"
-                          : "LIVE"}
-                    </span>
-                  </div>
-                </motion.div>
+                </motion.a>
               ))}
             </div>
           </div>
