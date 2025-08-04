@@ -389,61 +389,7 @@ export default function Index() {
           </div>
         </motion.div>
 
-        {/* Features Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-            style={{ borderColor: "#ff00de" }}
-          >
-            <div className="text-4xl mb-4 text-neon-pink group-hover:animate-glitch transition-all duration-300">
-              ♫
-            </div>
-            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-              DISCOGRAPHY
-            </h3>
-            <p className="text-muted-foreground font-mono text-sm">
-              Explore the complete collection of releases
-            </p>
-          </motion.div>
 
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-            style={{ borderColor: "#00ffff" }}
-          >
-            <div className="text-4xl mb-4 text-neon-cyan group-hover:animate-glitch transition-all duration-300">
-              ◈
-            </div>
-            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-              LIVE SHOWS
-            </h3>
-            <p className="text-muted-foreground font-mono text-sm">
-              Immersive performances & tour dates
-            </p>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-            style={{ borderColor: "#39ff14" }}
-          >
-            <div className="text-4xl mb-4 text-neon-green group-hover:animate-glitch transition-all duration-300">
-              ◯
-            </div>
-            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-              REMIXES
-            </h3>
-            <p className="text-muted-foreground font-mono text-sm">
-              Custom tracks & collaboration work
-            </p>
-          </motion.div>
-        </motion.div>
 
         {/* Social Links */}
         <motion.div
