@@ -44,11 +44,33 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const tracks = [
-    { title: "NEON NIGHTS", duration: "3:42", status: "streaming" },
-    { title: "CYBER DREAMS", duration: "4:15", status: "new" },
-    { title: "DIGITAL SOUL", duration: "3:28", status: "streaming" },
-    { title: "ELECTRIC HEART", duration: "4:03", status: "coming_soon" },
+  // Discography with Spotify links - update with actual URLs
+  const discography = [
+    {
+      title: "Sacred Queer Heart",
+      type: "Single",
+      year: "2024",
+      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      duration: "3:42",
+      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH" // Update with actual artwork
+    },
+    {
+      title: "Moongirlnonsense",
+      type: "Single",
+      year: "2024",
+      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      duration: "4:15",
+      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN"
+    },
+    {
+      title: "Don'tforgetmypeace",
+      type: "Single",
+      year: "2023",
+      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      duration: "3:28",
+      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=DFMP"
+    },
+    // Add more tracks as needed
   ];
 
   const socialLinks = [
@@ -57,9 +79,21 @@ export default function Index() {
       icon: SpotifyLogo,
       url: "https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94?si=YhRDbKpwRe6584Sh11FMUg",
     },
-    { name: "APPLE MUSIC", icon: AppleLogo, url: "#" },
-    { name: "INSTAGRAM", icon: Instagram, url: "#" },
-    { name: "YOUTUBE", icon: Youtube, url: "#" },
+    {
+      name: "APPLE MUSIC",
+      icon: AppleLogo,
+      url: "https://music.apple.com/us/album/sacred-queer-heart-single/1826390398",
+    },
+    {
+      name: "INSTAGRAM",
+      icon: Instagram,
+      url: "https://www.instagram.com/sheldoradoshellshock?igsh=YnoyMmo1Y3hqeTZo",
+    },
+    {
+      name: "YOUTUBE",
+      icon: Youtube,
+      url: "https://www.youtube.com/channel/UCo8uLZ6bb1zDfKK1_Q8f9BQ",
+    },
   ];
 
   useEffect(() => {
@@ -298,123 +332,64 @@ export default function Index() {
         >
           <div className="cyber-border bg-cyber-deep/50 p-6 rounded-lg backdrop-blur-sm">
             <h2 className="text-2xl font-bold text-neon-violet mb-6 font-mono neon-text">
-              ◈ LATEST TRACKS
+              ◈ DISCOGRAPHY
             </h2>
 
-            <div className="space-y-4">
-              {tracks.map((track, index) => (
-                <motion.div
-                  key={track.title}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  className={`flex items-center justify-between p-4 rounded-lg transition-all cursor-pointer ${
-                    currentTrack === index
-                      ? "bg-gradient-to-r from-neon-pink/20 to-neon-violet/20 border border-neon-pink"
-                      : "bg-cyber-deep/30 hover:bg-cyber-deep/50 border border-transparent"
-                  }`}
-                  onClick={() => {
-                    setCurrentTrack(index);
-                    setIsPlaying(!isPlaying || currentTrack !== index);
-                  }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {discography.map((release, index) => (
+                <motion.a
+                  key={release.title}
+                  href={release.spotifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow cursor-pointer backdrop-blur-sm group"
+                  style={{ borderColor: index % 3 === 0 ? '#ff00de' : index % 3 === 1 ? '#00ffff' : '#39ff14' }}
                 >
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                        currentTrack === index && isPlaying
-                          ? "bg-neon-pink animate-glow-pulse"
-                          : "bg-cyber-deep border border-neon-cyan"
-                      }`}
-                    >
-                      <span className="text-xl font-mono">
-                        {currentTrack === index && isPlaying ? "⏸" : "▶"}
+                  {/* Album Artwork */}
+                  <div className="relative mb-4 overflow-hidden rounded-lg">
+                    <img
+                      src={release.artwork}
+                      alt={`${release.title} artwork`}
+                      className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-cyber-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="text-4xl text-neon-green animate-glow-pulse">
+                        ▶
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Track Info */}
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-bold text-cyber-glow font-mono group-hover:text-neon-cyan transition-colors">
+                      {release.title}
+                    </h3>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground font-mono">
+                        {release.type} • {release.year}
+                      </span>
+                      <span className="text-sm text-muted-foreground font-mono">
+                        {release.duration}
                       </span>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-cyber-glow font-mono">
-                        {track.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-mono">
-                        {track.duration}
-                      </p>
+                    <div className="flex items-center space-x-2 mt-3">
+                      <div className="w-4 h-4">
+                        <SpotifyLogo size={16} style={{ color: '#39ff14' }} />
+                      </div>
+                      <span className="text-xs font-mono text-neon-green">
+                        STREAM ON SPOTIFY
+                      </span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-mono ${
-                        track.status === "new"
-                          ? "bg-neon-green/20 text-neon-green border border-neon-green"
-                          : track.status === "coming_soon"
-                            ? "bg-neon-orange/20 text-neon-orange border border-neon-orange"
-                            : "bg-neon-cyan/20 text-neon-cyan border border-neon-cyan"
-                      }`}
-                    >
-                      {track.status === "new"
-                        ? "NEW"
-                        : track.status === "coming_soon"
-                          ? "SOON"
-                          : "LIVE"}
-                    </span>
-                  </div>
-                </motion.div>
+                </motion.a>
               ))}
             </div>
           </div>
         </motion.div>
 
-        {/* Features Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-            style={{ borderColor: "#ff00de" }}
-          >
-            <div className="text-4xl mb-4 text-neon-pink group-hover:animate-glitch transition-all duration-300">
-              ♫
-            </div>
-            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-              DISCOGRAPHY
-            </h3>
-            <p className="text-muted-foreground font-mono text-sm">
-              Explore the complete collection of releases
-            </p>
-          </motion.div>
 
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-            style={{ borderColor: "#00ffff" }}
-          >
-            <div className="text-4xl mb-4 text-neon-cyan group-hover:animate-glitch transition-all duration-300">
-              ◈
-            </div>
-            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-              LIVE SHOWS
-            </h3>
-            <p className="text-muted-foreground font-mono text-sm">
-              Immersive performances & tour dates
-            </p>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="cyber-border bg-cyber-deep/50 p-6 rounded-lg hover-glow cursor-pointer group backdrop-blur-sm"
-            style={{ borderColor: "#39ff14" }}
-          >
-            <div className="text-4xl mb-4 text-neon-green group-hover:animate-glitch transition-all duration-300">
-              ◯
-            </div>
-            <h3 className="text-xl font-bold text-cyber-glow mb-2 font-mono">
-              REMIXES
-            </h3>
-            <p className="text-muted-foreground font-mono text-sm">
-              Custom tracks & collaboration work
-            </p>
-          </motion.div>
-        </motion.div>
 
         {/* Social Links */}
         <motion.div
@@ -431,6 +406,8 @@ export default function Index() {
               <motion.a
                 key={social.name}
                 href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -3 }}
                 whileTap={{ scale: 0.95 }}
                 className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow text-center cursor-pointer backdrop-blur-sm"
@@ -461,8 +438,7 @@ export default function Index() {
           <div className="flex justify-between items-center max-w-6xl mx-auto font-mono text-sm">
             <div className="flex space-x-6">
               <span className="text-neon-green">
-                NOW PLAYING:{" "}
-                {isPlaying ? tracks[currentTrack].title : "OFFLINE"}
+                LATEST RELEASE: {discography[0]?.title || "SACRED QUEER HEART"}
               </span>
               <span className="text-neon-cyan">LISTENERS: 2.4K</span>
               <span className="text-neon-violet">QUALITY: 320kbps</span>
