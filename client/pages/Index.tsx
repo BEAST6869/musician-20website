@@ -103,8 +103,43 @@ export default function Index() {
     };
   }, []);
 
+  // Handle hover detection for interactive elements
+  useEffect(() => {
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, .cursor-pointer, [role="button"]')) {
+        setIsHovering(true);
+      }
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, .cursor-pointer, [role="button"]')) {
+        setIsHovering(false);
+      }
+    };
+
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
+
+    return () => {
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
+    <>
+      {/* Custom Cyberpunk Cursor */}
+      <div
+        className={`cyber-cursor ${isHovering ? 'hover' : ''} ${isClicking ? 'click' : ''}`}
+        style={{
+          left: cursorPosition.x,
+          top: cursorPosition.y,
+        }}
+      />
+
+      <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
       {/* Ethereal dreamscape background elements */}
       <div className="absolute inset-0 opacity-30">
         {/* Mythic floating orbs */}
@@ -580,5 +615,6 @@ export default function Index() {
         ))}
       </div>
     </div>
+    </>
   );
 }
