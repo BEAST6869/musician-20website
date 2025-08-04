@@ -43,9 +43,6 @@ export default function Index() {
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
 
   const tracks = [
     { title: "NEON NIGHTS", duration: "3:42", status: "streaming" },
@@ -71,75 +68,16 @@ export default function Index() {
         x: (e.clientX / window.innerWidth) * 100,
         y: (e.clientY / window.innerHeight) * 100,
       });
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-
-      // Create cursor trail
-      if (Math.random() > 0.7) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.left = e.clientX + 'px';
-        trail.style.top = e.clientY + 'px';
-        document.body.appendChild(trail);
-
-        setTimeout(() => {
-          if (trail.parentNode) {
-            trail.parentNode.removeChild(trail);
-          }
-        }, 800);
-      }
     };
-
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Handle hover detection for interactive elements
-  useEffect(() => {
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('button, a, .cursor-pointer, [role="button"]')) {
-        setIsHovering(true);
-      }
-    };
 
-    const handleMouseOut = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('button, a, .cursor-pointer, [role="button"]')) {
-        setIsHovering(false);
-      }
-    };
-
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
-
-    return () => {
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
-    };
-  }, []);
 
   return (
-    <>
-      {/* Custom Cyberpunk Cursor */}
-      <div
-        className={`cyber-cursor ${isHovering ? 'hover' : ''} ${isClicking ? 'click' : ''}`}
-        style={{
-          left: cursorPosition.x,
-          top: cursorPosition.y,
-        }}
-      />
-
-      <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
+    <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
       {/* Ethereal dreamscape background elements */}
       <div className="absolute inset-0 opacity-30">
         {/* Mythic floating orbs */}
@@ -615,6 +553,5 @@ export default function Index() {
         ))}
       </div>
     </div>
-    </>
   );
 }
