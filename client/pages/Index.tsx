@@ -44,11 +44,33 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const tracks = [
-    { title: "NEON NIGHTS", duration: "3:42", status: "streaming" },
-    { title: "CYBER DREAMS", duration: "4:15", status: "new" },
-    { title: "DIGITAL SOUL", duration: "3:28", status: "streaming" },
-    { title: "ELECTRIC HEART", duration: "4:03", status: "coming_soon" },
+  // Discography with Spotify links - update with actual URLs
+  const discography = [
+    {
+      title: "Sacred Queer Heart",
+      type: "Single",
+      year: "2024",
+      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      duration: "3:42",
+      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH" // Update with actual artwork
+    },
+    {
+      title: "Moongirlnonsense",
+      type: "Single",
+      year: "2024",
+      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      duration: "4:15",
+      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN"
+    },
+    {
+      title: "Don'tforgetmypeace",
+      type: "Single",
+      year: "2023",
+      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      duration: "3:28",
+      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=DFMP"
+    },
+    // Add more tracks as needed
   ];
 
   const socialLinks = [
