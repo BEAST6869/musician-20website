@@ -74,8 +74,6 @@ export default function Index() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-
-
   return (
     <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
       {/* Ethereal dreamscape background elements */}
