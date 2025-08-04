@@ -244,4 +244,100 @@
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--neon-pink)) hsl(var(--cyber-dark));
   }
+
+  /* Custom Cyberpunk Cursor */
+  * {
+    cursor: none !important;
+  }
+
+  .cyber-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, hsl(var(--neon-pink)) 0%, hsl(var(--neon-violet)) 50%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%);
+    transition: all 0.1s ease;
+    box-shadow:
+      0 0 20px hsl(var(--neon-pink)),
+      0 0 40px hsl(var(--neon-pink)),
+      0 0 60px hsl(var(--neon-pink));
+  }
+
+  .cyber-cursor::before {
+    content: '◈';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: hsl(var(--cyber-dark));
+    font-family: monospace;
+    font-weight: bold;
+    text-shadow: 0 0 5px hsl(var(--neon-cyan));
+  }
+
+  .cyber-cursor.hover {
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, hsl(var(--neon-cyan)) 0%, hsl(var(--neon-green)) 50%, transparent 70%);
+    box-shadow:
+      0 0 30px hsl(var(--neon-cyan)),
+      0 0 60px hsl(var(--neon-cyan)),
+      0 0 90px hsl(var(--neon-cyan));
+  }
+
+  .cyber-cursor.hover::before {
+    content: '◯';
+    color: hsl(var(--cyber-dark));
+    font-size: 16px;
+  }
+
+  .cyber-cursor.click {
+    width: 35px;
+    height: 35px;
+    background: radial-gradient(circle, hsl(var(--neon-green)) 0%, hsl(var(--neon-violet)) 50%, transparent 70%);
+    box-shadow:
+      0 0 40px hsl(var(--neon-green)),
+      0 0 80px hsl(var(--neon-green)),
+      0 0 120px hsl(var(--neon-green));
+  }
+
+  .cyber-cursor.click::before {
+    content: '◉';
+    color: hsl(var(--cyber-dark));
+    font-size: 18px;
+    animation: glitch 0.2s linear;
+  }
+
+  /* Cursor trail effects */
+  .cursor-trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: hsl(var(--neon-violet));
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.6;
+    transform: translate(-50%, -50%);
+    animation: fade-out 0.8s ease-out forwards;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  @keyframes fade-out {
+    0% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.3);
+    }
+  }
 }
