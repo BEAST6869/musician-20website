@@ -28,7 +28,7 @@ export default function Index() {
   ];
 
   const socialLinks = [
-    { name: "SPOTIFY", icon: SpotifyLogo, url: "#" },
+    { name: "SPOTIFY", icon: SpotifyLogo, url: "https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94?si=YhRDbKpwRe6584Sh11FMUg" },
     { name: "APPLE MUSIC", icon: AppleLogo, url: "#" },
     { name: "INSTAGRAM", icon: Instagram, url: "#" },
     { name: "YOUTUBE", icon: Youtube, url: "#" }
