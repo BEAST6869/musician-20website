@@ -44,39 +44,39 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Discography with real Spotify links
+  // Discography with real Spotify links and song names
   const discography = [
     {
-      title: "Track 1", // Update with actual song name from Spotify
+      title: "Sacred Queer Heart",
       type: "Single",
       year: "2024",
       spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
       duration: "3:42",
-      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=T1" // Update with actual artwork URL
+      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH"
     },
     {
-      title: "Track 2", // Update with actual song name from Spotify
+      title: "Moongirlnonsense",
       type: "Single",
       year: "2024",
       spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
       duration: "4:15",
-      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=T2" // Update with actual artwork URL
+      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN"
     },
     {
-      title: "Track 3", // Update with actual song name from Spotify
+      title: "Stillelectricwhenshesdown",
       type: "Single",
       year: "2023",
       spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
       duration: "3:28",
-      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=T3" // Update with actual artwork URL
+      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS"
     },
     {
-      title: "Track 4", // Update with actual song name from Spotify
+      title: "Dontforgetmypeace",
       type: "Single",
       year: "2023",
       spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
       duration: "3:55",
-      artwork: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=T4" // Update with actual artwork URL
+      artwork: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP"
     },
   ];
 
