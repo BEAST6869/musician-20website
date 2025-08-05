@@ -154,12 +154,10 @@ class SpotifyAPI {
   }
 }
 
+import { SPOTIFY_CONFIG } from './spotify-config';
+
 // Initialize Spotify API client
-// 🔧 REPLACE WITH YOUR ACTUAL CREDENTIALS
-const SPOTIFY_CLIENT_ID = 'YOUR_SPOTIFY_CLIENT_ID_HERE';
-const SPOTIFY_CLIENT_SECRET = 'YOUR_SPOTIFY_CLIENT_SECRET_HERE';
+export const spotifyAPI = new SpotifyAPI(SPOTIFY_CONFIG.CLIENT_ID, SPOTIFY_CONFIG.CLIENT_SECRET);
 
-export const spotifyAPI = new SpotifyAPI(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET);
-
-// 🎯 REPLACE WITH YOUR ACTUAL SPOTIFY ARTIST ID
-export const ARTIST_ID = 'YOUR_SPOTIFY_ARTIST_ID_HERE';
+// Export artist ID for component use
+export const ARTIST_ID = SPOTIFY_CONFIG.ARTIST_ID;
