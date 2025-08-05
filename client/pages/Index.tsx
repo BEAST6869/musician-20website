@@ -351,8 +351,38 @@ export default function Index() {
               ◈ DISCOGRAPHY
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {discography.map((release, index) => (
+            {/* API Error Warning */}
+            {apiError && (
+              <div className="cyber-border bg-cyber-deep/50 p-4 rounded-lg mb-6 backdrop-blur-sm" style={{ borderColor: '#ff6b35' }}>
+                <p className="text-neon-orange font-mono text-sm">
+                  ⚠️ Spotify API Error: {apiError}
+                </p>
+                <p className="text-muted-foreground font-mono text-xs mt-2">
+                  Displaying fallback data. Check console for details.
+                </p>
+              </div>
+            )}
+
+            {/* Loading State */}
+            {isLoadingReleases ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="cyber-border bg-cyber-deep/50 p-4 rounded-lg backdrop-blur-sm animate-pulse"
+                    style={{ borderColor: index % 3 === 0 ? '#ff00de' : index % 3 === 1 ? '#00ffff' : '#39ff14' }}
+                  >
+                    <div className="aspect-square bg-cyber-deep rounded-lg mb-4"></div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-cyber-deep rounded"></div>
+                      <div className="h-3 bg-cyber-deep rounded w-3/4"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div id="discography" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {discography.map((release, index) => (
                 <motion.a
                   key={release.title}
                   href={release.spotifyUrl}
@@ -386,9 +416,6 @@ export default function Index() {
                       <span className="text-sm text-muted-foreground font-mono">
                         {release.type} • {release.year}
                       </span>
-                      <span className="text-sm text-muted-foreground font-mono">
-                        {release.duration}
-                      </span>
                     </div>
                     <div className="flex items-center space-x-2 mt-3">
                       <div className="w-4 h-4">
@@ -400,8 +427,9 @@ export default function Index() {
                     </div>
                   </div>
                 </motion.a>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </motion.div>
 
