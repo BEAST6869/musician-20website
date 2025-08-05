@@ -85,6 +85,66 @@ export default function Index() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Fetch discography from Spotify API
+  useEffect(() => {
+    const fetchDiscography = async () => {
+      try {
+        setIsLoadingReleases(true);
+        setApiError(null);
+
+        const releases = await spotifyAPI.getArtistReleases(ARTIST_ID, 12);
+        setDiscography(releases);
+      } catch (error) {
+        console.error('Failed to fetch Spotify releases:', error);
+        setApiError(error instanceof Error ? error.message : 'Failed to load releases');
+
+        // Fallback to hardcoded data if API fails
+        setDiscography([
+          {
+            id: '1',
+            title: "Sacred Queer Heart",
+            type: "Single",
+            year: "2024",
+            spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
+            artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH",
+            releaseDate: "2024-01-01"
+          },
+          {
+            id: '2',
+            title: "Moongirlnonsense",
+            type: "Single",
+            year: "2024",
+            spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
+            artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN",
+            releaseDate: "2024-01-01"
+          },
+          {
+            id: '3',
+            title: "Stillelectricwhenshesdown",
+            type: "Single",
+            year: "2023",
+            spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
+            artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS",
+            releaseDate: "2023-01-01"
+          },
+          {
+            id: '4',
+            title: "Dontforgetmypeace",
+            type: "Single",
+            year: "2023",
+            spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
+            artwork: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP",
+            releaseDate: "2023-01-01"
+          },
+        ]);
+      } finally {
+        setIsLoadingReleases(false);
+      }
+    };
+
+    fetchDiscography();
+  }, []);
+
   return (
     <div className="min-h-screen bg-cyber-dark overflow-hidden relative grid-bg">
       {/* Ethereal dreamscape background elements */}
