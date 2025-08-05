@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, Youtube } from "lucide-react";
-import { spotifyAPI, ARTIST_ID, ProcessedRelease } from "@/lib/spotify";
+import { spotifyPlaylistAPI, PLAYLIST_ID, PlaylistTrack } from "@/lib/spotify-playlist";
 
 // Custom brand logo components
 const SpotifyLogo = ({
