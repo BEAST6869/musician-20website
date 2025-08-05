@@ -44,33 +44,40 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Discography with Spotify links - update with actual URLs
+  // Discography with real Spotify links
   const discography = [
     {
-      title: "Sacred Queer Heart",
+      title: "Track 1", // Update with actual song name from Spotify
       type: "Single",
       year: "2024",
-      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
       duration: "3:42",
-      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH" // Update with actual artwork
+      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=T1" // Update with actual artwork URL
     },
     {
-      title: "Moongirlnonsense",
+      title: "Track 2", // Update with actual song name from Spotify
       type: "Single",
       year: "2024",
-      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
       duration: "4:15",
-      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN"
+      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=T2" // Update with actual artwork URL
     },
     {
-      title: "Don'tforgetmypeace",
+      title: "Track 3", // Update with actual song name from Spotify
       type: "Single",
       year: "2023",
-      spotifyUrl: "https://open.spotify.com/track/[TRACK_ID]", // Update with actual track ID
+      spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
       duration: "3:28",
-      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=DFMP"
+      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=T3" // Update with actual artwork URL
     },
-    // Add more tracks as needed
+    {
+      title: "Track 4", // Update with actual song name from Spotify
+      type: "Single",
+      year: "2023",
+      spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
+      duration: "3:55",
+      artwork: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=T4" // Update with actual artwork URL
+    },
   ];
 
   const socialLinks = [
@@ -297,28 +304,7 @@ export default function Index() {
                 past and future, creating sonic experiences that transport
                 listeners into worlds of imagination.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-neon-green/30">
-                <div className="text-center">
-                  <div className="text-2xl text-neon-green mb-1">◈</div>
-                  <div className="text-xs text-muted-foreground">RELEASES</div>
-                  <div className="text-lg font-bold">12</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl text-neon-cyan mb-1">◯</div>
-                  <div className="text-xs text-muted-foreground">COLLABS</div>
-                  <div className="text-lg font-bold">8</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl text-neon-pink mb-1">♫</div>
-                  <div className="text-xs text-muted-foreground">STREAMS</div>
-                  <div className="text-lg font-bold">1.2M</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl text-neon-violet mb-1">▲</div>
-                  <div className="text-xs text-muted-foreground">SHOWS</div>
-                  <div className="text-lg font-bold">24</div>
-                </div>
-              </div>
+  
             </div>
           </div>
         </motion.div>
@@ -437,11 +423,9 @@ export default function Index() {
         >
           <div className="flex justify-between items-center max-w-6xl mx-auto font-mono text-sm">
             <div className="flex space-x-6">
-              <span className="text-neon-green">
-                LATEST RELEASE: {discography[0]?.title || "SACRED QUEER HEART"}
-              </span>
-              <span className="text-neon-cyan">LISTENERS: 2.4K</span>
-              <span className="text-neon-violet">QUALITY: 320kbps</span>
+              <span className="text-neon-green">STATUS: ONLINE</span>
+              <span className="text-neon-cyan">CONN: SECURE</span>
+              <span className="text-neon-violet">LAT: 0.001ms</span>
             </div>
             <div className="text-neon-pink">
               {new Date().toLocaleTimeString()} UTC
