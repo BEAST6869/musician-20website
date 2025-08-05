@@ -71,33 +71,66 @@ class SpotifyAPI {
   }
 
   /**
+   * Validate that credentials are properly configured
+   */
+  private validateCredentials(): void {
+    if (!this.clientId || this.clientId === 'YOUR_SPOTIFY_CLIENT_ID_HERE') {
+      throw new Error('Spotify CLIENT_ID not configured. Please update client/lib/spotify-config.ts');
+    }
+    if (!this.clientSecret || this.clientSecret === 'YOUR_SPOTIFY_CLIENT_SECRET_HERE') {
+      throw new Error('Spotify CLIENT_SECRET not configured. Please update client/lib/spotify-config.ts');
+    }
+  }
+
+  /**
    * Get access token using Client Credentials Flow
    * ⚠️ SECURITY WARNING: This exposes client_secret in frontend!
    * In production, move this to backend/serverless function.
    */
   private async getAccessToken(): Promise<string> {
+    // Validate credentials before making API call
+    this.validateCredentials();
+
     if (this.accessToken && Date.now() < this.tokenExpiry) {
       return this.accessToken;
     }
 
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${btoa(`${this.clientId}:${this.clientSecret}`)}`
-      },
-      body: 'grant_type=client_credentials'
-    });
+    try {
+      const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${btoa(`${this.clientId}:${this.clientSecret}`)}`
+        },
+        body: 'grant_type=client_credentials'
+      });
 
-    if (!response.ok) {
-      throw new Error(`Failed to get Spotify token: ${response.status} ${response.statusText}`);
+      if (!response.ok) {
+        let errorMessage = `Failed to get Spotify token: ${response.status} ${response.statusText}`;
+
+        try {
+          const errorData = await response.json();
+          if (errorData.error_description) {
+            errorMessage += ` - ${errorData.error_description}`;
+          }
+        } catch (e) {
+          // If we can't parse error response, use the original message
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      const data: SpotifyTokenResponse = await response.json();
+      this.accessToken = data.access_token;
+      this.tokenExpiry = Date.now() + (data.expires_in * 1000) - 60000; // Subtract 1 minute for safety
+
+      return this.accessToken;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Unknown error occurred while getting Spotify token');
     }
-
-    const data: SpotifyTokenResponse = await response.json();
-    this.accessToken = data.access_token;
-    this.tokenExpiry = Date.now() + (data.expires_in * 1000) - 60000; // Subtract 1 minute for safety
-
-    return this.accessToken;
   }
 
   /**
