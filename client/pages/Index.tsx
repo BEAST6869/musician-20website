@@ -395,23 +395,23 @@ export default function Index() {
               </div>
             ) : (
               <div id="discography" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {discography.map((release, index) => (
+                {discography.map((track, index) => (
                 <motion.a
-                  key={release.title}
-                  href={release.spotifyUrl}
+                  key={track.id}
+                  href={track.spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow cursor-pointer backdrop-blur-sm group"
+                  className="song-card cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow cursor-pointer backdrop-blur-sm group"
                   style={{ borderColor: index % 3 === 0 ? '#ff00de' : index % 3 === 1 ? '#00ffff' : '#39ff14' }}
                 >
                   {/* Album Artwork */}
                   <div className="relative mb-4 overflow-hidden rounded-lg">
                     <img
-                      src={release.artwork}
-                      alt={`${release.title} artwork`}
-                      className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+                      src={track.albumCover}
+                      alt={`${track.name} artwork`}
+                      className="cover w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-cyber-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <div className="text-4xl text-neon-green animate-glow-pulse">
@@ -422,12 +422,12 @@ export default function Index() {
 
                   {/* Track Info */}
                   <div className="space-y-2">
-                    <h3 className="text-lg font-bold text-cyber-glow font-mono group-hover:text-neon-cyan transition-colors">
-                      {release.title}
+                    <h3 className="song-title text-lg font-bold text-cyber-glow font-mono group-hover:text-neon-cyan transition-colors">
+                      {track.name}
                     </h3>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-muted-foreground font-mono">
-                        {release.type} • {release.year}
+                        {track.artist}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2 mt-3">
