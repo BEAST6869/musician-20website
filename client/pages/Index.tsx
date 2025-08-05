@@ -44,6 +44,9 @@ export default function Index() {
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [discography, setDiscography] = useState<ProcessedRelease[]>([]);
+  const [isLoadingReleases, setIsLoadingReleases] = useState(true);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   // Discography with real Spotify links and song names
   const discography = [
