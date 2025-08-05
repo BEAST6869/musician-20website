@@ -137,6 +137,11 @@ class SpotifyAPI {
    * Fetch artist's albums and singles from Spotify
    */
   async getArtistReleases(artistId: string, limit: number = 12): Promise<ProcessedRelease[]> {
+    // Validate artist ID
+    if (!artistId || artistId === 'YOUR_SPOTIFY_ARTIST_ID_HERE') {
+      throw new Error('Spotify ARTIST_ID not configured. Please update client/lib/spotify-config.ts with your actual Spotify Artist ID');
+    }
+
     try {
       const token = await this.getAccessToken();
 
@@ -151,7 +156,18 @@ class SpotifyAPI {
       );
 
       if (!response.ok) {
-        throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
+        let errorMessage = `Spotify API error: ${response.status} ${response.statusText}`;
+
+        try {
+          const errorData = await response.json();
+          if (errorData.error?.message) {
+            errorMessage += ` - ${errorData.error.message}`;
+          }
+        } catch (e) {
+          // If we can't parse error response, use the original message
+        }
+
+        throw new Error(errorMessage);
       }
 
       const data: SpotifyArtistAlbumsResponse = await response.json();
