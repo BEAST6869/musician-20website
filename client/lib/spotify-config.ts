@@ -2,13 +2,12 @@
 // 🔧 REPLACE THESE WITH YOUR ACTUAL SPOTIFY CREDENTIALS
 
 export const SPOTIFY_CONFIG = {
-  // Get these from: https://developer.spotify.com/dashboard
-  CLIENT_ID: 'YOUR_SPOTIFY_CLIENT_ID_HERE',
-  CLIENT_SECRET: 'YOUR_SPOTIFY_CLIENT_SECRET_HERE',
+  CLIENT_ID: 4867425ccf554368bcc7274926d45738,
+  CLIENT_SECRET: 78007a2fbdad4fa9a1e46e7dc5ac19a7,
   
   // Your Spotify Artist ID - found in your Spotify artist URL
   // Example: https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94 -> Artist ID is "5p71wpajbzO90AEiPBej94"
-  ARTIST_ID: 'YOUR_SPOTIFY_ARTIST_ID_HERE'
+  ARTIST_ID: 31lyqvgaccgiuua2s2kdoxr6bsoy
 };
 
 // 🔒 SECURITY WARNING:
