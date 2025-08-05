@@ -94,9 +94,21 @@ export default function Index() {
 
         const releases = await spotifyAPI.getArtistReleases(ARTIST_ID, 12);
         setDiscography(releases);
+        console.log('✅ Successfully loaded', releases.length, 'releases from Spotify API');
       } catch (error) {
-        console.error('Failed to fetch Spotify releases:', error);
-        setApiError(error instanceof Error ? error.message : 'Failed to load releases');
+        console.error('❌ Failed to fetch Spotify releases:', error);
+
+        const errorMessage = error instanceof Error ? error.message : 'Failed to load releases';
+        setApiError(errorMessage);
+
+        // Show configuration instructions in console
+        if (errorMessage.includes('not configured')) {
+          console.warn('🔧 Configuration needed:');
+          console.warn('1. Go to https://developer.spotify.com/dashboard');
+          console.warn('2. Create a Spotify app and get CLIENT_ID and CLIENT_SECRET');
+          console.warn('3. Update client/lib/spotify-config.ts with your credentials');
+          console.warn('4. Add your Spotify Artist ID to the config');
+        }
 
         // Fallback to hardcoded data if API fails
         setDiscography([
@@ -137,6 +149,7 @@ export default function Index() {
             releaseDate: "2023-01-01"
           },
         ]);
+        console.log('📦 Using fallback discography data');
       } finally {
         setIsLoadingReleases(false);
       }
