@@ -365,9 +365,9 @@ export default function Index() {
                 {apiError.includes('not configured') && (
                   <div className="mt-3 text-muted-foreground font-mono text-xs">
                     <p className="mb-1">🔧 Setup Instructions:</p>
-                    <p>1. Get credentials at developer.spotify.com/dashboard</p>
-                    <p>2. Update client/lib/spotify-config.ts</p>
-                    <p>3. Add your Spotify Artist ID</p>
+                    <p>1. Get access token at developer.spotify.com/console/get-playlist/</p>
+                    <p>2. Update client/lib/spotify-playlist.ts</p>
+                    <p>3. Add your public Spotify Playlist ID</p>
                   </div>
                 )}
                 <p className="text-muted-foreground font-mono text-xs mt-2">
