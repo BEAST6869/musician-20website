@@ -85,77 +85,69 @@ export default function Index() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Fetch discography from Spotify API
+  // Fetch discography from Spotify Playlist API
   useEffect(() => {
-    const fetchDiscography = async () => {
+    const fetchPlaylistTracks = async () => {
       try {
         setIsLoadingReleases(true);
         setApiError(null);
 
-        const releases = await spotifyAPI.getArtistReleases(ARTIST_ID, 12);
-        setDiscography(releases);
-        console.log('✅ Successfully loaded', releases.length, 'releases from Spotify API');
+        const tracks = await spotifyPlaylistAPI.getPlaylistTracks(PLAYLIST_ID);
+        setDiscography(tracks);
+        console.log('✅ Successfully loaded', tracks.length, 'tracks from Spotify playlist');
       } catch (error) {
-        console.error('❌ Failed to fetch Spotify releases:', error);
+        console.error('❌ Failed to fetch Spotify playlist:', error);
 
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load releases';
+        const errorMessage = error instanceof Error ? error.message : 'Failed to load playlist';
         setApiError(errorMessage);
 
         // Show configuration instructions in console
         if (errorMessage.includes('not configured')) {
           console.warn('🔧 Configuration needed:');
-          console.warn('1. Go to https://developer.spotify.com/dashboard');
-          console.warn('2. Create a Spotify app and get CLIENT_ID and CLIENT_SECRET');
-          console.warn('3. Update client/lib/spotify-config.ts with your credentials');
-          console.warn('4. Add your Spotify Artist ID to the config');
+          console.warn('1. Get a Spotify access token from https://developer.spotify.com/console/get-playlist/');
+          console.warn('2. Update client/lib/spotify-playlist.ts with your access token');
+          console.warn('3. Add your Spotify Playlist ID to the config');
+          console.warn('4. Make sure your playlist is public');
         }
 
         // Fallback to hardcoded data if API fails
         setDiscography([
           {
             id: '1',
-            title: "Sacred Queer Heart",
-            type: "Single",
-            year: "2024",
+            name: "Sacred Queer Heart",
             spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
-            artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH",
-            releaseDate: "2024-01-01"
+            albumCover: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH",
+            artist: "Shelby Mackay"
           },
           {
             id: '2',
-            title: "Moongirlnonsense",
-            type: "Single",
-            year: "2024",
+            name: "Moongirlnonsense",
             spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
-            artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN",
-            releaseDate: "2024-01-01"
+            albumCover: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN",
+            artist: "Shelby Mackay"
           },
           {
             id: '3',
-            title: "Stillelectricwhenshesdown",
-            type: "Single",
-            year: "2023",
+            name: "Stillelectricwhenshesdown",
             spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
-            artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS",
-            releaseDate: "2023-01-01"
+            albumCover: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS",
+            artist: "Shelby Mackay"
           },
           {
             id: '4',
-            title: "Dontforgetmypeace",
-            type: "Single",
-            year: "2023",
+            name: "Dontforgetmypeace",
             spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
-            artwork: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP",
-            releaseDate: "2023-01-01"
+            albumCover: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP",
+            artist: "Shelby Mackay"
           },
         ]);
-        console.log('📦 Using fallback discography data');
+        console.log('📦 Using fallback playlist data');
       } finally {
         setIsLoadingReleases(false);
       }
     };
 
-    fetchDiscography();
+    fetchPlaylistTracks();
   }, []);
 
   return (
