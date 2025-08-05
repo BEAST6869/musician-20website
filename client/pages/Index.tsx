@@ -48,41 +48,7 @@ export default function Index() {
   const [isLoadingReleases, setIsLoadingReleases] = useState(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
-  // Discography with real Spotify links and song names
-  const discography = [
-    {
-      title: "Sacred Queer Heart",
-      type: "Single",
-      year: "2024",
-      spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
-      duration: "3:42",
-      artwork: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH"
-    },
-    {
-      title: "Moongirlnonsense",
-      type: "Single",
-      year: "2024",
-      spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
-      duration: "4:15",
-      artwork: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN"
-    },
-    {
-      title: "Stillelectricwhenshesdown",
-      type: "Single",
-      year: "2023",
-      spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
-      duration: "3:28",
-      artwork: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS"
-    },
-    {
-      title: "Dontforgetmypeace",
-      type: "Single",
-      year: "2023",
-      spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
-      duration: "3:55",
-      artwork: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP"
-    },
-  ];
+
 
   const socialLinks = [
     {
