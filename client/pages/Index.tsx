@@ -538,7 +538,6 @@ export default function Index() {
 
           <div className="max-w-6xl mx-auto px-4 py-12">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-
               {/* Music Links */}
               <div className="space-y-4">
                 <h3 className="text-lg font-bold text-neon-pink font-mono neon-text">
@@ -551,7 +550,7 @@ export default function Index() {
                     rel="noopener noreferrer"
                     className="flex items-center space-x-2 text-cyber-glow hover:text-neon-green transition-colors font-mono text-sm"
                   >
-                    <SpotifyLogo size={16} style={{ color: '#39ff14' }} />
+                    <SpotifyLogo size={16} style={{ color: "#39ff14" }} />
                     <span>Spotify</span>
                   </a>
                   <a
@@ -560,7 +559,7 @@ export default function Index() {
                     rel="noopener noreferrer"
                     className="flex items-center space-x-2 text-cyber-glow hover:text-neon-green transition-colors font-mono text-sm"
                   >
-                    <AppleLogo size={16} style={{ color: '#39ff14' }} />
+                    <AppleLogo size={16} style={{ color: "#39ff14" }} />
                     <span>Apple Music</span>
                   </a>
                   <a
@@ -569,7 +568,7 @@ export default function Index() {
                     rel="noopener noreferrer"
                     className="flex items-center space-x-2 text-cyber-glow hover:text-neon-green transition-colors font-mono text-sm"
                   >
-                    <Youtube size={16} style={{ color: '#39ff14' }} />
+                    <Youtube size={16} style={{ color: "#39ff14" }} />
                     <span>YouTube</span>
                   </a>
                 </div>
@@ -587,7 +586,7 @@ export default function Index() {
                     rel="noopener noreferrer"
                     className="flex items-center space-x-2 text-cyber-glow hover:text-neon-cyan transition-colors font-mono text-sm"
                   >
-                    <Instagram size={16} style={{ color: '#00ffff' }} />
+                    <Instagram size={16} style={{ color: "#00ffff" }} />
                     <span>Instagram</span>
                   </a>
                   <a
@@ -630,7 +629,9 @@ export default function Index() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">UPTIME:</span>
-                    <span className="text-neon-violet">{new Date().getFullYear()}</span>
+                    <span className="text-neon-violet">
+                      {new Date().getFullYear()}
+                    </span>
                   </div>
                 </div>
               </div>
