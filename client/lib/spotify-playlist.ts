@@ -48,12 +48,16 @@ class SpotifyPlaylistAPI {
    * Fetch tracks from a public Spotify playlist
    */
   async getPlaylistTracks(playlistId: string): Promise<PlaylistTrack[]> {
-    if (!playlistId || playlistId === 'YOUR_PLAYLIST_ID_HERE') {
-      throw new Error('Playlist ID not configured. Please update the PLAYLIST_ID in the configuration.');
+    if (!playlistId || playlistId === "YOUR_PLAYLIST_ID_HERE") {
+      throw new Error(
+        "Playlist ID not configured. Please update the PLAYLIST_ID in the configuration.",
+      );
     }
 
-    if (!this.accessToken || this.accessToken === 'YOUR_ACCESS_TOKEN_HERE') {
-      throw new Error('Access token not configured. Please add your Spotify access token.');
+    if (!this.accessToken || this.accessToken === "YOUR_ACCESS_TOKEN_HERE") {
+      throw new Error(
+        "Access token not configured. Please add your Spotify access token.",
+      );
     }
 
     try {
@@ -61,15 +65,15 @@ class SpotifyPlaylistAPI {
         `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
         {
           headers: {
-            'Authorization': `Bearer ${this.accessToken}`,
-            'Content-Type': 'application/json'
-          }
-        }
+            Authorization: `Bearer ${this.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        },
       );
 
       if (!response.ok) {
         let errorMessage = `Spotify API error: ${response.status} ${response.statusText}`;
-        
+
         try {
           const errorData = await response.json();
           if (errorData.error?.message) {
@@ -78,7 +82,7 @@ class SpotifyPlaylistAPI {
         } catch (e) {
           // If we can't parse error response, use the original message
         }
-        
+
         throw new Error(errorMessage);
       }
 
@@ -86,17 +90,20 @@ class SpotifyPlaylistAPI {
 
       // Process and format the tracks
       return data.tracks.items
-        .filter(item => item.track && item.track.id) // Filter out null tracks
-        .map((item): PlaylistTrack => ({
-          id: item.track.id,
-          name: item.track.name,
-          spotifyUrl: item.track.external_urls.spotify,
-          albumCover: item.track.album.images[0]?.url || 'https://via.placeholder.com/300x300/333/fff?text=No+Image',
-          artist: item.track.artists[0]?.name || 'Unknown Artist'
-        }));
-
+        .filter((item) => item.track && item.track.id) // Filter out null tracks
+        .map(
+          (item): PlaylistTrack => ({
+            id: item.track.id,
+            name: item.track.name,
+            spotifyUrl: item.track.external_urls.spotify,
+            albumCover:
+              item.track.album.images[0]?.url ||
+              "https://via.placeholder.com/300x300/333/fff?text=No+Image",
+            artist: item.track.artists[0]?.name || "Unknown Artist",
+          }),
+        );
     } catch (error) {
-      console.error('Error fetching Spotify playlist:', error);
+      console.error("Error fetching Spotify playlist:", error);
       throw error;
     }
   }
@@ -108,15 +115,17 @@ class SpotifyPlaylistAPI {
   async populateSongCards(playlistId: string): Promise<void> {
     try {
       const tracks = await this.getPlaylistTracks(playlistId);
-      const discographyContainer = document.getElementById('discography');
-      
+      const discographyContainer = document.getElementById("discography");
+
       if (!discographyContainer) {
-        throw new Error('Discography container not found');
+        throw new Error("Discography container not found");
       }
 
       // Find existing song cards
-      const songCards = discographyContainer.querySelectorAll('a[href*="spotify.com"]');
-      
+      const songCards = discographyContainer.querySelectorAll(
+        'a[href*="spotify.com"]',
+      );
+
       tracks.forEach((track, index) => {
         const card = songCards[index];
         if (!card) return; // No more cards to populate
@@ -125,14 +134,14 @@ class SpotifyPlaylistAPI {
         (card as HTMLAnchorElement).href = track.spotifyUrl;
 
         // Update album cover image
-        const coverImg = card.querySelector('img');
+        const coverImg = card.querySelector("img");
         if (coverImg) {
           coverImg.src = track.albumCover;
           coverImg.alt = `${track.name} artwork`;
         }
 
         // Update song title
-        const titleElement = card.querySelector('h3');
+        const titleElement = card.querySelector("h3");
         if (titleElement) {
           titleElement.textContent = track.name;
         }
@@ -140,10 +149,11 @@ class SpotifyPlaylistAPI {
         console.log(`✅ Updated card ${index + 1}: ${track.name}`);
       });
 
-      console.log(`🎵 Successfully populated ${Math.min(tracks.length, songCards.length)} song cards`);
-
+      console.log(
+        `🎵 Successfully populated ${Math.min(tracks.length, songCards.length)} song cards`,
+      );
     } catch (error) {
-      console.error('❌ Failed to populate song cards:', error);
+      console.error("❌ Failed to populate song cards:", error);
       throw error;
     }
   }
@@ -153,16 +163,19 @@ class SpotifyPlaylistAPI {
 const SPOTIFY_CONFIG = {
   // 🔧 Fresh access token from Spotify Web Console
   // Get this from: https://developer.spotify.com/console/get-playlist/
-  ACCESS_TOKEN: 'BQCaZV827QdGfU_XWjpSnRiNhgN0c3XCtZW5EF1fKYel2j17VQzJZGjk6UdCTXgofEbgC8l9ufzGICILFsBMq5Gaqh1cTbH_XrqrfduTeS0pMfLRdTob7F2kLmv84po2lmDyiQSxKsQ',
+  ACCESS_TOKEN:
+    "BQCaZV827QdGfU_XWjpSnRiNhgN0c3XCtZW5EF1fKYel2j17VQzJZGjk6UdCTXgofEbgC8l9ufzGICILFsBMq5Gaqh1cTbH_XrqrfduTeS0pMfLRdTob7F2kLmv84po2lmDyiQSxKsQ",
 
   // 🎵 Playlist ID extracted from your curl URL
   // From playlist URL: https://open.spotify.com/playlist/1ghDr8QsDH7aeP7Jd8OLT9
   // Playlist ID = 1ghDr8QsDH7aeP7Jd8OLT9
-  PLAYLIST_ID: '1ghDr8QsDH7aeP7Jd8OLT9'
+  PLAYLIST_ID: "1ghDr8QsDH7aeP7Jd8OLT9",
 };
 
 // Export configured API instance
-export const spotifyPlaylistAPI = new SpotifyPlaylistAPI(SPOTIFY_CONFIG.ACCESS_TOKEN);
+export const spotifyPlaylistAPI = new SpotifyPlaylistAPI(
+  SPOTIFY_CONFIG.ACCESS_TOKEN,
+);
 export const PLAYLIST_ID = SPOTIFY_CONFIG.PLAYLIST_ID;
 
 // Export configuration for easy access

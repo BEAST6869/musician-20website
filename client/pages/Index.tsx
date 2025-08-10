@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, Youtube } from "lucide-react";
-import { spotifyPlaylistAPI, PLAYLIST_ID, PlaylistTrack } from "@/lib/spotify-playlist";
+import {
+  spotifyPlaylistAPI,
+  PLAYLIST_ID,
+  PlaylistTrack,
+} from "@/lib/spotify-playlist";
 
 // Custom brand logo components
 const SpotifyLogo = ({
@@ -48,8 +52,6 @@ export default function Index() {
   const [isLoadingReleases, setIsLoadingReleases] = useState(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
-
-
   const socialLinks = [
     {
       name: "SPOTIFY",
@@ -94,54 +96,71 @@ export default function Index() {
 
         const tracks = await spotifyPlaylistAPI.getPlaylistTracks(PLAYLIST_ID);
         setDiscography(tracks);
-        console.log('✅ Successfully loaded', tracks.length, 'tracks from Spotify playlist');
+        console.log(
+          "✅ Successfully loaded",
+          tracks.length,
+          "tracks from Spotify playlist",
+        );
       } catch (error) {
-        console.error('❌ Failed to fetch Spotify playlist:', error);
+        console.error("❌ Failed to fetch Spotify playlist:", error);
 
-        const errorMessage = error instanceof Error ? error.message : 'Failed to load playlist';
+        const errorMessage =
+          error instanceof Error ? error.message : "Failed to load playlist";
         setApiError(errorMessage);
 
         // Show configuration instructions in console
-        if (errorMessage.includes('not configured')) {
-          console.warn('🔧 Configuration needed:');
-          console.warn('1. Get a Spotify access token from https://developer.spotify.com/console/get-playlist/');
-          console.warn('2. Update client/lib/spotify-playlist.ts with your access token');
-          console.warn('3. Add your Spotify Playlist ID to the config');
-          console.warn('4. Make sure your playlist is public');
+        if (errorMessage.includes("not configured")) {
+          console.warn("🔧 Configuration needed:");
+          console.warn(
+            "1. Get a Spotify access token from https://developer.spotify.com/console/get-playlist/",
+          );
+          console.warn(
+            "2. Update client/lib/spotify-playlist.ts with your access token",
+          );
+          console.warn("3. Add your Spotify Playlist ID to the config");
+          console.warn("4. Make sure your playlist is public");
         }
 
         // Fallback to hardcoded data if API fails
         setDiscography([
           {
-            id: '1',
+            id: "1",
             name: "Sacred Queer Heart",
-            spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
-            albumCover: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH",
-            artist: "Shelby Mackay"
+            spotifyUrl:
+              "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
+            albumCover:
+              "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH",
+            artist: "Shelby Mackay",
           },
           {
-            id: '2',
+            id: "2",
             name: "Moongirlnonsense",
-            spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
-            albumCover: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN",
-            artist: "Shelby Mackay"
+            spotifyUrl:
+              "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
+            albumCover:
+              "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN",
+            artist: "Shelby Mackay",
           },
           {
-            id: '3',
+            id: "3",
             name: "Stillelectricwhenshesdown",
-            spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
-            albumCover: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS",
-            artist: "Shelby Mackay"
+            spotifyUrl:
+              "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
+            albumCover:
+              "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS",
+            artist: "Shelby Mackay",
           },
           {
-            id: '4',
+            id: "4",
             name: "Dontforgetmypeace",
-            spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
-            albumCover: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP",
-            artist: "Shelby Mackay"
+            spotifyUrl:
+              "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
+            albumCover:
+              "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP",
+            artist: "Shelby Mackay",
           },
         ]);
-        console.log('📦 Using fallback playlist data');
+        console.log("📦 Using fallback playlist data");
       } finally {
         setIsLoadingReleases(false);
       }
@@ -339,7 +358,6 @@ export default function Index() {
                 past and future, creating sonic experiences that transport
                 listeners into worlds of imagination.
               </p>
-  
             </div>
           </div>
         </motion.div>
@@ -358,14 +376,20 @@ export default function Index() {
 
             {/* API Error Warning */}
             {apiError && (
-              <div className="cyber-border bg-cyber-deep/50 p-4 rounded-lg mb-6 backdrop-blur-sm" style={{ borderColor: '#ff6b35' }}>
+              <div
+                className="cyber-border bg-cyber-deep/50 p-4 rounded-lg mb-6 backdrop-blur-sm"
+                style={{ borderColor: "#ff6b35" }}
+              >
                 <p className="text-neon-orange font-mono text-sm">
                   ⚠️ Spotify API Error: {apiError}
                 </p>
-                {apiError.includes('not configured') && (
+                {apiError.includes("not configured") && (
                   <div className="mt-3 text-muted-foreground font-mono text-xs">
                     <p className="mb-1">🔧 Setup Instructions:</p>
-                    <p>1. Get access token at developer.spotify.com/console/get-playlist/</p>
+                    <p>
+                      1. Get access token at
+                      developer.spotify.com/console/get-playlist/
+                    </p>
                     <p>2. Update client/lib/spotify-playlist.ts</p>
                     <p>3. Add your public Spotify Playlist ID</p>
                   </div>
@@ -383,7 +407,14 @@ export default function Index() {
                   <div
                     key={index}
                     className="cyber-border bg-cyber-deep/50 p-4 rounded-lg backdrop-blur-sm animate-pulse"
-                    style={{ borderColor: index % 3 === 0 ? '#ff00de' : index % 3 === 1 ? '#00ffff' : '#39ff14' }}
+                    style={{
+                      borderColor:
+                        index % 3 === 0
+                          ? "#ff00de"
+                          : index % 3 === 1
+                            ? "#00ffff"
+                            : "#39ff14",
+                    }}
                   >
                     <div className="aspect-square bg-cyber-deep rounded-lg mb-4"></div>
                     <div className="space-y-2">
@@ -394,61 +425,69 @@ export default function Index() {
                 ))}
               </div>
             ) : (
-              <div id="discography" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div
+                id="discography"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
                 {discography.map((track, index) => (
-                <motion.a
-                  key={track.id}
-                  href={track.spotifyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="song-card cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow cursor-pointer backdrop-blur-sm group"
-                  style={{ borderColor: index % 3 === 0 ? '#ff00de' : index % 3 === 1 ? '#00ffff' : '#39ff14' }}
-                >
-                  {/* Album Artwork */}
-                  <div className="relative mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={track.albumCover}
-                      alt={`${track.name} artwork`}
-                      className="cover w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-green flex items-center justify-center backdrop-blur-sm animate-glow-pulse hover-glow">
-                        <div className="text-2xl text-neon-green ml-1">
-                          ▶
+                  <motion.a
+                    key={track.id}
+                    href={track.spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="song-card cyber-border bg-cyber-deep/50 p-4 rounded-lg hover-glow cursor-pointer backdrop-blur-sm group"
+                    style={{
+                      borderColor:
+                        index % 3 === 0
+                          ? "#ff00de"
+                          : index % 3 === 1
+                            ? "#00ffff"
+                            : "#39ff14",
+                    }}
+                  >
+                    {/* Album Artwork */}
+                    <div className="relative mb-4 overflow-hidden rounded-lg">
+                      <img
+                        src={track.albumCover}
+                        alt={`${track.name} artwork`}
+                        className="cover w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-green flex items-center justify-center backdrop-blur-sm animate-glow-pulse hover-glow">
+                          <div className="text-2xl text-neon-green ml-1">
+                            ▶
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Track Info */}
-                  <div className="space-y-2">
-                    <h3 className="song-title text-lg font-bold text-cyber-glow font-mono group-hover:text-neon-cyan transition-colors">
-                      {track.name}
-                    </h3>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground font-mono">
-                        {track.artist}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2 mt-3">
-                      <div className="w-4 h-4">
-                        <SpotifyLogo size={16} style={{ color: '#39ff14' }} />
+                    {/* Track Info */}
+                    <div className="space-y-2">
+                      <h3 className="song-title text-lg font-bold text-cyber-glow font-mono group-hover:text-neon-cyan transition-colors">
+                        {track.name}
+                      </h3>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground font-mono">
+                          {track.artist}
+                        </span>
                       </div>
-                      <span className="text-xs font-mono text-neon-green">
-                        STREAM ON SPOTIFY
-                      </span>
+                      <div className="flex items-center space-x-2 mt-3">
+                        <div className="w-4 h-4">
+                          <SpotifyLogo size={16} style={{ color: "#39ff14" }} />
+                        </div>
+                        <span className="text-xs font-mono text-neon-green">
+                          STREAM ON SPOTIFY
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </motion.a>
+                  </motion.a>
                 ))}
               </div>
             )}
           </div>
         </motion.div>
-
-
 
         {/* Social Links */}
         <motion.div
