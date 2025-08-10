@@ -413,9 +413,11 @@ export default function Index() {
                       alt={`${track.name} artwork`}
                       className="cover w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-cyber-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="text-4xl text-neon-green animate-glow-pulse">
-                        ▶
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-green flex items-center justify-center backdrop-blur-sm animate-glow-pulse hover-glow">
+                        <div className="text-2xl text-neon-green ml-1">
+                          ▶
+                        </div>
                       </div>
                     </div>
                   </div>
