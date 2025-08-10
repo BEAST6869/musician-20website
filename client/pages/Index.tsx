@@ -526,24 +526,143 @@ export default function Index() {
           </div>
         </motion.div>
 
-        {/* Bottom status bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+        {/* Cyberpunk Footer */}
+        <motion.footer
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 2.5 }}
-          className="fixed bottom-0 left-0 right-0 bg-cyber-deep/80 backdrop-blur-md border-t border-neon-cyan p-4"
+          className="mt-24 relative"
         >
-          <div className="flex justify-between items-center max-w-6xl mx-auto font-mono text-sm">
-            <div className="flex space-x-6">
-              <span className="text-neon-green">STATUS: ONLINE</span>
-              <span className="text-neon-cyan">CONN: SECURE</span>
-              <span className="text-neon-violet">LAT: 0.001ms</span>
+          {/* Footer decorative top border */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent mb-12"></div>
+
+          <div className="max-w-6xl mx-auto px-4 py-12">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+
+              {/* Music Links */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-neon-pink font-mono neon-text">
+                  ◈ MUSIC
+                </h3>
+                <div className="space-y-2">
+                  <a
+                    href="https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94?si=YhRDbKpwRe6584Sh11FMUg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-cyber-glow hover:text-neon-green transition-colors font-mono text-sm"
+                  >
+                    <SpotifyLogo size={16} style={{ color: '#39ff14' }} />
+                    <span>Spotify</span>
+                  </a>
+                  <a
+                    href="https://music.apple.com/us/album/sacred-queer-heart-single/1826390398"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-cyber-glow hover:text-neon-green transition-colors font-mono text-sm"
+                  >
+                    <AppleLogo size={16} style={{ color: '#39ff14' }} />
+                    <span>Apple Music</span>
+                  </a>
+                  <a
+                    href="https://www.youtube.com/channel/UCo8uLZ6bb1zDfKK1_Q8f9BQ"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-cyber-glow hover:text-neon-green transition-colors font-mono text-sm"
+                  >
+                    <Youtube size={16} style={{ color: '#39ff14' }} />
+                    <span>YouTube</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Social Links */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-neon-cyan font-mono neon-text">
+                  ◯ SOCIAL
+                </h3>
+                <div className="space-y-2">
+                  <a
+                    href="https://www.instagram.com/sheldoradoshellshock?igsh=YnoyMmo1Y3hqeTZo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-cyber-glow hover:text-neon-cyan transition-colors font-mono text-sm"
+                  >
+                    <Instagram size={16} style={{ color: '#00ffff' }} />
+                    <span>Instagram</span>
+                  </a>
+                  <a
+                    href="mailto:contact@shelbymackay.com"
+                    className="flex items-center space-x-2 text-cyber-glow hover:text-neon-cyan transition-colors font-mono text-sm"
+                  >
+                    <span className="text-base">✉</span>
+                    <span>Contact</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Latest Release */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-neon-violet font-mono neon-text">
+                  ♫ LATEST
+                </h3>
+                <div className="space-y-2">
+                  <div className="text-cyber-glow font-mono text-sm">
+                    <div className="text-neon-green">Now Streaming:</div>
+                    <div className="text-xs mt-1">Latest tracks from the</div>
+                    <div className="text-xs">digital frontier</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* System Status */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-neon-orange font-mono neon-text">
+                  ⟐ SYSTEM
+                </h3>
+                <div className="space-y-2 font-mono text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">STATUS:</span>
+                    <span className="text-neon-green">ONLINE</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">CONN:</span>
+                    <span className="text-neon-cyan">SECURE</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">UPTIME:</span>
+                    <span className="text-neon-violet">{new Date().getFullYear()}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="text-neon-pink">
-              {new Date().toLocaleTimeString()} UTC
+
+            {/* Footer Bottom */}
+            <div className="border-t border-cyber-deep pt-8">
+              <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div className="text-center md:text-left">
+                  <div className="text-cyber-glow font-mono text-sm">
+                    © {new Date().getFullYear()} SHELBY MACKAY
+                  </div>
+                  <div className="text-muted-foreground font-mono text-xs mt-1">
+                    CRAFTING DIGITAL SOUNDSCAPES FROM TORONTO
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <div className="text-muted-foreground font-mono text-xs">
+                    POWERED BY NEURAL NETWORKS
+                  </div>
+                  <div className="w-2 h-2 bg-neon-green rounded-full animate-glow-pulse"></div>
+                </div>
+              </div>
             </div>
           </div>
-        </motion.div>
+
+          {/* Footer decorative elements */}
+          <div className="absolute top-0 left-1/4 w-px h-20 bg-gradient-to-b from-neon-pink to-transparent opacity-30"></div>
+          <div className="absolute top-0 right-1/3 w-px h-16 bg-gradient-to-b from-neon-cyan to-transparent opacity-40"></div>
+          <div className="absolute bottom-0 left-1/3 w-8 h-px bg-gradient-to-r from-neon-violet to-transparent opacity-50"></div>
+        </motion.footer>
       </div>
 
       {/* Ethereal particle effects */}
