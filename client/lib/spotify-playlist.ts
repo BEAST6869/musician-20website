@@ -153,12 +153,12 @@ class SpotifyPlaylistAPI {
 const SPOTIFY_CONFIG = {
   // 🔧 Replace with your actual Spotify access token
   // Get this from: https://developer.spotify.com/console/get-playlist/
-  ACCESS_TOKEN: 4867425ccf554368bcc7274926d45738,
-  
+  ACCESS_TOKEN: 'YOUR_ACCESS_TOKEN_HERE',
+
   // 🎵 Replace with your actual playlist ID
   // From playlist URL: https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M
   // Playlist ID = 37i9dQZF1DXcBWIGoYBM5M
-  PLAYLIST_ID: 1ghDr8QsDH7aeP7Jd8OLT9?si=q2welkodQ5OFu - S3LQSKbg & nd=1& dlsi=c7e81481913b4c31
+  PLAYLIST_ID: '1ghDr8QsDH7aeP7Jd8OLT9'
 };
 
 // Export configured API instance
