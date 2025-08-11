@@ -35,7 +35,7 @@ async function getSpotifyAccessToken(): Promise<string> {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
       },
       body: "grant_type=client_credentials",
     });
@@ -76,15 +76,15 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
       `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
       {
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     if (!response.ok) {
       let errorMessage = `Spotify API error: ${response.status} ${response.statusText}`;
-      
+
       try {
         const errorData = await response.json();
         if (errorData.error?.message) {
@@ -106,14 +106,17 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
         id: item.track.id,
         name: item.track.name,
         spotifyUrl: item.track.external_urls.spotify,
-        albumCover: item.track.album.images[0]?.url || "https://via.placeholder.com/300x300/333/fff?text=No+Image",
+        albumCover:
+          item.track.album.images[0]?.url ||
+          "https://via.placeholder.com/300x300/333/fff?text=No+Image",
         artist: item.track.artists[0]?.name || "Unknown Artist",
       }));
 
     res.json({ tracks });
   } catch (error) {
     console.error("Error fetching Spotify playlist:", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to fetch playlist";
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to fetch playlist";
     res.status(500).json({ error: errorMessage });
   }
 };
