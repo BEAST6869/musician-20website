@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import { handleSpotifyPlaylist } from "./routes/spotify";
 
 export function createServer() {
   const app = express();
@@ -18,6 +19,9 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Spotify API routes
+  app.get("/api/spotify/playlist/:playlistId", handleSpotifyPlaylist);
 
   return app;
 }
