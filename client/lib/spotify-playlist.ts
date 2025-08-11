@@ -1,5 +1,5 @@
-// Spotify Playlist API integration using public playlists
-// Uses hardcoded access token (replace with your actual token)
+// Spotify Playlist API integration using secure backend
+// No longer requires hardcoded access tokens
 
 // Spotify API Types for Playlist
 export interface SpotifyPlaylistTrack {
@@ -28,6 +28,11 @@ export interface SpotifyPlaylistResponse {
   };
 }
 
+// Backend API response type
+interface BackendPlaylistResponse {
+  tracks: PlaylistTrack[];
+}
+
 // Processed track data for UI
 export interface PlaylistTrack {
   id: string;
@@ -38,14 +43,8 @@ export interface PlaylistTrack {
 }
 
 class SpotifyPlaylistAPI {
-  private accessToken: string;
-
-  constructor(accessToken: string) {
-    this.accessToken = accessToken;
-  }
-
   /**
-   * Fetch tracks from a public Spotify playlist
+   * Fetch tracks from a Spotify playlist via our secure backend
    */
   async getPlaylistTracks(playlistId: string): Promise<PlaylistTrack[]> {
     if (!playlistId || playlistId === "YOUR_PLAYLIST_ID_HERE") {
@@ -54,30 +53,16 @@ class SpotifyPlaylistAPI {
       );
     }
 
-    if (!this.accessToken || this.accessToken === "YOUR_ACCESS_TOKEN_HERE") {
-      throw new Error(
-        "Access token not configured. Please add your Spotify access token.",
-      );
-    }
-
     try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.accessToken}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const response = await fetch(`/api/spotify/playlist/${playlistId}`);
 
       if (!response.ok) {
-        let errorMessage = `Spotify API error: ${response.status} ${response.statusText}`;
+        let errorMessage = `Backend API error: ${response.status} ${response.statusText}`;
 
         try {
           const errorData = await response.json();
-          if (errorData.error?.message) {
-            errorMessage += ` - ${errorData.error.message}`;
+          if (errorData.error) {
+            errorMessage += ` - ${errorData.error}`;
           }
         } catch (e) {
           // If we can't parse error response, use the original message
@@ -86,22 +71,8 @@ class SpotifyPlaylistAPI {
         throw new Error(errorMessage);
       }
 
-      const data: SpotifyPlaylistResponse = await response.json();
-
-      // Process and format the tracks
-      return data.tracks.items
-        .filter((item) => item.track && item.track.id) // Filter out null tracks
-        .map(
-          (item): PlaylistTrack => ({
-            id: item.track.id,
-            name: item.track.name,
-            spotifyUrl: item.track.external_urls.spotify,
-            albumCover:
-              item.track.album.images[0]?.url ||
-              "https://via.placeholder.com/300x300/333/fff?text=No+Image",
-            artist: item.track.artists[0]?.name || "Unknown Artist",
-          }),
-        );
+      const data: BackendPlaylistResponse = await response.json();
+      return data.tracks;
     } catch (error) {
       console.error("Error fetching Spotify playlist:", error);
       throw error;
@@ -161,21 +132,14 @@ class SpotifyPlaylistAPI {
 
 // Configuration
 const SPOTIFY_CONFIG = {
-  // 🔧 Fresh access token from Spotify Web Console
-  // Get this from: https://developer.spotify.com/console/get-playlist/
-  ACCESS_TOKEN:
-    "BQCaZV827QdGfU_XWjpSnRiNhgN0c3XCtZW5EF1fKYel2j17VQzJZGjk6UdCTXgofEbgC8l9ufzGICILFsBMq5Gaqh1cTbH_XrqrfduTeS0pMfLRdTob7F2kLmv84po2lmDyiQSxKsQ",
-
-  // 🎵 Playlist ID extracted from your curl URL
+  // 🎵 Playlist ID extracted from your Spotify URL
   // From playlist URL: https://open.spotify.com/playlist/1ghDr8QsDH7aeP7Jd8OLT9
   // Playlist ID = 1ghDr8QsDH7aeP7Jd8OLT9
   PLAYLIST_ID: "1ghDr8QsDH7aeP7Jd8OLT9",
 };
 
 // Export configured API instance
-export const spotifyPlaylistAPI = new SpotifyPlaylistAPI(
-  SPOTIFY_CONFIG.ACCESS_TOKEN,
-);
+export const spotifyPlaylistAPI = new SpotifyPlaylistAPI();
 export const PLAYLIST_ID = SPOTIFY_CONFIG.PLAYLIST_ID;
 
 // Export configuration for easy access
