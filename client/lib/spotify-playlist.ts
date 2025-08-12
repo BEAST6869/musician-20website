@@ -61,28 +61,28 @@ class SpotifyPlaylistAPI {
         id: "5iuWm1EbaACpLVqs5jEplm",
         name: "Sacred Queer Heart",
         spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
-        albumCover: "https://i.scdn.co/image/ab67616d0000b273f0c8f3b6e6e90b8ca3b4c2f1",
+        albumCover: "https://picsum.photos/640/640?random=1",
         artists: ["Shelby Mackay"]
       },
       {
         id: "53NYm8PTesJSSMSMoyljeh",
         name: "Moongirlnonsense",
         spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
-        albumCover: "https://i.scdn.co/image/ab67616d0000b273a1b2c3d4e5f6789012345678",
+        albumCover: "https://picsum.photos/640/640?random=2",
         artists: ["Shelby Mackay"]
       },
       {
         id: "3CY4ZmQ067SPACan76Wj5B",
         name: "Stillelectricwhenshesdown",
         spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
-        albumCover: "https://i.scdn.co/image/ab67616d0000b273c4d5e6f7890a1b2c3d4e5f67",
+        albumCover: "https://picsum.photos/640/640?random=3",
         artists: ["Shelby Mackay"]
       },
       {
         id: "5JdLlW10WLuhWnxfhCednE",
         name: "Dontforgetmypeace",
         spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
-        albumCover: "https://i.scdn.co/image/ab67616d0000b273e8f9a0b1c2d3e4f56789012a",
+        albumCover: "https://picsum.photos/640/640?random=4",
         artists: ["Shelby Mackay"]
       }
     ];
