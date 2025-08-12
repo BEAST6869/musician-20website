@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 
 export const handleDemo: RequestHandler = (req, res) => {
-  res.json({ 
+  res.json({
     message: "Hello from the backend!",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 };

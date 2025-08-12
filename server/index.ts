@@ -20,7 +20,7 @@ export function createServer() {
 }
 
 // For production builds
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   const app = createServer();
   const port = process.env.PORT || 8080;
 

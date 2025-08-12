@@ -51,13 +51,15 @@ npm run deploy          # Build and deploy to gh-pages branch
 ### Repository Setup
 
 1. **Update repository name** in `vite.config.ts`:
+
    ```typescript
-   const base = mode === 'production' ? '/your-repo-name/' : '/';
+   const base = mode === "production" ? "/your-repo-name/" : "/";
    ```
 
 2. **Update 404.html** with your repository name:
+
    ```javascript
-   const base = '/your-repo-name/';
+   const base = "/your-repo-name/";
    ```
 
 3. **Enable GitHub Pages** in repository settings:
@@ -68,6 +70,7 @@ npm run deploy          # Build and deploy to gh-pages branch
 ### Hash Router
 
 This project uses React Router's `HashRouter` for GitHub Pages compatibility. URLs will have the format:
+
 - `https://yourusername.github.io/your-repo-name/#/`
 - `https://yourusername.github.io/your-repo-name/#/about`
 
@@ -92,13 +95,16 @@ This project uses React Router's `HashRouter` for GitHub Pages compatibility. UR
 ## 🔧 Adding Features
 
 ### New Page Route
+
 1. Create component in `client/pages/MyPage.tsx`
 2. Add route in `client/App.tsx`:
+
 ```typescript
 <Route path="/my-page" element={<MyPage />} />
 ```
 
 ### Custom Components
+
 - Use existing UI components from `client/components/ui/`
 - Follow the established patterns for styling and props
 - Leverage the `cn()` utility for conditional classes

@@ -1,26 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Fusion Starter</title>
-  <script>
-    // This script redirects all 404 pages to index.html for SPA routing
-    // GitHub Pages serves this file for any unmatched routes
-    const path = window.location.pathname.split('/').slice(1);
-    const base = '/your-repo-name/'; // Update this to match your repository name
-    
-    if (path.length > 0) {
-      window.history.replaceState(null, null, base + '#/' + path.join('/') + window.location.search);
-    } else {
-      window.history.replaceState(null, null, base);
-    }
-    
-    window.location.replace(base);
-  </script>
-</head>
-<body>
-  <noscript>
-    <p>This site requires JavaScript to run properly. Please enable JavaScript and reload the page.</p>
-  </noscript>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Fusion Starter</title>
+    <script>
+      // This script redirects all 404 pages to index.html for SPA routing
+      // GitHub Pages serves this file for any unmatched routes
+      const path = window.location.pathname.split("/").slice(1);
+      const base = "/your-repo-name/"; // Update this to match your repository name
+
+      if (path.length > 0) {
+        window.history.replaceState(
+          null,
+          null,
+          base + "#/" + path.join("/") + window.location.search,
+        );
+      } else {
+        window.history.replaceState(null, null, base);
+      }
+
+      window.location.replace(base);
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>
+        This site requires JavaScript to run properly. Please enable JavaScript
+        and reload the page.
+      </p>
+    </noscript>
+  </body>
 </html>
