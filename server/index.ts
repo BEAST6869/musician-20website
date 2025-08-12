@@ -1,27 +1,30 @@
-import "dotenv/config";
 import express from "express";
-import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleSpotifyPlaylist } from "./routes/spotify";
 
 export function createServer() {
   const app = express();
 
-  // Middleware
-  app.use(cors());
+  // Enable JSON parsing
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
 
-  // Example API routes
-  app.get("/api/ping", (_req, res) => {
-    const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
+  // API Routes
+  app.get("/api/ping", (req, res) => {
+    res.json({ message: "pong" });
   });
 
   app.get("/api/demo", handleDemo);
-
-  // Spotify API routes
   app.get("/api/spotify/playlist/:playlistId", handleSpotifyPlaylist);
 
   return app;
+}
+
+// For production builds
+if (process.env.NODE_ENV === "production") {
+  const app = createServer();
+  const port = process.env.PORT || 8080;
+
+  app.listen(port, () => {
+    console.log(`🚀 Server running on http://localhost:${port}`);
+  });
 }

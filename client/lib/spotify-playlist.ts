@@ -44,7 +44,7 @@ export interface PlaylistTrack {
 
 class SpotifyPlaylistAPI {
   /**
-   * Fetch tracks from a Spotify playlist via our secure backend
+   * Fetch tracks from a Spotify playlist via our backend API
    */
   async getPlaylistTracks(playlistId: string): Promise<PlaylistTrack[]> {
     if (!playlistId || playlistId === "YOUR_PLAYLIST_ID_HERE") {
