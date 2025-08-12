@@ -28,12 +28,16 @@
     
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./client/*"]
+      "@/*": ["./client/*"],
+      "@shared/*": ["./shared/*"]
     }
   },
   "include": [
     "client/**/*",
-    "vite.config.ts"
+    "server/**/*",
+    "shared/**/*",
+    "vite.config.ts",
+    "vite.config.server.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }
