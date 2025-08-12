@@ -20,10 +20,10 @@ export function createServer() {
 }
 
 // For production builds
-if (import.meta.env.PROD) {
+if (process.env.NODE_ENV === 'production') {
   const app = createServer();
   const port = process.env.PORT || 8080;
-  
+
   app.listen(port, () => {
     console.log(`🚀 Server running on http://localhost:${port}`);
   });
