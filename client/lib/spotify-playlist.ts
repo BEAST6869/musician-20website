@@ -44,7 +44,8 @@ export interface PlaylistTrack {
 
 class SpotifyPlaylistAPI {
   /**
-   * Fetch tracks from a Spotify playlist via our secure backend
+   * Since we're now a static site, we'll return mock/hardcoded playlist data
+   * In a real implementation, you'd need a backend service to handle Spotify API calls
    */
   async getPlaylistTracks(playlistId: string): Promise<PlaylistTrack[]> {
     if (!playlistId || playlistId === "YOUR_PLAYLIST_ID_HERE") {
@@ -53,30 +54,38 @@ class SpotifyPlaylistAPI {
       );
     }
 
-    try {
-      const response = await fetch(`/api/spotify/playlist/${playlistId}`);
-
-      if (!response.ok) {
-        let errorMessage = `Backend API error: ${response.status} ${response.statusText}`;
-
-        try {
-          const errorData = await response.json();
-          if (errorData.error) {
-            errorMessage += ` - ${errorData.error}`;
-          }
-        } catch (e) {
-          // If we can't parse error response, use the original message
-        }
-
-        throw new Error(errorMessage);
+    // For GitHub Pages deployment, return hardcoded tracks
+    // This avoids the need for a backend API
+    return [
+      {
+        id: "5iuWm1EbaACpLVqs5jEplm",
+        name: "Sacred Queer Heart",
+        spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
+        albumCover: "https://i.scdn.co/image/ab67616d0000b273b3b3b3b3b3b3b3b3b3b3b3b3",
+        artists: ["Artist Name"]
+      },
+      {
+        id: "53NYm8PTesJSSMSMoyljeh",
+        name: "Moongirlnonsense",
+        spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
+        albumCover: "https://i.scdn.co/image/ab67616d0000b273b3b3b3b3b3b3b3b3b3b3b3b3",
+        artists: ["Artist Name"]
+      },
+      {
+        id: "3CY4ZmQ067SPACan76Wj5B",
+        name: "Stillelectricwhenshesdown",
+        spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
+        albumCover: "https://i.scdn.co/image/ab67616d0000b273b3b3b3b3b3b3b3b3b3b3b3b3",
+        artists: ["Artist Name"]
+      },
+      {
+        id: "5JdLlW10WLuhWnxfhCednE",
+        name: "Dontforgetmypeace",
+        spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
+        albumCover: "https://i.scdn.co/image/ab67616d0000b273b3b3b3b3b3b3b3b3b3b3b3b3",
+        artists: ["Artist Name"]
       }
-
-      const data: BackendPlaylistResponse = await response.json();
-      return data.tracks;
-    } catch (error) {
-      console.error("Error fetching Spotify playlist:", error);
-      throw error;
-    }
+    ];
   }
 
   /**
