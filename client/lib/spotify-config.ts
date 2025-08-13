@@ -3,7 +3,7 @@
 
 export const SPOTIFY_CONFIG = {
   CLIENT_ID: '4867425ccf554368bcc7274926d45738',
-  CLIENT_SECRET: '78007a2fbdad4fa9a1e46e7dc5ac19a7',
+  // CLIENT_SECRET removed for security - handled server-side only
 
   // Your Spotify Artist ID - found in your Spotify artist URL
   // Example: https://open.spotify.com/artist/5p71wpajbzO90AEiPBej94 -> Artist ID is "5p71wpajbzO90AEiPBej94"
