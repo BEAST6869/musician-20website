@@ -88,8 +88,9 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
     const playlistController = new AbortController();
     const playlistTimeoutId = setTimeout(() => playlistController.abort(), 10000);
 
+    let response: Response;
     try {
-      const response = await fetch(
+      response = await fetch(
         `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
         {
           headers: {
