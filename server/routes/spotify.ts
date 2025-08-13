@@ -135,9 +135,20 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
     res.json({ tracks });
   } catch (error) {
     console.error("Error fetching Spotify playlist:", error);
-    res.status(500).json({
+
+    // Provide more helpful error messages for common issues
+    let errorMessage = error instanceof Error ? error.message : "Unknown error";
+    let statusCode = 500;
+
+    if (errorMessage.includes("credentials not configured")) {
+      statusCode = 503; // Service Unavailable
+      errorMessage = "Spotify API not configured - Using fallback data";
+    }
+
+    res.status(statusCode).json({
       error: "Failed to fetch playlist",
-      message: error instanceof Error ? error.message : "Unknown error",
+      message: errorMessage,
+      fallback: true, // Signal to frontend to use fallback data
     });
   }
 };
