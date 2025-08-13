@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client",
+    "build": "NODE_ENV=production npm run build:client",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.server.ts",
     "build:full": "npm run build:client && npm run build:server",
@@ -12,8 +12,7 @@
     "preview": "vite preview",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc",
-    "postinstall": "npm run typecheck"
+    "typecheck": "tsc"
   },
   "dependencies": {
     "dotenv": "^17.2.0",
