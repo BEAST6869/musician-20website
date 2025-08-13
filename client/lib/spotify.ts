@@ -64,6 +64,9 @@ class SpotifyAPI {
   private clientSecret: string;
   private accessToken: string | null = null;
   private tokenExpiry: number = 0;
+  private cache: Map<string, { data: any; expiry: number }> = new Map();
+  private readonly DEFAULT_TIMEOUT = 10000; // 10 seconds
+  private readonly CACHE_DURATION = 300000; // 5 minutes
 
   constructor(clientId: string, clientSecret: string) {
     this.clientId = clientId;
@@ -83,6 +86,51 @@ class SpotifyAPI {
   }
 
   /**
+   * Fetch with timeout and retry logic
+   */
+  private async fetchWithTimeout(url: string, options: RequestInit, timeout: number = this.DEFAULT_TIMEOUT): Promise<Response> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if ((error as Error).name === 'AbortError') {
+        throw new Error(`Request timeout after ${timeout}ms`);
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Get cached data if available and not expired
+   */
+  private getCachedData(key: string): any | null {
+    const cached = this.cache.get(key);
+    if (cached && Date.now() < cached.expiry) {
+      return cached.data;
+    }
+    this.cache.delete(key);
+    return null;
+  }
+
+  /**
+   * Set data in cache
+   */
+  private setCachedData(key: string, data: any): void {
+    this.cache.set(key, {
+      data,
+      expiry: Date.now() + this.CACHE_DURATION
+    });
+  }
+
+  /**
    * Get access token using Client Credentials Flow
    * ⚠️ SECURITY WARNING: This exposes client_secret in frontend!
    * In production, move this to backend/serverless function.
@@ -96,7 +144,7 @@ class SpotifyAPI {
     }
 
     try {
-      const response = await fetch('https://accounts.spotify.com/api/token', {
+      const response = await this.fetchWithTimeout('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -134,7 +182,7 @@ class SpotifyAPI {
   }
 
   /**
-   * Fetch artist's albums and singles from Spotify
+   * Fetch artist's albums and singles from Spotify with caching
    */
   async getArtistReleases(artistId: string, limit: number = 12): Promise<ProcessedRelease[]> {
     // Validate artist ID
@@ -142,10 +190,17 @@ class SpotifyAPI {
       throw new Error('Spotify ARTIST_ID not configured. Please update client/lib/spotify-config.ts with your actual Spotify Artist ID');
     }
 
+    // Check cache first
+    const cacheKey = `releases-${artistId}-${limit}`;
+    const cachedData = this.getCachedData(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+
     try {
       const token = await this.getAccessToken();
 
-      const response = await fetch(
+      const response = await this.fetchWithTimeout(
         `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album,single&market=US&limit=${limit}&offset=0`,
         {
           headers: {
@@ -173,7 +228,7 @@ class SpotifyAPI {
       const data: SpotifyArtistAlbumsResponse = await response.json();
 
       // Process and format the releases
-      return data.items.map((album): ProcessedRelease => ({
+      const processedReleases = data.items.map((album): ProcessedRelease => ({
         id: album.id,
         title: album.name,
         type: this.formatAlbumType(album.album_type),
@@ -182,6 +237,10 @@ class SpotifyAPI {
         artwork: album.images[0]?.url || 'https://via.placeholder.com/300x300/333/fff?text=No+Image',
         releaseDate: album.release_date
       }));
+
+      // Cache the processed data
+      this.setCachedData(cacheKey, processedReleases);
+      return processedReleases;
 
     } catch (error) {
       console.error('Error fetching Spotify releases:', error);
