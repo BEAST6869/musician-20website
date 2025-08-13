@@ -15,34 +15,16 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 1000,
     sourcemap: false, // Disable sourcemaps for faster builds
-    minify: 'terser', // Use terser for better minification
+    minify: 'esbuild', // Use esbuild for faster minification
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom"],
-          ui: [
-            "@radix-ui/react-slot",
-            "@radix-ui/react-toast",
-            "@radix-ui/react-tooltip",
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu",
-          ],
+          ui: ["@radix-ui/react-slot", "@radix-ui/react-toast"],
           animations: ["framer-motion"],
-          query: ["@tanstack/react-query"],
-          spotify: [
-            "./client/lib/spotify.ts",
-            "./client/lib/spotify-config.ts",
-            "./client/lib/spotify-playlist.ts",
-          ],
         },
-      },
-    },
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console logs in production
-        drop_debugger: true,
       },
     },
   },
