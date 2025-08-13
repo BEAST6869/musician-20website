@@ -34,11 +34,10 @@ interface SpotifyPlaylistResponse {
 async function getSpotifyToken(): Promise<string> {
   const clientId =
     process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
-  const clientSecret =
-    process.env.SPOTIFY_CLIENT_SECRET || "YOUR_SPOTIFY_CLIENT_SECRET_HERE";
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-  if (clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
-    throw new Error("Spotify client secret not configured");
+  if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
+    throw new Error("Spotify credentials not configured");
   }
 
   const controller = new AbortController();
