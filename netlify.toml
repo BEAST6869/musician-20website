@@ -70,7 +70,3 @@
 # Build optimizations
 [build.processing.images]
   compress = true
-
-# Cache settings for faster deploys - using build environment instead
-[build.environment]
-  NETLIFY_CACHE_STRATEGY = "aggressive"
