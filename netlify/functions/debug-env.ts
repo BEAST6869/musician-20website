@@ -25,8 +25,8 @@ export const handler: Handler = async (event, context) => {
     spotifyClientSecret: !!process.env.SPOTIFY_CLIENT_SECRET,
     nodeEnv: process.env.NODE_ENV || "unknown",
     netlifyDev: !!process.env.NETLIFY_DEV,
-    availableEnvVars: Object.keys(process.env).filter(key => 
-      key.includes('SPOTIFY') || key.includes('NETLIFY')
+    availableEnvVars: Object.keys(process.env).filter(
+      (key) => key.includes("SPOTIFY") || key.includes("NETLIFY"),
     ),
     timestamp: new Date().toISOString(),
   };
