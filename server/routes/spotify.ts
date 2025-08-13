@@ -30,7 +30,7 @@ interface SpotifyPlaylistResponse {
   };
 }
 
-// Get Spotify access token using Client Credentials Flow
+// Get Spotify access token using Client Credentials Flow with timeout
 async function getSpotifyToken(): Promise<string> {
   const clientId =
     process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
@@ -41,21 +41,38 @@ async function getSpotifyToken(): Promise<string> {
     throw new Error("Spotify client secret not configured");
   }
 
-  const response = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
-    },
-    body: "grant_type=client_credentials",
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-  if (!response.ok) {
-    throw new Error(`Failed to get Spotify token: ${response.status}`);
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+      },
+      body: "grant_type=client_credentials",
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Failed to get Spotify token: ${response.status} - ${errorText}`,
+      );
+    }
+
+    const data: SpotifyTokenResponse = await response.json();
+    return data.access_token;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if ((error as Error).name === "AbortError") {
+      throw new Error("Spotify token request timeout");
+    }
+    throw error;
   }
-
-  const data: SpotifyTokenResponse = await response.json();
-  return data.access_token;
 }
 
 export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
@@ -69,19 +86,38 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
     // Get access token
     const token = await getSpotifyToken();
 
-    // Fetch playlist data
-    const response = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
+    // Fetch playlist data with timeout
+    const playlistController = new AbortController();
+    const playlistTimeoutId = setTimeout(
+      () => playlistController.abort(),
+      10000,
     );
 
-    if (!response.ok) {
-      throw new Error(`Spotify API error: ${response.status}`);
+    let response: Response;
+    try {
+      response = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          signal: playlistController.signal,
+        },
+      );
+
+      clearTimeout(playlistTimeoutId);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Spotify API error: ${response.status} - ${errorText}`);
+      }
+    } catch (error) {
+      clearTimeout(playlistTimeoutId);
+      if ((error as Error).name === "AbortError") {
+        throw new Error("Spotify playlist request timeout");
+      }
+      throw error;
     }
 
     const data: SpotifyPlaylistResponse = await response.json();
@@ -94,7 +130,7 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
       albumCover:
         item.track.album.images[0]?.url ||
         "https://via.placeholder.com/640x640/333/fff?text=No+Image",
-      artists: item.track.artists.map((artist) => artist.name),
+      artist: item.track.artists.map((artist) => artist.name).join(", "),
     }));
 
     res.json({ tracks });

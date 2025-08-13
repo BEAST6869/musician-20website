@@ -43,18 +43,82 @@ export interface PlaylistTrack {
 }
 
 class SpotifyPlaylistAPI {
+  private readonly DEFAULT_TIMEOUT = 10000; // 10 seconds
+  private cache: Map<string, { data: PlaylistTrack[]; expiry: number }> =
+    new Map();
+  private readonly CACHE_DURATION = 300000; // 5 minutes
+
+  /**
+   * Fetch with timeout
+   */
+  private async fetchWithTimeout(
+    url: string,
+    timeout: number = this.DEFAULT_TIMEOUT,
+  ): Promise<Response> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if ((error as Error).name === "AbortError") {
+        throw new Error(`Request timeout after ${timeout}ms`);
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Get cached data if available and not expired
+   */
+  private getCachedData(key: string): PlaylistTrack[] | null {
+    const cached = this.cache.get(key);
+    if (cached && Date.now() < cached.expiry) {
+      return cached.data;
+    }
+    this.cache.delete(key);
+    return null;
+  }
+
+  /**
+   * Set data in cache
+   */
+  private setCachedData(key: string, data: PlaylistTrack[]): void {
+    this.cache.set(key, {
+      data,
+      expiry: Date.now() + this.CACHE_DURATION,
+    });
+  }
+
   /**
    * Fetch tracks from a Spotify playlist via our backend API
    */
   async getPlaylistTracks(playlistId: string): Promise<PlaylistTrack[]> {
     if (!playlistId || playlistId === "YOUR_PLAYLIST_ID_HERE") {
-      throw new Error(
-        "Playlist ID not configured. Please update the PLAYLIST_ID in the configuration.",
-      );
+      console.warn("⚠️ Playlist ID not configured. Using mock data.");
+      return this.getMockTracks();
+    }
+
+    // Check cache first
+    const cacheKey = `playlist-${playlistId}`;
+    const cachedData = this.getCachedData(cacheKey);
+    if (cachedData) {
+      console.log("📋 Using cached playlist data");
+      return cachedData;
     }
 
     try {
-      const response = await fetch(`/api/spotify/playlist/${playlistId}`);
+      const response = await this.fetchWithTimeout(
+        `/api/spotify/playlist/${playlistId}`,
+      );
 
       if (!response.ok) {
         let errorMessage = `Backend API error: ${response.status} ${response.statusText}`;
@@ -72,11 +136,47 @@ class SpotifyPlaylistAPI {
       }
 
       const data: BackendPlaylistResponse = await response.json();
+
+      // Cache the data
+      this.setCachedData(cacheKey, data.tracks);
+
       return data.tracks;
     } catch (error) {
       console.error("Error fetching Spotify playlist:", error);
-      throw error;
+
+      // Return mock data as fallback
+      console.warn("🔄 Using mock data as fallback");
+      return this.getMockTracks();
     }
+  }
+
+  /**
+   * Get mock tracks for fallback
+   */
+  private getMockTracks(): PlaylistTrack[] {
+    return [
+      {
+        id: "mock1",
+        name: "Sample Track 1",
+        spotifyUrl: "https://open.spotify.com/track/example1",
+        albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+1",
+        artist: "Sample Artist",
+      },
+      {
+        id: "mock2",
+        name: "Sample Track 2",
+        spotifyUrl: "https://open.spotify.com/track/example2",
+        albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+2",
+        artist: "Sample Artist",
+      },
+      {
+        id: "mock3",
+        name: "Sample Track 3",
+        spotifyUrl: "https://open.spotify.com/track/example3",
+        albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+3",
+        artist: "Sample Artist",
+      },
+    ];
   }
 
   /**
