@@ -30,7 +30,7 @@ interface SpotifyPlaylistResponse {
   };
 }
 
-// Get Spotify access token using Client Credentials Flow
+// Get Spotify access token using Client Credentials Flow with timeout
 async function getSpotifyToken(): Promise<string> {
   const clientId =
     process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
@@ -41,21 +41,36 @@ async function getSpotifyToken(): Promise<string> {
     throw new Error("Spotify client secret not configured");
   }
 
-  const response = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
-    },
-    body: "grant_type=client_credentials",
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-  if (!response.ok) {
-    throw new Error(`Failed to get Spotify token: ${response.status}`);
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+      },
+      body: "grant_type=client_credentials",
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to get Spotify token: ${response.status} - ${errorText}`);
+    }
+
+    const data: SpotifyTokenResponse = await response.json();
+    return data.access_token;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if ((error as Error).name === 'AbortError') {
+      throw new Error('Spotify token request timeout');
+    }
+    throw error;
   }
-
-  const data: SpotifyTokenResponse = await response.json();
-  return data.access_token;
 }
 
 export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
