@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  NPM_FLAGS = "--silent"
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 [functions]
   directory = "netlify/functions"
