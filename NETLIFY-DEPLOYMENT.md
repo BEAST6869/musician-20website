@@ -7,17 +7,20 @@ This project has been optimized for Netlify deployment with the following improv
 ### ✅ Optimizations Applied
 
 1. **Converted Express APIs to Netlify Functions**
+
    - All API routes moved to `netlify/functions/`
    - Reduced timeout from 30s to 25s for faster response
    - Added proper CORS headers
 
 2. **Build Performance Optimizations**
+
    - Switched from terser to esbuild for faster minification
    - Disabled sourcemaps in production
    - Optimized chunk splitting strategy
    - Added build concurrency settings
 
 3. **Bundle Size Optimizations**
+
    - Simplified manual chunks configuration
    - Removed console logs in production build
    - Optimized dependencies loading
@@ -31,11 +34,13 @@ This project has been optimized for Netlify deployment with the following improv
 ### 🔧 Deployment Steps
 
 1. **Connect to Netlify:**
+
    - Link your GitHub repository to Netlify
    - Or use [Open MCP popover](#open-mcp-popover) to connect Netlify integration
 
 2. **Environment Variables:**
    Set these in Netlify dashboard → Site settings → Environment variables:
+
    ```
    SPOTIFY_CLIENT_SECRET=your_actual_spotify_client_secret
    NODE_VERSION=18
@@ -58,7 +63,7 @@ This project has been optimized for Netlify deployment with the following improv
 All API endpoints now work as Netlify Functions:
 
 - `GET /api/ping` → `/.netlify/functions/ping`
-- `GET /api/demo` → `/.netlify/functions/demo`  
+- `GET /api/demo` → `/.netlify/functions/demo`
 - `GET /api/spotify/playlist/:id` → `/.netlify/functions/spotify-playlist`
 
 ### 🛡️ Security Improvements

@@ -1,18 +1,24 @@
 // Optimized API client for Netlify Functions
 export class ApiClient {
-  private static readonly BASE_URL = '/api';
+  private static readonly BASE_URL = "/api";
   private static readonly REQUEST_TIMEOUT = 20000; // 20 seconds max
 
-  private static async fetchWithTimeout(url: string, options: RequestInit = {}) {
+  private static async fetchWithTimeout(
+    url: string,
+    options: RequestInit = {},
+  ) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), this.REQUEST_TIMEOUT);
+    const timeoutId = setTimeout(
+      () => controller.abort(),
+      this.REQUEST_TIMEOUT,
+    );
 
     try {
       const response = await fetch(url, {
         ...options,
         signal: controller.signal,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...options.headers,
         },
       });
@@ -21,14 +27,17 @@ export class ApiClient {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+        throw new Error(
+          errorData.message ||
+            `HTTP ${response.status}: ${response.statusText}`,
+        );
       }
 
       return response;
     } catch (error) {
       clearTimeout(timeoutId);
-      if ((error as Error).name === 'AbortError') {
-        throw new Error('Request timeout - please try again');
+      if ((error as Error).name === "AbortError") {
+        throw new Error("Request timeout - please try again");
       }
       throw error;
     }
@@ -45,7 +54,9 @@ export class ApiClient {
   }
 
   static async getSpotifyPlaylist(playlistId: string) {
-    const response = await this.fetchWithTimeout(`${this.BASE_URL}/spotify/playlist/${playlistId}`);
+    const response = await this.fetchWithTimeout(
+      `${this.BASE_URL}/spotify/playlist/${playlistId}`,
+    );
     return await response.json();
   }
 }

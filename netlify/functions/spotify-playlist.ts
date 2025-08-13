@@ -1,4 +1,4 @@
-import { Handler } from '@netlify/functions';
+import { Handler } from "@netlify/functions";
 
 interface SpotifyTokenResponse {
   access_token: string;
@@ -32,7 +32,8 @@ interface SpotifyPlaylistResponse {
 
 // Get Spotify access token with optimized timeout for Netlify
 async function getSpotifyToken(): Promise<string> {
-  const clientId = process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
+  const clientId =
+    process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
   if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
@@ -57,7 +58,9 @@ async function getSpotifyToken(): Promise<string> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to get Spotify token: ${response.status} - ${errorText}`);
+      throw new Error(
+        `Failed to get Spotify token: ${response.status} - ${errorText}`,
+      );
     }
 
     const data: SpotifyTokenResponse = await response.json();
@@ -74,36 +77,36 @@ async function getSpotifyToken(): Promise<string> {
 export const handler: Handler = async (event, context) => {
   // Enable CORS
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Content-Type": "application/json",
   };
 
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers,
-      body: '',
+      body: "",
     };
   }
 
-  if (event.httpMethod !== 'GET') {
+  if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
       headers,
-      body: JSON.stringify({ error: 'Method not allowed' }),
+      body: JSON.stringify({ error: "Method not allowed" }),
     };
   }
 
   try {
-    const playlistId = event.path.split('/').pop();
+    const playlistId = event.path.split("/").pop();
 
     if (!playlistId) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Playlist ID is required' }),
+        body: JSON.stringify({ error: "Playlist ID is required" }),
       };
     }
 
@@ -112,7 +115,10 @@ export const handler: Handler = async (event, context) => {
 
     // Fetch playlist data with reduced timeout for Netlify
     const playlistController = new AbortController();
-    const playlistTimeoutId = setTimeout(() => playlistController.abort(), 8000);
+    const playlistTimeoutId = setTimeout(
+      () => playlistController.abort(),
+      8000,
+    );
 
     let response: Response;
     try {
@@ -124,7 +130,7 @@ export const handler: Handler = async (event, context) => {
             "Content-Type": "application/json",
           },
           signal: playlistController.signal,
-        }
+        },
       );
 
       clearTimeout(playlistTimeoutId);

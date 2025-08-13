@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist/spa",
     chunkSizeWarningLimit: 1000,
     sourcemap: false, // Disable sourcemaps for faster builds
-    minify: 'esbuild', // Use esbuild for faster minification
+    minify: "esbuild", // Use esbuild for faster minification
     rollupOptions: {
       output: {
         manualChunks: {

@@ -1,35 +1,35 @@
-import { Handler } from '@netlify/functions';
+import { Handler } from "@netlify/functions";
 
 export const handler: Handler = async (event, context) => {
   // Enable CORS
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Content-Type": "application/json",
   };
 
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers,
-      body: '',
+      body: "",
     };
   }
 
-  if (event.httpMethod !== 'GET') {
+  if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
       headers,
-      body: JSON.stringify({ error: 'Method not allowed' }),
+      body: JSON.stringify({ error: "Method not allowed" }),
     };
   }
 
   try {
     const demoData = {
-      message: 'Hello from Netlify Functions!',
+      message: "Hello from Netlify Functions!",
       timestamp: new Date().toISOString(),
-      env: process.env.NODE_ENV || 'development',
+      env: process.env.NODE_ENV || "development",
     };
 
     return {
@@ -38,11 +38,11 @@ export const handler: Handler = async (event, context) => {
       body: JSON.stringify(demoData),
     };
   } catch (error) {
-    console.error('Error in demo function:', error);
+    console.error("Error in demo function:", error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal server error' }),
+      body: JSON.stringify({ error: "Internal server error" }),
     };
   }
 };
