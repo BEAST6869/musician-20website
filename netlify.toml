@@ -1,14 +1,19 @@
 [build]
   publish = "dist/spa"
   command = "npm run build"
-  
+
 [build.environment]
   NODE_VERSION = "18"
-  NPM_FLAGS = "--legacy-peer-deps"
+  NPM_FLAGS = "--legacy-peer-deps --no-audit --no-fund"
+  # Optimize for faster builds
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  # Enable parallel processing
+  NETLIFY_BUILD_CONCURRENCY = "4"
 
 [functions]
-  # Increase timeout for functions
-  timeout = 30
+  directory = "netlify/functions"
+  # Reduced timeout to prevent hanging
+  timeout = 25
 
 [[headers]]
   for = "/assets/*"
@@ -25,6 +30,23 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# API redirects for Netlify Functions
+[[redirects]]
+  from = "/api/ping"
+  to = "/.netlify/functions/ping"
+  status = 200
+
+[[redirects]]
+  from = "/api/demo"
+  to = "/.netlify/functions/demo"
+  status = 200
+
+[[redirects]]
+  from = "/api/spotify/playlist/*"
+  to = "/.netlify/functions/spotify-playlist"
+  status = 200
+
+# SPA fallback - must be last
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -45,6 +67,10 @@
 [build.processing.html]
   pretty_urls = true
 
-# Edge functions timeout
-[edge_functions]
-  timeout = 30
+# Build optimizations
+[build.processing.images]
+  compress = true
+
+# Cache settings for faster deploys
+[template.environment]
+  NETLIFY_CACHE_STRATEGY = "aggressive"

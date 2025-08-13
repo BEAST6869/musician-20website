@@ -286,11 +286,12 @@ class SpotifyAPI {
 
 import { SPOTIFY_CONFIG } from "./spotify-config";
 
-// Initialize Spotify API client
-export const spotifyAPI = new SpotifyAPI(
-  SPOTIFY_CONFIG.CLIENT_ID,
-  SPOTIFY_CONFIG.CLIENT_SECRET,
-);
+// Note: Spotify API client moved to Netlify Functions for security
+// Client-side code should use ApiClient instead
+// export const spotifyAPI = new SpotifyAPI(
+//   SPOTIFY_CONFIG.CLIENT_ID,
+//   CLIENT_SECRET, // This would be handled server-side
+// );
 
 // Export artist ID for component use
 export const ARTIST_ID = SPOTIFY_CONFIG.ARTIST_ID;
