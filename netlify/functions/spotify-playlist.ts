@@ -1,5 +1,12 @@
 import { Handler } from "@netlify/functions";
 
+// Declare Netlify global for environment variable access
+declare const Netlify: {
+  env: {
+    get(key: string): string | undefined;
+  };
+};
+
 interface SpotifyTokenResponse {
   access_token: string;
   token_type: string;
