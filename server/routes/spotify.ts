@@ -36,8 +36,14 @@ async function getSpotifyToken(): Promise<string> {
     process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-  if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE" || clientSecret.startsWith("BQD8l6lQykn7aPFtXI1u1PElQhHCjJlgwOW2r9nGjp9k")) {
-    throw new Error("Spotify credentials not configured - Please set SPOTIFY_CLIENT_SECRET environment variable with a valid Spotify Client Secret from https://developer.spotify.com/dashboard");
+  if (
+    !clientSecret ||
+    clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE" ||
+    clientSecret.startsWith("BQD8l6lQykn7aPFtXI1u1PElQhHCjJlgwOW2r9nGjp9k")
+  ) {
+    throw new Error(
+      "Spotify credentials not configured - Please set SPOTIFY_CLIENT_SECRET environment variable with a valid Spotify Client Secret from https://developer.spotify.com/dashboard",
+    );
   }
 
   const controller = new AbortController();

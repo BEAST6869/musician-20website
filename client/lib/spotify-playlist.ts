@@ -126,11 +126,15 @@ class SpotifyPlaylistAPI {
           try {
             const errorData = await response.json();
             if (errorData.fallback) {
-              console.warn("🔧 Spotify API not configured - using fallback data");
+              console.warn(
+                "🔧 Spotify API not configured - using fallback data",
+              );
               return this.getMockTracks(); // Return mock data directly instead of throwing
             }
           } catch (e) {
-            console.warn("🔧 Failed to parse 503 response, using fallback data");
+            console.warn(
+              "🔧 Failed to parse 503 response, using fallback data",
+            );
             return this.getMockTracks();
           }
         }
