@@ -128,6 +128,11 @@ class SpotifyPlaylistAPI {
           if (errorData.error) {
             errorMessage += ` - ${errorData.error}`;
           }
+          // For service unavailable (503), provide a user-friendly message
+          if (response.status === 503 && errorData.fallback) {
+            console.warn("🔧 Spotify API not configured - using fallback data");
+            return this.getMockTracks(); // Return mock data directly instead of throwing
+          }
         } catch (e) {
           // If we can't parse error response, use the original message
         }
