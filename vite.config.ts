@@ -16,8 +16,9 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
     chunkSizeWarningLimit: 1000,
-    sourcemap: false, // Disable sourcemaps for faster builds
-    minify: "esbuild", // Use esbuild for faster minification
+    sourcemap: false,
+    minify: "esbuild",
+    target: "esnext",
     rollupOptions: {
       output: {
         manualChunks: {
@@ -26,7 +27,14 @@ export default defineConfig(({ mode }) => ({
           animations: ["framer-motion"],
         },
       },
+      onwarn(warning, warn) {
+        // Suppress chunk size warnings that can hang builds
+        if (warning.code === 'LARGE_BUNDLE') return;
+        warn(warning);
+      },
     },
+    reportCompressedSize: false, // Disable gzip size reporting to prevent hanging
+    emptyOutDir: true,
   },
   plugins: [react(), expressPlugin()],
   resolve: {
