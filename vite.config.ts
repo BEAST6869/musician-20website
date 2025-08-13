@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
       },
       onwarn(warning, warn) {
         // Suppress chunk size warnings that can hang builds
-        if (warning.code === 'LARGE_BUNDLE') return;
+        if (warning.code === "LARGE_BUNDLE") return;
         warn(warning);
       },
     },
