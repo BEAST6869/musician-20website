@@ -12,7 +12,15 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -38,4 +46,9 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Prevent multiple root creation in development
+const rootElement = document.getElementById("root");
+if (rootElement && !rootElement.hasAttribute('data-root-created')) {
+  rootElement.setAttribute('data-root-created', 'true');
+  createRoot(rootElement).render(<App />);
+}
