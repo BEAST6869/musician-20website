@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, lazy } from "react";
 import { Instagram, Youtube } from "lucide-react";
+
+// Lazy load framer-motion to reduce initial bundle size
+const { motion } = await import("framer-motion");
 import {
   spotifyPlaylistAPI,
   PLAYLIST_ID,
