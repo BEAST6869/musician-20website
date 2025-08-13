@@ -52,22 +52,24 @@ async function getSpotifyToken(): Promise<string> {
         Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
       },
       body: "grant_type=client_credentials",
-      signal: controller.signal
+      signal: controller.signal,
     });
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to get Spotify token: ${response.status} - ${errorText}`);
+      throw new Error(
+        `Failed to get Spotify token: ${response.status} - ${errorText}`,
+      );
     }
 
     const data: SpotifyTokenResponse = await response.json();
     return data.access_token;
   } catch (error) {
     clearTimeout(timeoutId);
-    if ((error as Error).name === 'AbortError') {
-      throw new Error('Spotify token request timeout');
+    if ((error as Error).name === "AbortError") {
+      throw new Error("Spotify token request timeout");
     }
     throw error;
   }
@@ -86,7 +88,10 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
 
     // Fetch playlist data with timeout
     const playlistController = new AbortController();
-    const playlistTimeoutId = setTimeout(() => playlistController.abort(), 10000);
+    const playlistTimeoutId = setTimeout(
+      () => playlistController.abort(),
+      10000,
+    );
 
     let response: Response;
     try {
@@ -97,7 +102,7 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          signal: playlistController.signal
+          signal: playlistController.signal,
         },
       );
 
@@ -109,8 +114,8 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
       }
     } catch (error) {
       clearTimeout(playlistTimeoutId);
-      if ((error as Error).name === 'AbortError') {
-        throw new Error('Spotify playlist request timeout');
+      if ((error as Error).name === "AbortError") {
+        throw new Error("Spotify playlist request timeout");
       }
       throw error;
     }

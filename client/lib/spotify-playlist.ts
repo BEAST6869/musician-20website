@@ -44,13 +44,17 @@ export interface PlaylistTrack {
 
 class SpotifyPlaylistAPI {
   private readonly DEFAULT_TIMEOUT = 10000; // 10 seconds
-  private cache: Map<string, { data: PlaylistTrack[]; expiry: number }> = new Map();
+  private cache: Map<string, { data: PlaylistTrack[]; expiry: number }> =
+    new Map();
   private readonly CACHE_DURATION = 300000; // 5 minutes
 
   /**
    * Fetch with timeout
    */
-  private async fetchWithTimeout(url: string, timeout: number = this.DEFAULT_TIMEOUT): Promise<Response> {
+  private async fetchWithTimeout(
+    url: string,
+    timeout: number = this.DEFAULT_TIMEOUT,
+  ): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -58,14 +62,14 @@ class SpotifyPlaylistAPI {
       const response = await fetch(url, {
         signal: controller.signal,
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
       clearTimeout(timeoutId);
       return response;
     } catch (error) {
       clearTimeout(timeoutId);
-      if ((error as Error).name === 'AbortError') {
+      if ((error as Error).name === "AbortError") {
         throw new Error(`Request timeout after ${timeout}ms`);
       }
       throw error;
@@ -90,7 +94,7 @@ class SpotifyPlaylistAPI {
   private setCachedData(key: string, data: PlaylistTrack[]): void {
     this.cache.set(key, {
       data,
-      expiry: Date.now() + this.CACHE_DURATION
+      expiry: Date.now() + this.CACHE_DURATION,
     });
   }
 
@@ -112,7 +116,9 @@ class SpotifyPlaylistAPI {
     }
 
     try {
-      const response = await this.fetchWithTimeout(`/api/spotify/playlist/${playlistId}`);
+      const response = await this.fetchWithTimeout(
+        `/api/spotify/playlist/${playlistId}`,
+      );
 
       if (!response.ok) {
         let errorMessage = `Backend API error: ${response.status} ${response.statusText}`;
@@ -154,22 +160,22 @@ class SpotifyPlaylistAPI {
         name: "Sample Track 1",
         spotifyUrl: "https://open.spotify.com/track/example1",
         albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+1",
-        artist: "Sample Artist"
+        artist: "Sample Artist",
       },
       {
         id: "mock2",
         name: "Sample Track 2",
         spotifyUrl: "https://open.spotify.com/track/example2",
         albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+2",
-        artist: "Sample Artist"
+        artist: "Sample Artist",
       },
       {
         id: "mock3",
         name: "Sample Track 3",
         spotifyUrl: "https://open.spotify.com/track/example3",
         albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+3",
-        artist: "Sample Artist"
-      }
+        artist: "Sample Artist",
+      },
     ];
   }
 
