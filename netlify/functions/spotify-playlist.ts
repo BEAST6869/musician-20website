@@ -1,12 +1,5 @@
 import { Handler } from "@netlify/functions";
 
-// Declare Netlify global for environment variable access
-declare const Netlify: {
-  env: {
-    get(key: string): string | undefined;
-  };
-};
-
 interface SpotifyTokenResponse {
   access_token: string;
   token_type: string;
@@ -39,9 +32,12 @@ interface SpotifyPlaylistResponse {
 
 // Get Spotify access token with optimized timeout for Netlify
 async function getSpotifyToken(): Promise<string> {
-  // Use Netlify's recommended way to access env vars
-  const clientId = Netlify.env.get("SPOTIFY_CLIENT_ID") || process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
-  const clientSecret = Netlify.env.get("SPOTIFY_CLIENT_SECRET") || process.env.SPOTIFY_CLIENT_SECRET;
+  // Try multiple ways to access environment variables
+  const clientId = process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+
+  console.log("Environment check - Client ID:", clientId ? "Set" : "Missing");
+  console.log("Environment check - Client Secret:", clientSecret ? "Set" : "Missing");
 
   if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
     throw new Error("Spotify credentials not configured");
