@@ -19,14 +19,22 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-slot', '@radix-ui/react-toast', '@radix-ui/react-tooltip'],
-          animations: ['framer-motion'],
-          query: ['@tanstack/react-query'],
-          spotify: ['./client/lib/spotify.ts', './client/lib/spotify-config.ts', './client/lib/spotify-playlist.ts']
-        }
-      }
-    }
+          vendor: ["react", "react-dom", "react-router-dom"],
+          ui: [
+            "@radix-ui/react-slot",
+            "@radix-ui/react-toast",
+            "@radix-ui/react-tooltip",
+          ],
+          animations: ["framer-motion"],
+          query: ["@tanstack/react-query"],
+          spotify: [
+            "./client/lib/spotify.ts",
+            "./client/lib/spotify-config.ts",
+            "./client/lib/spotify-playlist.ts",
+          ],
+        },
+      },
+    },
   },
   plugins: [react(), expressPlugin()],
   resolve: {
