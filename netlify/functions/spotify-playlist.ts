@@ -32,12 +32,12 @@ interface SpotifyPlaylistResponse {
 
 // Get Spotify access token with optimized timeout for Netlify
 async function getSpotifyToken(): Promise<string> {
-  const clientId =
-    process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  // Use Netlify's recommended way to access env vars
+  const clientId = Netlify.env.get("SPOTIFY_CLIENT_ID") || process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
+  const clientSecret = Netlify.env.get("SPOTIFY_CLIENT_SECRET") || process.env.SPOTIFY_CLIENT_SECRET;
 
   if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
-    throw new Error("Spotify client secret not configured");
+    throw new Error("Spotify credentials not configured");
   }
 
   const controller = new AbortController();
