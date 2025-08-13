@@ -36,8 +36,14 @@ async function getSpotifyToken(): Promise<string> {
     process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-  if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
-    throw new Error("Spotify credentials not configured");
+  if (
+    !clientSecret ||
+    clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE" ||
+    clientSecret.startsWith("BQD8l6lQykn7aPFtXI1u1PElQhHCjJlgwOW2r9nGjp9k")
+  ) {
+    throw new Error(
+      "Spotify credentials not configured - Please set SPOTIFY_CLIENT_SECRET environment variable with a valid Spotify Client Secret from https://developer.spotify.com/dashboard",
+    );
   }
 
   const controller = new AbortController();
@@ -135,9 +141,20 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
     res.json({ tracks });
   } catch (error) {
     console.error("Error fetching Spotify playlist:", error);
-    res.status(500).json({
+
+    // Provide more helpful error messages for common issues
+    let errorMessage = error instanceof Error ? error.message : "Unknown error";
+    let statusCode = 500;
+
+    if (errorMessage.includes("credentials not configured")) {
+      statusCode = 503; // Service Unavailable
+      errorMessage = "Spotify API not configured - Using fallback data";
+    }
+
+    res.status(statusCode).json({
       error: "Failed to fetch playlist",
-      message: error instanceof Error ? error.message : "Unknown error",
+      message: errorMessage,
+      fallback: true, // Signal to frontend to use fallback data
     });
   }
 };

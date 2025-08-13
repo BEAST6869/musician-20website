@@ -121,8 +121,26 @@ class SpotifyPlaylistAPI {
       );
 
       if (!response.ok) {
-        let errorMessage = `Backend API error: ${response.status} ${response.statusText}`;
+        // For service unavailable (503), try to parse response and use fallback
+        if (response.status === 503) {
+          try {
+            const errorData = await response.json();
+            if (errorData.fallback) {
+              console.warn(
+                "🔧 Spotify API not configured - using fallback data",
+              );
+              return this.getMockTracks(); // Return mock data directly instead of throwing
+            }
+          } catch (e) {
+            console.warn(
+              "🔧 Failed to parse 503 response, using fallback data",
+            );
+            return this.getMockTracks();
+          }
+        }
 
+        // For other errors, provide detailed error message
+        let errorMessage = `Backend API error: ${response.status} ${response.statusText}`;
         try {
           const errorData = await response.json();
           if (errorData.error) {
