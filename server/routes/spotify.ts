@@ -94,7 +94,7 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
       albumCover:
         item.track.album.images[0]?.url ||
         "https://via.placeholder.com/640x640/333/fff?text=No+Image",
-      artists: item.track.artists.map((artist) => artist.name),
+      artist: item.track.artists.map((artist) => artist.name).join(", "),
     }));
 
     res.json({ tracks });
