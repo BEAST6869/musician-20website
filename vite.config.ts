@@ -15,7 +15,9 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 800,
+    sourcemap: false, // Disable sourcemaps for faster builds
+    minify: 'terser', // Use terser for better minification
     rollupOptions: {
       output: {
         manualChunks: {
@@ -24,6 +26,8 @@ export default defineConfig(({ mode }) => ({
             "@radix-ui/react-slot",
             "@radix-ui/react-toast",
             "@radix-ui/react-tooltip",
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
           ],
           animations: ["framer-motion"],
           query: ["@tanstack/react-query"],
@@ -33,6 +37,12 @@ export default defineConfig(({ mode }) => ({
             "./client/lib/spotify-playlist.ts",
           ],
         },
+      },
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console logs in production
+        drop_debugger: true,
       },
     },
   },
