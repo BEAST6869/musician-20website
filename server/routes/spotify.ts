@@ -84,19 +84,34 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
     // Get access token
     const token = await getSpotifyToken();
 
-    // Fetch playlist data
-    const response = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    // Fetch playlist data with timeout
+    const playlistController = new AbortController();
+    const playlistTimeoutId = setTimeout(() => playlistController.abort(), 10000);
 
-    if (!response.ok) {
-      throw new Error(`Spotify API error: ${response.status}`);
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          signal: playlistController.signal
+        },
+      );
+
+      clearTimeout(playlistTimeoutId);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Spotify API error: ${response.status} - ${errorText}`);
+      }
+    } catch (error) {
+      clearTimeout(playlistTimeoutId);
+      if ((error as Error).name === 'AbortError') {
+        throw new Error('Spotify playlist request timeout');
+      }
+      throw error;
     }
 
     const data: SpotifyPlaylistResponse = await response.json();
