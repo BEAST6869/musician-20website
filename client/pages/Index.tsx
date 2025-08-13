@@ -1,8 +1,12 @@
-import { useEffect, useState, lazy } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Instagram, Youtube } from "lucide-react";
 
-// Lazy load framer-motion to reduce initial bundle size
-const { motion } = await import("framer-motion");
+// Lazy load motion components
+const MotionDiv = lazy(() => import("framer-motion").then(mod => ({ default: mod.motion.div })));
+const MotionButton = lazy(() => import("framer-motion").then(mod => ({ default: mod.motion.button })));
+const MotionImg = lazy(() => import("framer-motion").then(mod => ({ default: mod.motion.img })));
+const MotionH1 = lazy(() => import("framer-motion").then(mod => ({ default: mod.motion.h1 })));
+const MotionSection = lazy(() => import("framer-motion").then(mod => ({ default: mod.motion.section })));
 import {
   spotifyPlaylistAPI,
   PLAYLIST_ID,
