@@ -19,12 +19,16 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-select', '@radix-ui/react-tabs'],
-          utils: ['clsx', 'tailwind-merge', 'class-variance-authority']
-        }
-      }
-    }
+          vendor: ["react", "react-dom", "react-router-dom"],
+          ui: [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-select",
+            "@radix-ui/react-tabs",
+          ],
+          utils: ["clsx", "tailwind-merge", "class-variance-authority"],
+        },
+      },
+    },
   },
   plugins: [react(), expressPlugin()],
   resolve: {
