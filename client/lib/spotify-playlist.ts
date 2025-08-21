@@ -233,8 +233,8 @@ class SpotifyPlaylistAPI {
 // Configuration
 const SPOTIFY_CONFIG = {
   // 🎵 Playlist ID extracted from your Spotify URL
-  // From playlist URL: https://open.spotify.com/playlist/1ghDr8QsDH7aeP7Jd8OLT9
-  // Playlist ID = 1ghDr8QsDH7aeP7Jd8OLT9
+  // From playlist URL: https://open.spotify.com/playlist/1ghDr8QsDH7aeP7Jd8OLT9?si=q2welkodQ5OFu-S3LQSKbg&nd=1&dlsi=5efe33b916754f58
+  // Clean Playlist ID = 1ghDr8QsDH7aeP7Jd8OLT9 (everything before the ? is the actual ID)
   PLAYLIST_ID: "1ghDr8QsDH7aeP7Jd8OLT9",
 };
 
