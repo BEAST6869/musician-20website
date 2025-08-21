@@ -16,10 +16,12 @@ export function createServer() {
   const app = express();
 
   // Middleware
+  const allowedOrigins = process.env.NODE_ENV === "production"
+    ? [process.env.FRONTEND_URL, "https://*.railway.app"].filter((url): url is string => Boolean(url))
+    : ["http://localhost:3000", "http://localhost:8080", "http://localhost:5173"];
+
   app.use(cors({
-    origin: process.env.NODE_ENV === "production" 
-      ? [process.env.FRONTEND_URL, "https://*.railway.app"].filter(Boolean)
-      : ["http://localhost:3000", "http://localhost:8080", "http://localhost:5173"],
+    origin: allowedOrigins,
     credentials: true
   }));
   
@@ -69,7 +71,7 @@ export function createServer() {
 // Start server if running directly
 if (process.env.NODE_ENV === "production" || process.argv[1] === fileURLToPath(import.meta.url)) {
   const app = createServer();
-  const port = process.env.PORT || 8080;
+  const port = parseInt(process.env.PORT || "8080", 10);
 
   app.listen(port, "0.0.0.0", () => {
     console.log(`🚀 Server running on port ${port}`);
