@@ -5,15 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  NPM_FLAGS = "--production=false --legacy-peer-deps"
 
 [functions]
-  external_node_modules = ["express"]
+  external_node_modules = ["express", "dotenv"]
   node_bundler = "esbuild"
-  included_files = ["!node_modules/@types/**/*", "!**/*.spec.ts", "!**/*.test.ts"]
-  
-[[redirects]]
-  force = true
-  from = "/api/*"
-  status = 200
-  to = "/.netlify/functions/api/:splat"
