@@ -1,6 +1,5 @@
-// Spotify Web API integration using Client Credentials Flow
-// ⚠️ WARNING: In production, client_secret should NEVER be exposed in frontend code!
-// Move token generation to backend/serverless function for security.
+// Spotify API integration using secure backend endpoints
+// All Spotify API calls now go through our backend for security
 
 // Spotify API Types
 export interface SpotifyImage {
@@ -33,21 +32,6 @@ export interface SpotifyAlbum {
   artists: SpotifyArtist[];
 }
 
-export interface SpotifyArtistAlbumsResponse {
-  items: SpotifyAlbum[];
-  total: number;
-  limit: number;
-  offset: number;
-  next: string | null;
-  previous: string | null;
-}
-
-export interface SpotifyTokenResponse {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-}
-
 // Processed release data for our UI
 export interface ProcessedRelease {
   id: string;
@@ -59,154 +43,62 @@ export interface ProcessedRelease {
   releaseDate: string;
 }
 
-class SpotifyAPI {
-  private clientId: string;
-  private clientSecret: string;
-  private accessToken: string | null = null;
-  private tokenExpiry: number = 0;
-
-  constructor(clientId: string, clientSecret: string) {
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
-  }
-
-  /**
-   * Validate that credentials are properly configured
-   */
-  private validateCredentials(): void {
-    if (!this.clientId || this.clientId === 'YOUR_SPOTIFY_CLIENT_ID_HERE') {
-      throw new Error('Spotify CLIENT_ID not configured. Please update client/lib/spotify-config.ts');
-    }
-    if (!this.clientSecret || this.clientSecret === 'YOUR_SPOTIFY_CLIENT_SECRET_HERE') {
-      throw new Error('Spotify CLIENT_SECRET not configured. Please update client/lib/spotify-config.ts');
-    }
-  }
-
-  /**
-   * Get access token using Client Credentials Flow
-   * ⚠️ SECURITY WARNING: This exposes client_secret in frontend!
-   * In production, move this to backend/serverless function.
-   */
-  private async getAccessToken(): Promise<string> {
-    // Validate credentials before making API call
-    this.validateCredentials();
-
-    if (this.accessToken && Date.now() < this.tokenExpiry) {
-      return this.accessToken;
-    }
-
-    try {
-      const response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${btoa(`${this.clientId}:${this.clientSecret}`)}`
-        },
-        body: 'grant_type=client_credentials'
-      });
-
-      if (!response.ok) {
-        let errorMessage = `Failed to get Spotify token: ${response.status} ${response.statusText}`;
-
-        try {
-          const errorData = await response.json();
-          if (errorData.error_description) {
-            errorMessage += ` - ${errorData.error_description}`;
-          }
-        } catch (e) {
-          // If we can't parse error response, use the original message
-        }
-
-        throw new Error(errorMessage);
-      }
-
-      const data: SpotifyTokenResponse = await response.json();
-      this.accessToken = data.access_token;
-      this.tokenExpiry = Date.now() + (data.expires_in * 1000) - 60000; // Subtract 1 minute for safety
-
-      return this.accessToken;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error('Unknown error occurred while getting Spotify token');
-    }
-  }
-
-  /**
-   * Fetch artist's albums and singles from Spotify
-   */
-  async getArtistReleases(artistId: string, limit: number = 12): Promise<ProcessedRelease[]> {
-    // Validate artist ID
-    if (!artistId || artistId === 'YOUR_SPOTIFY_ARTIST_ID_HERE') {
-      throw new Error('Spotify ARTIST_ID not configured. Please update client/lib/spotify-config.ts with your actual Spotify Artist ID');
-    }
-
-    try {
-      const token = await this.getAccessToken();
-
-      const response = await fetch(
-        `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album,single&market=US&limit=${limit}&offset=0`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-
-      if (!response.ok) {
-        let errorMessage = `Spotify API error: ${response.status} ${response.statusText}`;
-
-        try {
-          const errorData = await response.json();
-          if (errorData.error?.message) {
-            errorMessage += ` - ${errorData.error.message}`;
-          }
-        } catch (e) {
-          // If we can't parse error response, use the original message
-        }
-
-        throw new Error(errorMessage);
-      }
-
-      const data: SpotifyArtistAlbumsResponse = await response.json();
-
-      // Process and format the releases
-      return data.items.map((album): ProcessedRelease => ({
-        id: album.id,
-        title: album.name,
-        type: this.formatAlbumType(album.album_type),
-        year: album.release_date.split('-')[0],
-        spotifyUrl: album.external_urls.spotify,
-        artwork: album.images[0]?.url || 'https://via.placeholder.com/300x300/333/fff?text=No+Image',
-        releaseDate: album.release_date
-      }));
-
-    } catch (error) {
-      console.error('Error fetching Spotify releases:', error);
-      throw error;
-    }
-  }
-
-  private formatAlbumType(type: string): 'Single' | 'Album' | 'Compilation' {
-    switch (type) {
-      case 'single':
-        return 'Single';
-      case 'album':
-        return 'Album';
-      case 'compilation':
-        return 'Compilation';
-      default:
-        return 'Single';
-    }
-  }
+// Track data from playlist
+export interface ProcessedTrack {
+  id: string;
+  name: string;
+  spotifyUrl: string;
+  albumCover: string;
+  artist: string;
 }
 
 import { SPOTIFY_CONFIG } from './spotify-config';
 
-// Initialize Spotify API client
-export const spotifyAPI = new SpotifyAPI(SPOTIFY_CONFIG.CLIENT_ID, SPOTIFY_CONFIG.CLIENT_SECRET);
+class SpotifyAPI {
+  private apiBase: string;
 
-// Export artist ID for component use
-export const ARTIST_ID = SPOTIFY_CONFIG.ARTIST_ID;
+  constructor(apiBase: string) {
+    this.apiBase = apiBase;
+  }
+
+  /**
+   * Fetch playlist tracks from our backend API
+   */
+  async getPlaylistTracks(playlistId: string): Promise<ProcessedTrack[]> {
+    try {
+      const response = await fetch(`${this.apiBase}/playlist/${playlistId}`);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch playlist: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.tracks || [];
+    } catch (error) {
+      console.error('Error fetching playlist:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch artist releases - this would need a backend endpoint
+   * For now, returning empty array until backend endpoint is implemented
+   */
+  async getArtistReleases(artistId: string, limit: number = 12): Promise<ProcessedRelease[]> {
+    try {
+      // This would call a backend endpoint like /api/spotify/artist/{artistId}/releases
+      // For now, return empty array to prevent TypeScript errors
+      console.warn('Artist releases endpoint not yet implemented in backend');
+      return [];
+    } catch (error) {
+      console.error('Error fetching artist releases:', error);
+      throw error;
+    }
+  }
+}
+
+// Initialize Spotify API client with backend base URL
+export const spotifyAPI = new SpotifyAPI(SPOTIFY_CONFIG.API_BASE);
+
+// Artist ID - this should be moved to backend configuration eventually
+export const ARTIST_ID = '31lyqvgaccgiuua2s2kdoxr6bsoy';
