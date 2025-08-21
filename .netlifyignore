@@ -1,0 +1,48 @@
+# Development files
+*.log
+.env.local
+.env.development
+.env.test
+
+# Test files
+**/*.test.*
+**/*.spec.*
+**/test/**
+**/tests/**
+**/__tests__/**
+
+# Documentation
+README.md
+AGENTS.md
+*.md
+
+# Source maps (comment out if you need them)
+**/*.map
+
+# TypeScript source files (we only need compiled JS)
+server/**/*.ts
+!server/**/*.d.ts
+
+# Development dependencies
+node_modules/@types/**
+node_modules/.bin/**
+
+# IDE files
+.vscode/**
+.idea/**
+*.swp
+*.swo
+
+# Git files
+.git/**
+.gitignore
+
+# Large media files (if any)
+**/*.mp4
+**/*.mov
+**/*.avi
+
+# Cache directories
+.cache/**
+.next/**
+.nuxt/**
