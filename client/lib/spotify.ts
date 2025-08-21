@@ -23,9 +23,9 @@ export interface SpotifyArtist {
 export interface SpotifyAlbum {
   id: string;
   name: string;
-  album_type: 'album' | 'single' | 'compilation';
+  album_type: "album" | "single" | "compilation";
   release_date: string;
-  release_date_precision: 'year' | 'month' | 'day';
+  release_date_precision: "year" | "month" | "day";
   total_tracks: number;
   images: SpotifyImage[];
   external_urls: SpotifyExternalUrls;
@@ -36,7 +36,7 @@ export interface SpotifyAlbum {
 export interface ProcessedRelease {
   id: string;
   title: string;
-  type: 'Single' | 'Album' | 'Compilation';
+  type: "Single" | "Album" | "Compilation";
   year: string;
   spotifyUrl: string;
   artwork: string;
@@ -52,7 +52,7 @@ export interface ProcessedTrack {
   artist: string;
 }
 
-import { SPOTIFY_CONFIG } from './spotify-config';
+import { SPOTIFY_CONFIG } from "./spotify-config";
 
 class SpotifyAPI {
   private apiBase: string;
@@ -69,13 +69,15 @@ class SpotifyAPI {
       const response = await fetch(`${this.apiBase}/playlist/${playlistId}`);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch playlist: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch playlist: ${response.status} ${response.statusText}`,
+        );
       }
 
       const data = await response.json();
       return data.tracks || [];
     } catch (error) {
-      console.error('Error fetching playlist:', error);
+      console.error("Error fetching playlist:", error);
       throw error;
     }
   }
@@ -84,14 +86,17 @@ class SpotifyAPI {
    * Fetch artist releases - this would need a backend endpoint
    * For now, returning empty array until backend endpoint is implemented
    */
-  async getArtistReleases(artistId: string, limit: number = 12): Promise<ProcessedRelease[]> {
+  async getArtistReleases(
+    artistId: string,
+    limit: number = 12,
+  ): Promise<ProcessedRelease[]> {
     try {
       // This would call a backend endpoint like /api/spotify/artist/{artistId}/releases
       // For now, return empty array to prevent TypeScript errors
-      console.warn('Artist releases endpoint not yet implemented in backend');
+      console.warn("Artist releases endpoint not yet implemented in backend");
       return [];
     } catch (error) {
-      console.error('Error fetching artist releases:', error);
+      console.error("Error fetching artist releases:", error);
       throw error;
     }
   }
@@ -101,4 +106,4 @@ class SpotifyAPI {
 export const spotifyAPI = new SpotifyAPI(SPOTIFY_CONFIG.API_BASE);
 
 // Artist ID - this should be moved to backend configuration eventually
-export const ARTIST_ID = '31lyqvgaccgiuua2s2kdoxr6bsoy';
+export const ARTIST_ID = "31lyqvgaccgiuua2s2kdoxr6bsoy";

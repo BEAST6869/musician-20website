@@ -36,7 +36,7 @@ The build was failing due to TypeScript compilation errors in `client/lib/spotif
 ## What Was Fixed:
 
 - ❌ `Property 'CLIENT_ID' does not exist` → ✅ Using backend API
-- ❌ `Property 'CLIENT_SECRET' does not exist` → ✅ Secure server handling  
+- ❌ `Property 'CLIENT_SECRET' does not exist` → ✅ Secure server handling
 - ❌ `Property 'ARTIST_ID' does not exist` → ✅ Moved to backend config
 - ❌ `postinstall typecheck failing` → ✅ Removed blocking typecheck
 
