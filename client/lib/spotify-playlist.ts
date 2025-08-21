@@ -147,8 +147,12 @@ class SpotifyPlaylistAPI {
 
       // Check if it's a network error
       if (error instanceof TypeError && error.message === "Failed to fetch") {
-        console.warn("🌐 Network error: Backend server may not be running or accessible");
-        console.warn("💡 Tip: Check that your backend server is deployed and environment variables are set");
+        console.warn(
+          "🌐 Network error: Backend server may not be running or accessible",
+        );
+        console.warn(
+          "💡 Tip: Check that your backend server is deployed and environment variables are set",
+        );
       }
 
       // Return mock data as fallback
