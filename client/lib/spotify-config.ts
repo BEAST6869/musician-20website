@@ -4,7 +4,7 @@
 export const SPOTIFY_CONFIG = {
   // All Spotify API calls now go through our backend endpoints
   // No credentials exposed on the frontend
-  API_BASE: '/api/spotify'
+  API_BASE: "/api/spotify",
 };
 
 // Security: All Spotify credentials are now handled server-side
