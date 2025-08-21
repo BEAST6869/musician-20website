@@ -46,9 +46,9 @@ export default defineConfig(({ mode }) => ({
   define: {
     // Define API URL for frontend
     __API_URL__: JSON.stringify(
-      mode === "production" 
+      mode === "production"
         ? "" // Same origin in production
-        : "http://localhost:3001"
+        : "http://localhost:3001",
     ),
   },
 }));

@@ -70,7 +70,7 @@ interface SpotifySearchResponse {
  */
 async function makeSpotifyRequest(endpoint: string, options: RequestInit = {}) {
   const token = await spotifyTokenManager.getAccessToken();
-  
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -78,7 +78,7 @@ async function makeSpotifyRequest(endpoint: string, options: RequestInit = {}) {
     const response = await fetch(`https://api.spotify.com/v1/${endpoint}`, {
       ...options,
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
         ...options.headers,
       },
@@ -95,11 +95,11 @@ async function makeSpotifyRequest(endpoint: string, options: RequestInit = {}) {
     return response.json();
   } catch (error) {
     clearTimeout(timeoutId);
-    
+
     if ((error as Error).name === "AbortError") {
       throw new Error("Spotify API request timeout");
     }
-    
+
     throw error;
   }
 }
@@ -108,75 +108,85 @@ async function makeSpotifyRequest(endpoint: string, options: RequestInit = {}) {
  * Get playlist tracks
  * GET /api/spotify/playlist/:playlistId
  */
-spotifyRouter.get("/playlist/:playlistId", async (req: Request, res: Response) => {
-  try {
-    const { playlistId } = req.params;
+spotifyRouter.get(
+  "/playlist/:playlistId",
+  async (req: Request, res: Response) => {
+    try {
+      const { playlistId } = req.params;
 
-    if (!playlistId) {
-      return res.status(400).json({ error: "Playlist ID is required" });
+      if (!playlistId) {
+        return res.status(400).json({ error: "Playlist ID is required" });
+      }
+
+      console.log(`🎵 Fetching playlist: ${playlistId}`);
+
+      const data: SpotifyPlaylistResponse = await makeSpotifyRequest(
+        `playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`,
+      );
+
+      // Transform the data to match frontend interface
+      const tracks = data.tracks.items.map((item) => ({
+        id: item.track.id,
+        name: item.track.name,
+        spotifyUrl: item.track.external_urls.spotify,
+        albumCover:
+          item.track.album.images[0]?.url ||
+          "https://via.placeholder.com/640x640/333/fff?text=No+Image",
+        artist: item.track.artists.map((artist) => artist.name).join(", "),
+      }));
+
+      res.json({ tracks, total: tracks.length });
+    } catch (error) {
+      console.error("❌ Error fetching Spotify playlist:", error);
+      res.status(500).json({
+        error: "Failed to fetch playlist",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
-
-    console.log(`🎵 Fetching playlist: ${playlistId}`);
-
-    const data: SpotifyPlaylistResponse = await makeSpotifyRequest(
-      `playlists/${playlistId}?fields=tracks.items(track(id,name,external_urls,album(images),artists(name)))`
-    );
-
-    // Transform the data to match frontend interface
-    const tracks = data.tracks.items.map((item) => ({
-      id: item.track.id,
-      name: item.track.name,
-      spotifyUrl: item.track.external_urls.spotify,
-      albumCover: item.track.album.images[0]?.url || "https://via.placeholder.com/640x640/333/fff?text=No+Image",
-      artist: item.track.artists.map((artist) => artist.name).join(", "),
-    }));
-
-    res.json({ tracks, total: tracks.length });
-  } catch (error) {
-    console.error("❌ Error fetching Spotify playlist:", error);
-    res.status(500).json({
-      error: "Failed to fetch playlist",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-});
+  },
+);
 
 /**
  * Get artist albums
  * GET /api/spotify/artist/:artistId/albums
  */
-spotifyRouter.get("/artist/:artistId/albums", async (req: Request, res: Response) => {
-  try {
-    const { artistId } = req.params;
-    const { limit = "20", offset = "0" } = req.query;
+spotifyRouter.get(
+  "/artist/:artistId/albums",
+  async (req: Request, res: Response) => {
+    try {
+      const { artistId } = req.params;
+      const { limit = "20", offset = "0" } = req.query;
 
-    if (!artistId) {
-      return res.status(400).json({ error: "Artist ID is required" });
+      if (!artistId) {
+        return res.status(400).json({ error: "Artist ID is required" });
+      }
+
+      console.log(`🎤 Fetching albums for artist: ${artistId}`);
+
+      const data: SpotifyArtistAlbumsResponse = await makeSpotifyRequest(
+        `artists/${artistId}/albums?include_groups=album,single&market=US&limit=${limit}&offset=${offset}`,
+      );
+
+      const albums = data.items.map((album) => ({
+        id: album.id,
+        name: album.name,
+        releaseDate: album.release_date,
+        spotifyUrl: album.external_urls.spotify,
+        image:
+          album.images[0]?.url ||
+          "https://via.placeholder.com/640x640/333/fff?text=No+Image",
+      }));
+
+      res.json({ albums, total: albums.length });
+    } catch (error) {
+      console.error("❌ Error fetching artist albums:", error);
+      res.status(500).json({
+        error: "Failed to fetch artist albums",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
-
-    console.log(`🎤 Fetching albums for artist: ${artistId}`);
-
-    const data: SpotifyArtistAlbumsResponse = await makeSpotifyRequest(
-      `artists/${artistId}/albums?include_groups=album,single&market=US&limit=${limit}&offset=${offset}`
-    );
-
-    const albums = data.items.map((album) => ({
-      id: album.id,
-      name: album.name,
-      releaseDate: album.release_date,
-      spotifyUrl: album.external_urls.spotify,
-      image: album.images[0]?.url || "https://via.placeholder.com/640x640/333/fff?text=No+Image",
-    }));
-
-    res.json({ albums, total: albums.length });
-  } catch (error) {
-    console.error("❌ Error fetching artist albums:", error);
-    res.status(500).json({
-      error: "Failed to fetch artist albums",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-});
+  },
+);
 
 /**
  * Search tracks
@@ -193,7 +203,7 @@ spotifyRouter.get("/search", async (req: Request, res: Response) => {
     console.log(`🔍 Searching Spotify: "${q}"`);
 
     const data: SpotifySearchResponse = await makeSpotifyRequest(
-      `search?q=${encodeURIComponent(q as string)}&type=${type}&limit=${limit}&offset=${offset}&market=US`
+      `search?q=${encodeURIComponent(q as string)}&type=${type}&limit=${limit}&offset=${offset}&market=US`,
     );
 
     if (type === "track" && data.tracks) {
@@ -201,7 +211,9 @@ spotifyRouter.get("/search", async (req: Request, res: Response) => {
         id: track.id,
         name: track.name,
         spotifyUrl: track.external_urls.spotify,
-        albumCover: track.album.images[0]?.url || "https://via.placeholder.com/640x640/333/fff?text=No+Image",
+        albumCover:
+          track.album.images[0]?.url ||
+          "https://via.placeholder.com/640x640/333/fff?text=No+Image",
         artist: track.artists.map((artist) => artist.name).join(", "),
       }));
 
@@ -249,7 +261,7 @@ spotifyRouter.post("/token/refresh", async (req: Request, res: Response) => {
     spotifyTokenManager.clearCache();
     const token = await spotifyTokenManager.getAccessToken();
     const tokenInfo = spotifyTokenManager.getTokenInfo();
-    
+
     res.json({
       message: "Token refreshed successfully",
       expiresIn: tokenInfo.expiresIn,

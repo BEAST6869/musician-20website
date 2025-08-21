@@ -21,7 +21,7 @@ healthRouter.get("/", (req: Request, res: Response) => {
  * GET /api/ping
  */
 healthRouter.get("/ping", (req: Request, res: Response) => {
-  res.json({ 
+  res.json({
     message: "pong",
     timestamp: new Date().toISOString(),
   });

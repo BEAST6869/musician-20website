@@ -24,14 +24,6 @@
       "@shared/*": ["./shared/*"]
     }
   },
-  "include": [
-    "server/**/*",
-    "shared/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "client/**/*",
-    "netlify/**/*"
-  ]
+  "include": ["server/**/*", "shared/**/*"],
+  "exclude": ["node_modules", "dist", "client/**/*", "netlify/**/*"]
 }

@@ -20,7 +20,9 @@ class SpotifyTokenManager {
     this.clientSecret = process.env.SPOTIFY_CLIENT_SECRET || "";
 
     if (!this.clientId || !this.clientSecret) {
-      throw new Error("Spotify credentials not configured. Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET environment variables.");
+      throw new Error(
+        "Spotify credentials not configured. Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET environment variables.",
+      );
     }
   }
 
@@ -29,7 +31,8 @@ class SpotifyTokenManager {
    */
   async getAccessToken(): Promise<string> {
     // Check if we have a valid cached token
-    if (this.tokenCache && this.tokenCache.expiresAt > Date.now() + 60000) { // 1 minute buffer
+    if (this.tokenCache && this.tokenCache.expiresAt > Date.now() + 60000) {
+      // 1 minute buffer
       return this.tokenCache.token;
     }
 
@@ -40,7 +43,7 @@ class SpotifyTokenManager {
 
     // Start refresh process
     this.refreshPromise = this.refreshToken();
-    
+
     try {
       const token = await this.refreshPromise;
       return token;
@@ -63,7 +66,7 @@ class SpotifyTokenManager {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString("base64")}`,
+          Authorization: `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString("base64")}`,
         },
         body: "grant_type=client_credentials",
         signal: controller.signal,
@@ -73,28 +76,33 @@ class SpotifyTokenManager {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Spotify token refresh failed: ${response.status} - ${errorText}`);
+        throw new Error(
+          `Spotify token refresh failed: ${response.status} - ${errorText}`,
+        );
       }
 
       const data: SpotifyTokenResponse = await response.json();
-      
+
       // Cache the token with expiration time (minus 5 minutes for safety)
       this.tokenCache = {
         token: data.access_token,
         expiresAt: Date.now() + (data.expires_in - 300) * 1000, // Convert to milliseconds, subtract 5 minutes
       };
 
-      console.log(`✅ Spotify token refreshed, expires in ${data.expires_in} seconds`);
+      console.log(
+        `✅ Spotify token refreshed, expires in ${data.expires_in} seconds`,
+      );
       return data.access_token;
-
     } catch (error) {
       console.error("❌ Failed to refresh Spotify token:", error);
-      
+
       if ((error as Error).name === "AbortError") {
         throw new Error("Spotify token request timeout");
       }
-      
-      throw new Error(`Failed to refresh Spotify access token: ${(error as Error).message}`);
+
+      throw new Error(
+        `Failed to refresh Spotify access token: ${(error as Error).message}`,
+      );
     }
   }
 
@@ -114,7 +122,10 @@ class SpotifyTokenManager {
       return { hasToken: false };
     }
 
-    const expiresIn = Math.max(0, Math.floor((this.tokenCache.expiresAt - Date.now()) / 1000));
+    const expiresIn = Math.max(
+      0,
+      Math.floor((this.tokenCache.expiresAt - Date.now()) / 1000),
+    );
     return {
       hasToken: true,
       expiresIn,

@@ -16,15 +16,24 @@ export function createServer() {
   const app = express();
 
   // Middleware
-  const allowedOrigins = process.env.NODE_ENV === "production"
-    ? [process.env.FRONTEND_URL, "https://*.railway.app"].filter((url): url is string => Boolean(url))
-    : ["http://localhost:3000", "http://localhost:8080", "http://localhost:5173"];
+  const allowedOrigins =
+    process.env.NODE_ENV === "production"
+      ? [process.env.FRONTEND_URL, "https://*.railway.app"].filter(
+          (url): url is string => Boolean(url),
+        )
+      : [
+          "http://localhost:3000",
+          "http://localhost:8080",
+          "http://localhost:5173",
+        ];
 
-  app.use(cors({
-    origin: allowedOrigins,
-    credentials: true
-  }));
-  
+  app.use(
+    cors({
+      origin: allowedOrigins,
+      credentials: true,
+    }),
+  );
+
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
@@ -45,7 +54,7 @@ export function createServer() {
   if (process.env.NODE_ENV === "production") {
     const staticPath = path.join(__dirname, "../dist/spa");
     app.use(express.static(staticPath));
-    
+
     // SPA fallback - serve index.html for all non-API routes
     app.get("*", (req, res) => {
       if (!req.path.startsWith("/api")) {
@@ -57,25 +66,40 @@ export function createServer() {
   }
 
   // Global error handler
-  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.error("Unhandled error:", err);
-    res.status(500).json({ 
-      error: "Internal server error",
-      message: process.env.NODE_ENV === "development" ? err.message : "Something went wrong"
-    });
-  });
+  app.use(
+    (
+      err: any,
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => {
+      console.error("Unhandled error:", err);
+      res.status(500).json({
+        error: "Internal server error",
+        message:
+          process.env.NODE_ENV === "development"
+            ? err.message
+            : "Something went wrong",
+      });
+    },
+  );
 
   return app;
 }
 
 // Start server if running directly
-if (process.env.NODE_ENV === "production" || process.argv[1] === fileURLToPath(import.meta.url)) {
+if (
+  process.env.NODE_ENV === "production" ||
+  process.argv[1] === fileURLToPath(import.meta.url)
+) {
   const app = createServer();
   const port = parseInt(process.env.PORT || "8080", 10);
 
   app.listen(port, "0.0.0.0", () => {
     console.log(`🚀 Server running on port ${port}`);
     console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
-    console.log(`🎵 Spotify integration: ${process.env.SPOTIFY_CLIENT_ID ? "✅" : "❌"}`);
+    console.log(
+      `🎵 Spotify integration: ${process.env.SPOTIFY_CLIENT_ID ? "✅" : "❌"}`,
+    );
   });
 }
