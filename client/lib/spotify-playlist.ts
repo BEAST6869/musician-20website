@@ -132,6 +132,7 @@ class SpotifyPlaylistAPI {
           // If we can't parse error response, use the original message
         }
 
+        console.warn(`⚠️ API Error: ${errorMessage}`);
         throw new Error(errorMessage);
       }
 
@@ -144,8 +145,14 @@ class SpotifyPlaylistAPI {
     } catch (error) {
       console.error("Error fetching Spotify playlist:", error);
 
+      // Check if it's a network error
+      if (error instanceof TypeError && error.message === "Failed to fetch") {
+        console.warn("🌐 Network error: Backend server may not be running or accessible");
+        console.warn("💡 Tip: Check that your backend server is deployed and environment variables are set");
+      }
+
       // Return mock data as fallback
-      console.warn("🔄 Using mock data as fallback");
+      console.warn("🔄 Using mock data as fallback due to API error");
       return this.getMockTracks();
     }
   }
