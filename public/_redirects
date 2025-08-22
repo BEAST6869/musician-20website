@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 # API routes to Netlify functions
 /api/* /.netlify/functions/api/:splat 200
 
 # SPA fallback - must be last
 /* /index.html 200
-=======
-# SPA routing - redirect all routes to index.html
-/*    /index.html   200
-
-# API routes should not be redirected
-/api/*  /api/:splat  200
->>>>>>> 19d9491b5e7b76d4e4db88fed63bfd06aa65f5fc
