@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
             "@radix-ui/react-select",
             "@radix-ui/react-tabs",
             "@radix-ui/react-slot",
-            "@radix-ui/react-toast"
+            "@radix-ui/react-toast",
           ],
           utils: ["clsx", "tailwind-merge", "class-variance-authority"],
           animations: ["framer-motion"],
