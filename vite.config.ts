@@ -16,16 +16,26 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
     chunkSizeWarningLimit: 1000,
+<<<<<<< HEAD
+=======
+    sourcemap: false, // Disable sourcemaps for faster builds
+    minify: "esbuild", // Use esbuild for faster minification
+>>>>>>> 19d9491b5e7b76d4e4db88fed63bfd06aa65f5fc
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom"],
+<<<<<<< HEAD
           ui: [
             "@radix-ui/react-dialog",
             "@radix-ui/react-select",
             "@radix-ui/react-tabs",
           ],
           utils: ["clsx", "tailwind-merge", "class-variance-authority"],
+=======
+          ui: ["@radix-ui/react-slot", "@radix-ui/react-toast"],
+          animations: ["framer-motion"],
+>>>>>>> 19d9491b5e7b76d4e4db88fed63bfd06aa65f5fc
         },
       },
     },

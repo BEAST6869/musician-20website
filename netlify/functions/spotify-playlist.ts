@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { Handler } from "@netlify/functions";
 
 interface SpotifyTokenResponse {
   access_token: string;
@@ -30,24 +30,25 @@ interface SpotifyPlaylistResponse {
   };
 }
 
-// Get Spotify access token using Client Credentials Flow with timeout
+// Get Spotify access token with optimized timeout for Netlify
 async function getSpotifyToken(): Promise<string> {
+  // Try multiple ways to access environment variables
   const clientId =
     process.env.SPOTIFY_CLIENT_ID || "4867425ccf554368bcc7274926d45738";
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-  if (
-    !clientSecret ||
-    clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE" ||
-    clientSecret.startsWith("BQD8l6lQykn7aPFtXI1u1PElQhHCjJlgwOW2r9nGjp9k")
-  ) {
-    throw new Error(
-      "Spotify credentials not configured - Please set SPOTIFY_CLIENT_SECRET environment variable with a valid Spotify Client Secret from https://developer.spotify.com/dashboard",
-    );
+  console.log("Environment check - Client ID:", clientId ? "Set" : "Missing");
+  console.log(
+    "Environment check - Client Secret:",
+    clientSecret ? "Set" : "Missing",
+  );
+
+  if (!clientSecret || clientSecret === "YOUR_SPOTIFY_CLIENT_SECRET_HERE") {
+    throw new Error("Spotify credentials not configured");
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+  const timeoutId = setTimeout(() => controller.abort(), 8000); // Reduced timeout for Netlify
 
   try {
     const response = await fetch("https://accounts.spotify.com/api/token", {
@@ -80,22 +81,50 @@ async function getSpotifyToken(): Promise<string> {
   }
 }
 
-export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
+export const handler: Handler = async (event, context) => {
+  // Enable CORS
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Content-Type": "application/json",
+  };
+
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers,
+      body: "",
+    };
+  }
+
+  if (event.httpMethod !== "GET") {
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: "Method not allowed" }),
+    };
+  }
+
   try {
-    const { playlistId } = req.params;
+    const playlistId = event.path.split("/").pop();
 
     if (!playlistId) {
-      return res.status(400).json({ error: "Playlist ID is required" });
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: "Playlist ID is required" }),
+      };
     }
 
     // Get access token
     const token = await getSpotifyToken();
 
-    // Fetch playlist data with timeout
+    // Fetch playlist data with reduced timeout for Netlify
     const playlistController = new AbortController();
     const playlistTimeoutId = setTimeout(
       () => playlistController.abort(),
-      10000,
+      8000,
     );
 
     let response: Response;
@@ -127,7 +156,7 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
 
     const data: SpotifyPlaylistResponse = await response.json();
 
-    // Transform the data to match our frontend interface
+    // Transform the data to match frontend interface
     const tracks = data.tracks.items.map((item) => ({
       id: item.track.id,
       name: item.track.name,
@@ -138,23 +167,20 @@ export const handleSpotifyPlaylist: RequestHandler = async (req, res) => {
       artist: item.track.artists.map((artist) => artist.name).join(", "),
     }));
 
-    res.json({ tracks });
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ tracks }),
+    };
   } catch (error) {
     console.error("Error fetching Spotify playlist:", error);
-
-    // Provide more helpful error messages for common issues
-    let errorMessage = error instanceof Error ? error.message : "Unknown error";
-    let statusCode = 500;
-
-    if (errorMessage.includes("credentials not configured")) {
-      statusCode = 503; // Service Unavailable
-      errorMessage = "Spotify API not configured - Using fallback data";
-    }
-
-    res.status(statusCode).json({
-      error: "Failed to fetch playlist",
-      message: errorMessage,
-      fallback: true, // Signal to frontend to use fallback data
-    });
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        error: "Failed to fetch playlist",
+        message: error instanceof Error ? error.message : "Unknown error",
+      }),
+    };
   }
 };
