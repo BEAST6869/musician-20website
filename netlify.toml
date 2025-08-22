@@ -4,12 +4,6 @@
 
 [build.environment]
   NODE_VERSION = "18"
-<<<<<<< HEAD
-
-[functions]
-  external_node_modules = ["express", "dotenv"]
-  node_bundler = "esbuild"
-=======
   NODE_ENV = "production"
   NPM_FLAGS = "--prefer-offline --no-audit"
 
@@ -40,4 +34,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
->>>>>>> 19d9491b5e7b76d4e4db88fed63bfd06aa65f5fc
