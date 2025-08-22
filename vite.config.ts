@@ -22,7 +22,14 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom"],
-          ui: ["@radix-ui/react-slot", "@radix-ui/react-toast"],
+          ui: [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-select",
+            "@radix-ui/react-tabs",
+            "@radix-ui/react-slot",
+            "@radix-ui/react-toast",
+          ],
+          utils: ["clsx", "tailwind-merge", "class-variance-authority"],
           animations: ["framer-motion"],
         },
       },
