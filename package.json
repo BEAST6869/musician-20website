@@ -4,16 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-<<<<<<< HEAD
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --mode production",
     "build:server": "vite build --config vite.config.server.ts --mode production",
-=======
-    "build": "NODE_ENV=production npm run build:client",
-    "build:client": "vite build",
-    "build:server": "vite build --config vite.config.server.ts",
-    "build:full": "npm run build:client && npm run build:server",
->>>>>>> 19d9491b5e7b76d4e4db88fed63bfd06aa65f5fc
     "start": "node dist/server/node-build.mjs",
     "preview": "vite preview",
     "test": "vitest --run",
