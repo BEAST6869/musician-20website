@@ -445,8 +445,14 @@ export default function Index() {
               {/* Fan Image 2 */}
               <motion.div
                 whileHover={{ scale: 1.02, y: -5 }}
-                className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group"
+                className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#39ff14" }}
+                onClick={() => openLightbox(
+                  "https://cdn.builder.io/api/v1/image/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F2103096b7b674ed0b1f9e73c33e94c45?format=webp&width=800",
+                  "DIGITAL.REMIX",
+                  "Y2K aesthetic interpretation",
+                  "image"
+                )}
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <img
@@ -456,6 +462,11 @@ export default function Index() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-neon-green/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-green rounded-full animate-glow-pulse" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-12 h-12 rounded-full bg-cyber-dark/90 border-2 border-neon-green flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
+                      <span className="text-neon-green text-lg font-mono">👁</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-lg font-bold text-neon-green font-mono">DIGITAL.REMIX</h3>
