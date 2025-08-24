@@ -6,11 +6,7 @@ import {
   PLAYLIST_ID,
   PlaylistTrack,
 } from "@/lib/spotify-playlist";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 // Custom brand logo components
 const SpotifyLogo = ({
@@ -63,7 +59,7 @@ export default function Index() {
     src: string;
     title: string;
     description: string;
-    type: 'image' | 'video';
+    type: "image" | "video";
   } | null>(null);
 
   const socialLinks = [
@@ -90,7 +86,12 @@ export default function Index() {
   ];
 
   // Helper functions for lightbox
-  const openLightbox = (src: string, title: string, description: string, type: 'image' | 'video') => {
+  const openLightbox = (
+    src: string,
+    title: string,
+    description: string,
+    type: "image" | "video",
+  ) => {
     setCurrentMedia({ src, title, description, type });
     setLightboxOpen(true);
   };
@@ -411,12 +412,14 @@ export default function Index() {
                 whileHover={{ scale: 1.02, y: -5 }}
                 className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#ff00de" }}
-                onClick={() => openLightbox(
-                  "https://cdn.builder.io/api/v1/image/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F5d25bf673e48461eaef1a2efe579780d?format=webp&width=800",
-                  "CYBERPUNK.PORTRAIT",
-                  "Digital fan art creation",
-                  "image"
-                )}
+                onClick={() =>
+                  openLightbox(
+                    "https://cdn.builder.io/api/v1/image/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F5d25bf673e48461eaef1a2efe579780d?format=webp&width=800",
+                    "CYBERPUNK.PORTRAIT",
+                    "Digital fan art creation",
+                    "image",
+                  )
+                }
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <img
@@ -428,16 +431,24 @@ export default function Index() {
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-pink rounded-full animate-glow-pulse" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-12 h-12 rounded-full bg-cyber-dark/90 border-2 border-neon-pink flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
-                      <span className="text-neon-pink text-lg font-mono">👁</span>
+                      <span className="text-neon-pink text-lg font-mono">
+                        👁
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-neon-pink font-mono">CYBERPUNK.PORTRAIT</h3>
-                  <p className="text-sm text-muted-foreground font-mono">Digital fan art creation</p>
+                  <h3 className="text-lg font-bold text-neon-pink font-mono">
+                    CYBERPUNK.PORTRAIT
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-mono">
+                    Digital fan art creation
+                  </p>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-neon-pink rounded-full animate-pulse" />
-                    <span className="text-xs text-cyber-glow font-mono">COMMUNITY_UPLOAD</span>
+                    <span className="text-xs text-cyber-glow font-mono">
+                      COMMUNITY_UPLOAD
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -447,12 +458,14 @@ export default function Index() {
                 whileHover={{ scale: 1.02, y: -5 }}
                 className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#39ff14" }}
-                onClick={() => openLightbox(
-                  "https://cdn.builder.io/api/v1/image/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F2103096b7b674ed0b1f9e73c33e94c45?format=webp&width=800",
-                  "DIGITAL.REMIX",
-                  "Y2K aesthetic interpretation",
-                  "image"
-                )}
+                onClick={() =>
+                  openLightbox(
+                    "https://cdn.builder.io/api/v1/image/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F2103096b7b674ed0b1f9e73c33e94c45?format=webp&width=800",
+                    "DIGITAL.REMIX",
+                    "Y2K aesthetic interpretation",
+                    "image",
+                  )
+                }
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <img
@@ -464,16 +477,24 @@ export default function Index() {
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-green rounded-full animate-glow-pulse" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-12 h-12 rounded-full bg-cyber-dark/90 border-2 border-neon-green flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
-                      <span className="text-neon-green text-lg font-mono">👁</span>
+                      <span className="text-neon-green text-lg font-mono">
+                        👁
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-neon-green font-mono">DIGITAL.REMIX</h3>
-                  <p className="text-sm text-muted-foreground font-mono">Y2K aesthetic interpretation</p>
+                  <h3 className="text-lg font-bold text-neon-green font-mono">
+                    DIGITAL.REMIX
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-mono">
+                    Y2K aesthetic interpretation
+                  </p>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
-                    <span className="text-xs text-cyber-glow font-mono">COMMUNITY_UPLOAD</span>
+                    <span className="text-xs text-cyber-glow font-mono">
+                      COMMUNITY_UPLOAD
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -483,12 +504,14 @@ export default function Index() {
                 whileHover={{ scale: 1.02, y: -5 }}
                 className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#8a2be2" }}
-                onClick={() => openLightbox(
-                  "https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F51fd544a1c4941d186270781a55343f2?alt=media&token=e68710f2-1c68-4220-94df-3f432cbcb9f9&apiKey=0633d7dd76bc46b5ae429b203d2a5219",
-                  "MOTION.GRAPHICS",
-                  "Fan-created visual experience",
-                  "video"
-                )}
+                onClick={() =>
+                  openLightbox(
+                    "https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F51fd544a1c4941d186270781a55343f2?alt=media&token=e68710f2-1c68-4220-94df-3f432cbcb9f9&apiKey=0633d7dd76bc46b5ae429b203d2a5219",
+                    "MOTION.GRAPHICS",
+                    "Fan-created visual experience",
+                    "video",
+                  )
+                }
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <video
@@ -496,7 +519,10 @@ export default function Index() {
                     muted
                     preload="metadata"
                   >
-                    <source src="https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F51fd544a1c4941d186270781a55343f2?alt=media&token=e68710f2-1c68-4220-94df-3f432cbcb9f9&apiKey=0633d7dd76bc46b5ae429b203d2a5219" type="video/mp4" />
+                    <source
+                      src="https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F51fd544a1c4941d186270781a55343f2?alt=media&token=e68710f2-1c68-4220-94df-3f432cbcb9f9&apiKey=0633d7dd76bc46b5ae429b203d2a5219"
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-neon-violet/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -506,16 +532,24 @@ export default function Index() {
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-violet rounded-full animate-glow-pulse" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-violet flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
-                      <span className="text-neon-violet text-2xl font-mono">▶</span>
+                      <span className="text-neon-violet text-2xl font-mono">
+                        ▶
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-neon-violet font-mono">MOTION.GRAPHICS</h3>
-                  <p className="text-sm text-muted-foreground font-mono">Fan-created visual experience</p>
+                  <h3 className="text-lg font-bold text-neon-violet font-mono">
+                    MOTION.GRAPHICS
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-mono">
+                    Fan-created visual experience
+                  </p>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-neon-violet rounded-full animate-pulse" />
-                    <span className="text-xs text-cyber-glow font-mono">COMMUNITY_UPLOAD</span>
+                    <span className="text-xs text-cyber-glow font-mono">
+                      COMMUNITY_UPLOAD
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -525,12 +559,14 @@ export default function Index() {
                 whileHover={{ scale: 1.02, y: -5 }}
                 className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#ff6b35" }}
-                onClick={() => openLightbox(
-                  "https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F0c18f6bff0c940049a6f3cb93f7f5352?alt=media&token=c79a662a-b373-4fe6-bbf1-349f69cb8cfc&apiKey=0633d7dd76bc46b5ae429b203d2a5219",
-                  "VISUAL.REMIX",
-                  "Creative interpretation",
-                  "video"
-                )}
+                onClick={() =>
+                  openLightbox(
+                    "https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F0c18f6bff0c940049a6f3cb93f7f5352?alt=media&token=c79a662a-b373-4fe6-bbf1-349f69cb8cfc&apiKey=0633d7dd76bc46b5ae429b203d2a5219",
+                    "VISUAL.REMIX",
+                    "Creative interpretation",
+                    "video",
+                  )
+                }
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <video
@@ -538,7 +574,10 @@ export default function Index() {
                     muted
                     preload="metadata"
                   >
-                    <source src="https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F0c18f6bff0c940049a6f3cb93f7f5352?alt=media&token=c79a662a-b373-4fe6-bbf1-349f69cb8cfc&apiKey=0633d7dd76bc46b5ae429b203d2a5219" type="video/mp4" />
+                    <source
+                      src="https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F0c18f6bff0c940049a6f3cb93f7f5352?alt=media&token=c79a662a-b373-4fe6-bbf1-349f69cb8cfc&apiKey=0633d7dd76bc46b5ae429b203d2a5219"
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-neon-orange/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -548,16 +587,24 @@ export default function Index() {
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-orange rounded-full animate-glow-pulse" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-orange flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
-                      <span className="text-neon-orange text-2xl font-mono">▶</span>
+                      <span className="text-neon-orange text-2xl font-mono">
+                        ▶
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-neon-orange font-mono">VISUAL.REMIX</h3>
-                  <p className="text-sm text-muted-foreground font-mono">Creative interpretation</p>
+                  <h3 className="text-lg font-bold text-neon-orange font-mono">
+                    VISUAL.REMIX
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-mono">
+                    Creative interpretation
+                  </p>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-neon-orange rounded-full animate-pulse" />
-                    <span className="text-xs text-cyber-glow font-mono">COMMUNITY_UPLOAD</span>
+                    <span className="text-xs text-cyber-glow font-mono">
+                      COMMUNITY_UPLOAD
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -570,7 +617,8 @@ export default function Index() {
               transition={{ delay: 2 }}
               className="mt-8 text-center"
             >
-              <div className="cyber-border bg-cyber-deep/20 p-4 rounded-lg backdrop-blur-sm inline-block"
+              <div
+                className="cyber-border bg-cyber-deep/20 p-4 rounded-lg backdrop-blur-sm inline-block"
                 style={{ borderColor: "#00ffff" }}
               >
                 <p className="text-cyber-glow font-mono text-sm mb-2">
@@ -969,14 +1017,20 @@ export default function Index() {
       <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
         <DialogContent
           className="max-w-5xl w-[95vw] h-[95vh] p-0 overflow-hidden cyber-border bg-cyber-dark/95 backdrop-blur-lg border-2 [&>button]:hidden"
-          style={{ borderColor: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
+          style={{
+            borderColor: currentMedia?.type === "video" ? "#8a2be2" : "#ff00de",
+          }}
         >
           <div className="relative w-full h-full flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-4 bg-cyber-deep/50 border-b border-neon-cyan/30 shrink-0">
               <div className="min-w-0">
-                <DialogTitle className="text-xl font-bold font-mono neon-text truncate"
-                  style={{ color: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
+                <DialogTitle
+                  className="text-xl font-bold font-mono neon-text truncate"
+                  style={{
+                    color:
+                      currentMedia?.type === "video" ? "#8a2be2" : "#ff00de",
+                  }}
                 >
                   {currentMedia?.title}
                 </DialogTitle>
@@ -994,7 +1048,7 @@ export default function Index() {
 
             {/* Media Content */}
             <div className="flex-1 flex items-center justify-center p-4 bg-gradient-to-br from-cyber-dark to-cyber-deep min-h-0 overflow-hidden">
-              {currentMedia?.type === 'image' ? (
+              {currentMedia?.type === "image" ? (
                 <motion.img
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -1003,10 +1057,10 @@ export default function Index() {
                   alt={currentMedia.title}
                   className="w-full h-full object-contain rounded-lg cyber-border shadow-2xl cursor-pointer"
                   style={{
-                    borderColor: '#ff00de',
-                    boxShadow: '0 0 30px rgba(255, 0, 222, 0.3)',
-                    maxWidth: 'calc(100vw - 4rem)',
-                    maxHeight: 'calc(100vh - 12rem)'
+                    borderColor: "#ff00de",
+                    boxShadow: "0 0 30px rgba(255, 0, 222, 0.3)",
+                    maxWidth: "calc(100vw - 4rem)",
+                    maxHeight: "calc(100vh - 12rem)",
                   }}
                   onClick={closeLightbox}
                 />
@@ -1020,10 +1074,10 @@ export default function Index() {
                   autoPlay
                   className="w-full h-full object-contain rounded-lg cyber-border shadow-2xl"
                   style={{
-                    borderColor: '#8a2be2',
-                    boxShadow: '0 0 30px rgba(138, 43, 226, 0.3)',
-                    maxWidth: 'calc(100vw - 4rem)',
-                    maxHeight: 'calc(100vh - 12rem)'
+                    borderColor: "#8a2be2",
+                    boxShadow: "0 0 30px rgba(138, 43, 226, 0.3)",
+                    maxWidth: "calc(100vw - 4rem)",
+                    maxHeight: "calc(100vh - 12rem)",
                   }}
                 >
                   Your browser does not support the video tag.
@@ -1038,15 +1092,24 @@ export default function Index() {
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-3 h-3 rounded-full animate-glow-pulse"
-                      style={{ backgroundColor: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
+                      style={{
+                        backgroundColor:
+                          currentMedia?.type === "video"
+                            ? "#8a2be2"
+                            : "#ff00de",
+                      }}
                     />
                     <span className="text-xs text-cyber-glow font-mono">
-                      {currentMedia?.type === 'video' ? 'VIDEO.CONTENT' : 'IMAGE.CONTENT'}
+                      {currentMedia?.type === "video"
+                        ? "VIDEO.CONTENT"
+                        : "IMAGE.CONTENT"}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
-                    <span className="text-xs text-cyber-glow font-mono">COMMUNITY_UPLOAD</span>
+                    <span className="text-xs text-cyber-glow font-mono">
+                      COMMUNITY_UPLOAD
+                    </span>
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground font-mono">
