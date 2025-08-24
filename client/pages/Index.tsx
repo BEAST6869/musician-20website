@@ -523,23 +523,34 @@ export default function Index() {
               {/* Fan Video 2 */}
               <motion.div
                 whileHover={{ scale: 1.02, y: -5 }}
-                className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group"
+                className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#ff6b35" }}
+                onClick={() => openLightbox(
+                  "https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F0c18f6bff0c940049a6f3cb93f7f5352?alt=media&token=c79a662a-b373-4fe6-bbf1-349f69cb8cfc&apiKey=0633d7dd76bc46b5ae429b203d2a5219",
+                  "VISUAL.REMIX",
+                  "Creative interpretation",
+                  "video"
+                )}
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <video
-                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                    controls
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                    muted
                     preload="metadata"
                   >
                     <source src="https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F0c18f6bff0c940049a6f3cb93f7f5352?alt=media&token=c79a662a-b373-4fe6-bbf1-349f69cb8cfc&apiKey=0633d7dd76bc46b5ae429b203d2a5219" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-neon-orange/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neon-orange/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-2 left-2 px-2 py-1 bg-cyber-deep/80 rounded text-xs font-mono text-neon-orange">
                     VIDEO
                   </div>
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-orange rounded-full animate-glow-pulse" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-orange flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
+                      <span className="text-neon-orange text-2xl font-mono">▶</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-lg font-bold text-neon-orange font-mono">VISUAL.REMIX</h3>
