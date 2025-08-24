@@ -481,23 +481,34 @@ export default function Index() {
               {/* Fan Video 1 */}
               <motion.div
                 whileHover={{ scale: 1.02, y: -5 }}
-                className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group"
+                className="fan-item cyber-border bg-cyber-deep/30 p-4 rounded-lg hover-glow backdrop-blur-sm group cursor-pointer"
                 style={{ borderColor: "#8a2be2" }}
+                onClick={() => openLightbox(
+                  "https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F51fd544a1c4941d186270781a55343f2?alt=media&token=e68710f2-1c68-4220-94df-3f432cbcb9f9&apiKey=0633d7dd76bc46b5ae429b203d2a5219",
+                  "MOTION.GRAPHICS",
+                  "Fan-created visual experience",
+                  "video"
+                )}
               >
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <video
-                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                    controls
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                    muted
                     preload="metadata"
                   >
                     <source src="https://cdn.builder.io/o/assets%2F0633d7dd76bc46b5ae429b203d2a5219%2F51fd544a1c4941d186270781a55343f2?alt=media&token=e68710f2-1c68-4220-94df-3f432cbcb9f9&apiKey=0633d7dd76bc46b5ae429b203d2a5219" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-neon-violet/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neon-violet/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-2 left-2 px-2 py-1 bg-cyber-deep/80 rounded text-xs font-mono text-neon-violet">
                     VIDEO
                   </div>
                   <div className="absolute top-2 right-2 w-3 h-3 bg-neon-violet rounded-full animate-glow-pulse" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-16 h-16 rounded-full bg-cyber-dark/90 border-2 border-neon-violet flex items-center justify-center backdrop-blur-sm animate-glow-pulse">
+                      <span className="text-neon-violet text-2xl font-mono">▶</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-lg font-bold text-neon-violet font-mono">MOTION.GRAPHICS</h3>
