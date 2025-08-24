@@ -964,6 +964,94 @@ export default function Index() {
           />
         ))}
       </div>
+
+      {/* Cyberpunk Lightbox Modal for Fan Creations */}
+      <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
+        <DialogContent
+          className="max-w-4xl w-[90vw] h-[90vh] p-0 overflow-hidden cyber-border bg-cyber-dark/95 backdrop-blur-lg border-2"
+          style={{ borderColor: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
+        >
+          <div className="relative w-full h-full flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 bg-cyber-deep/50 border-b border-neon-cyan/30">
+              <div>
+                <DialogTitle className="text-xl font-bold font-mono neon-text"
+                  style={{ color: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
+                >
+                  {currentMedia?.title}
+                </DialogTitle>
+                <p className="text-sm text-cyber-glow font-mono mt-1">
+                  {currentMedia?.description}
+                </p>
+              </div>
+              <button
+                onClick={closeLightbox}
+                className="w-10 h-10 rounded-full bg-cyber-deep/80 border-2 border-neon-pink hover:border-neon-cyan transition-colors flex items-center justify-center hover-glow group"
+              >
+                <X className="w-5 h-5 text-neon-pink group-hover:text-neon-cyan transition-colors" />
+              </button>
+            </div>
+
+            {/* Media Content */}
+            <div className="flex-1 flex items-center justify-center p-4 bg-gradient-to-br from-cyber-dark to-cyber-deep">
+              {currentMedia?.type === 'image' ? (
+                <motion.img
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  src={currentMedia.src}
+                  alt={currentMedia.title}
+                  className="max-w-full max-h-full object-contain rounded-lg cyber-border"
+                  style={{ borderColor: '#ff00de' }}
+                />
+              ) : (
+                <motion.video
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  src={currentMedia?.src}
+                  controls
+                  autoPlay
+                  className="max-w-full max-h-full object-contain rounded-lg cyber-border"
+                  style={{ borderColor: '#8a2be2' }}
+                >
+                  Your browser does not support the video tag.
+                </motion.video>
+              )}
+            </div>
+
+            {/* Footer with metadata */}
+            <div className="p-4 bg-cyber-deep/50 border-t border-neon-cyan/30">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div
+                      className="w-3 h-3 rounded-full animate-glow-pulse"
+                      style={{ backgroundColor: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
+                    />
+                    <span className="text-xs text-cyber-glow font-mono">
+                      {currentMedia?.type === 'video' ? 'VIDEO.CONTENT' : 'IMAGE.CONTENT'}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
+                    <span className="text-xs text-cyber-glow font-mono">COMMUNITY_UPLOAD</span>
+                  </div>
+                </div>
+                <div className="text-xs text-muted-foreground font-mono">
+                  ESC or click X to close
+                </div>
+              </div>
+            </div>
+
+            {/* Cyberpunk decorative elements */}
+            <div className="absolute top-4 left-4 w-2 h-2 bg-neon-cyan rounded-full animate-pulse opacity-60" />
+            <div className="absolute top-8 left-8 w-1 h-1 bg-neon-green rounded-full animate-glow-pulse opacity-40" />
+            <div className="absolute bottom-4 right-4 w-2 h-2 bg-neon-orange rounded-full animate-pulse opacity-60" />
+            <div className="absolute bottom-8 right-8 w-1 h-1 bg-neon-violet rounded-full animate-glow-pulse opacity-40" />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
