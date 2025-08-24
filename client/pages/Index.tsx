@@ -968,14 +968,14 @@ export default function Index() {
       {/* Cyberpunk Lightbox Modal for Fan Creations */}
       <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
         <DialogContent
-          className="max-w-4xl w-[90vw] h-[90vh] p-0 overflow-hidden cyber-border bg-cyber-dark/95 backdrop-blur-lg border-2"
+          className="max-w-5xl w-[95vw] h-[95vh] p-0 overflow-hidden cyber-border bg-cyber-dark/95 backdrop-blur-lg border-2 [&>button]:hidden"
           style={{ borderColor: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
         >
           <div className="relative w-full h-full flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-cyber-deep/50 border-b border-neon-cyan/30">
-              <div>
-                <DialogTitle className="text-xl font-bold font-mono neon-text"
+            <div className="flex items-center justify-between p-4 bg-cyber-deep/50 border-b border-neon-cyan/30 shrink-0">
+              <div className="min-w-0">
+                <DialogTitle className="text-xl font-bold font-mono neon-text truncate"
                   style={{ color: currentMedia?.type === 'video' ? '#8a2be2' : '#ff00de' }}
                 >
                   {currentMedia?.title}
@@ -986,14 +986,14 @@ export default function Index() {
               </div>
               <button
                 onClick={closeLightbox}
-                className="w-10 h-10 rounded-full bg-cyber-deep/80 border-2 border-neon-pink hover:border-neon-cyan transition-colors flex items-center justify-center hover-glow group"
+                className="w-10 h-10 rounded-full bg-cyber-deep/80 border-2 border-neon-pink hover:border-neon-cyan transition-colors flex items-center justify-center hover-glow group shrink-0 ml-4"
               >
                 <X className="w-5 h-5 text-neon-pink group-hover:text-neon-cyan transition-colors" />
               </button>
             </div>
 
             {/* Media Content */}
-            <div className="flex-1 flex items-center justify-center p-4 bg-gradient-to-br from-cyber-dark to-cyber-deep">
+            <div className="flex-1 flex items-center justify-center p-6 bg-gradient-to-br from-cyber-dark to-cyber-deep min-h-0">
               {currentMedia?.type === 'image' ? (
                 <motion.img
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -1001,8 +1001,9 @@ export default function Index() {
                   transition={{ duration: 0.3 }}
                   src={currentMedia.src}
                   alt={currentMedia.title}
-                  className="max-w-full max-h-full object-contain rounded-lg cyber-border"
-                  style={{ borderColor: '#ff00de' }}
+                  className="max-w-full max-h-full object-contain rounded-lg cyber-border shadow-2xl cursor-pointer"
+                  style={{ borderColor: '#ff00de', boxShadow: '0 0 30px rgba(255, 0, 222, 0.3)' }}
+                  onClick={closeLightbox}
                 />
               ) : (
                 <motion.video
@@ -1012,8 +1013,8 @@ export default function Index() {
                   src={currentMedia?.src}
                   controls
                   autoPlay
-                  className="max-w-full max-h-full object-contain rounded-lg cyber-border"
-                  style={{ borderColor: '#8a2be2' }}
+                  className="max-w-full max-h-full object-contain rounded-lg cyber-border shadow-2xl"
+                  style={{ borderColor: '#8a2be2', boxShadow: '0 0 30px rgba(138, 43, 226, 0.3)' }}
                 >
                   Your browser does not support the video tag.
                 </motion.video>
@@ -1021,7 +1022,7 @@ export default function Index() {
             </div>
 
             {/* Footer with metadata */}
-            <div className="p-4 bg-cyber-deep/50 border-t border-neon-cyan/30">
+            <div className="p-4 bg-cyber-deep/50 border-t border-neon-cyan/30 shrink-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
@@ -1039,16 +1040,16 @@ export default function Index() {
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground font-mono">
-                  ESC or click X to close
+                  ESC, click X, or click image to close
                 </div>
               </div>
             </div>
 
             {/* Cyberpunk decorative elements */}
-            <div className="absolute top-4 left-4 w-2 h-2 bg-neon-cyan rounded-full animate-pulse opacity-60" />
-            <div className="absolute top-8 left-8 w-1 h-1 bg-neon-green rounded-full animate-glow-pulse opacity-40" />
-            <div className="absolute bottom-4 right-4 w-2 h-2 bg-neon-orange rounded-full animate-pulse opacity-60" />
-            <div className="absolute bottom-8 right-8 w-1 h-1 bg-neon-violet rounded-full animate-glow-pulse opacity-40" />
+            <div className="absolute top-16 left-4 w-2 h-2 bg-neon-cyan rounded-full animate-pulse opacity-60 pointer-events-none" />
+            <div className="absolute top-20 left-8 w-1 h-1 bg-neon-green rounded-full animate-glow-pulse opacity-40 pointer-events-none" />
+            <div className="absolute bottom-16 right-4 w-2 h-2 bg-neon-orange rounded-full animate-pulse opacity-60 pointer-events-none" />
+            <div className="absolute bottom-20 right-8 w-1 h-1 bg-neon-violet rounded-full animate-glow-pulse opacity-40 pointer-events-none" />
           </div>
         </DialogContent>
       </Dialog>
