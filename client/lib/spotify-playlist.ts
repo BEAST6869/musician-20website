@@ -103,7 +103,7 @@ class SpotifyPlaylistAPI {
    */
   async getPlaylistTracks(playlistId: string): Promise<PlaylistTrack[]> {
     if (!playlistId || playlistId === "YOUR_PLAYLIST_ID_HERE") {
-      console.warn("⚠️ Playlist ID not configured. Using mock data.");
+      console.warn("���️ Playlist ID not configured. Using mock data.");
       return this.getMockTracks();
     }
 
@@ -174,25 +174,32 @@ class SpotifyPlaylistAPI {
   private getMockTracks(): PlaylistTrack[] {
     return [
       {
-        id: "mock1",
-        name: "Sample Track 1",
-        spotifyUrl: "https://open.spotify.com/track/example1",
-        albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+1",
-        artist: "Sample Artist",
+        id: "1",
+        name: "Sacred Queer Heart",
+        spotifyUrl: "https://open.spotify.com/track/5iuWm1EbaACpLVqs5jEplm?si=c0828c8edcb641a6",
+        albumCover: "https://via.placeholder.com/300x300/ff00de/ffffff?text=SQH",
+        artist: "Shelby Mackay",
       },
       {
-        id: "mock2",
-        name: "Sample Track 2",
-        spotifyUrl: "https://open.spotify.com/track/example2",
-        albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+2",
-        artist: "Sample Artist",
+        id: "2",
+        name: "Moongirlnonsense",
+        spotifyUrl: "https://open.spotify.com/track/53NYm8PTesJSSMSMoyljeh?si=5d6c3dcc88674138",
+        albumCover: "https://via.placeholder.com/300x300/00ffff/ffffff?text=MGN",
+        artist: "Shelby Mackay",
       },
       {
-        id: "mock3",
-        name: "Sample Track 3",
-        spotifyUrl: "https://open.spotify.com/track/example3",
-        albumCover: "https://via.placeholder.com/300x300/333/fff?text=Track+3",
-        artist: "Sample Artist",
+        id: "3",
+        name: "Stillelectricwhenshesdown",
+        spotifyUrl: "https://open.spotify.com/track/3CY4ZmQ067SPACan76Wj5B?si=7b652d81525a4371",
+        albumCover: "https://via.placeholder.com/300x300/39ff14/ffffff?text=SEWS",
+        artist: "Shelby Mackay",
+      },
+      {
+        id: "4",
+        name: "Dontforgetmypeace",
+        spotifyUrl: "https://open.spotify.com/track/5JdLlW10WLuhWnxfhCednE?si=3c33e8ef46544dc2",
+        albumCover: "https://via.placeholder.com/300x300/8a2be2/ffffff?text=DFMP",
+        artist: "Shelby Mackay",
       },
     ];
   }
