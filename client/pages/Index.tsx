@@ -57,6 +57,15 @@ export default function Index() {
   const [isLoadingReleases, setIsLoadingReleases] = useState(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
+  // Lightbox state for fan creations
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentMedia, setCurrentMedia] = useState<{
+    src: string;
+    title: string;
+    description: string;
+    type: 'image' | 'video';
+  } | null>(null);
+
   const socialLinks = [
     {
       name: "SPOTIFY",
