@@ -993,7 +993,7 @@ export default function Index() {
             </div>
 
             {/* Media Content */}
-            <div className="flex-1 flex items-center justify-center p-6 bg-gradient-to-br from-cyber-dark to-cyber-deep min-h-0">
+            <div className="flex-1 flex items-center justify-center p-4 bg-gradient-to-br from-cyber-dark to-cyber-deep min-h-0 overflow-hidden">
               {currentMedia?.type === 'image' ? (
                 <motion.img
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -1001,8 +1001,13 @@ export default function Index() {
                   transition={{ duration: 0.3 }}
                   src={currentMedia.src}
                   alt={currentMedia.title}
-                  className="max-w-full max-h-full object-contain rounded-lg cyber-border shadow-2xl cursor-pointer"
-                  style={{ borderColor: '#ff00de', boxShadow: '0 0 30px rgba(255, 0, 222, 0.3)' }}
+                  className="w-full h-full object-contain rounded-lg cyber-border shadow-2xl cursor-pointer"
+                  style={{
+                    borderColor: '#ff00de',
+                    boxShadow: '0 0 30px rgba(255, 0, 222, 0.3)',
+                    maxWidth: 'calc(100vw - 4rem)',
+                    maxHeight: 'calc(100vh - 12rem)'
+                  }}
                   onClick={closeLightbox}
                 />
               ) : (
@@ -1013,8 +1018,13 @@ export default function Index() {
                   src={currentMedia?.src}
                   controls
                   autoPlay
-                  className="max-w-full max-h-full object-contain rounded-lg cyber-border shadow-2xl"
-                  style={{ borderColor: '#8a2be2', boxShadow: '0 0 30px rgba(138, 43, 226, 0.3)' }}
+                  className="w-full h-full object-contain rounded-lg cyber-border shadow-2xl"
+                  style={{
+                    borderColor: '#8a2be2',
+                    boxShadow: '0 0 30px rgba(138, 43, 226, 0.3)',
+                    maxWidth: 'calc(100vw - 4rem)',
+                    maxHeight: 'calc(100vh - 12rem)'
+                  }}
                 >
                   Your browser does not support the video tag.
                 </motion.video>
