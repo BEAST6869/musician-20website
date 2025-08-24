@@ -89,6 +89,17 @@ export default function Index() {
     },
   ];
 
+  // Helper functions for lightbox
+  const openLightbox = (src: string, title: string, description: string, type: 'image' | 'video') => {
+    setCurrentMedia({ src, title, description, type });
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    setCurrentMedia(null);
+  };
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
